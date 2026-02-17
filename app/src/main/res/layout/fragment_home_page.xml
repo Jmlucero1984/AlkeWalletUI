@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePageFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/superiorFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="295dp"
+            android:background="@drawable/home_page_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:layout_width="70dp"
+                                android:layout_height="70dp"
+                                android:textAlignment="center"
+                                app:cardCornerRadius="50dp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <ImageView
+                                    android:id="@+id/imageView33"
+                                    android:layout_width="72dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginEnd="16dp"
+                                    android:adjustViewBounds="true"
+                                    android:clipToOutline="true"
+                                    android:contentDescription="TODO"
+                                    android:scaleType="fitXY"
+                                    tools:srcCompat="@tools:sample/avatars" />
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/MetaProBold"
+                                android:text="Inicio"
+                                android:textColor="@color/white"
+                                android:textSize="24sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </FrameLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+
+                        />
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="45dp"
+                                android:layout_height="39dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:contentDescription="TODO"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                tools:srcCompat="@drawable/campanita" />
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="45dp"
+                                android:fontFamily="@font/MetaProBold"
+                                android:gravity="center|left"
+                                android:text="Hola usuario!"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView6"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/MetaProBold"
+                                android:gravity="center|left"
+                                android:text="Balance Total"
+                                android:textColor="@color/white"
+                                android:textSize="24sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                            <TextView
+                                android:id="@+id/textView8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/MetaProBold"
+                                android:gravity="center|left"
+                                android:text="$124.57"
+                                android:textColor="@color/white"
+                                android:textSize="50sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </FrameLayout>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/inferiorFrameLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/superiorFrameLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/enviarDineroButton"
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:layout_weight="13"
+                        android:backgroundTint="#72DB31"
+                        android:text="Enviar dinero"
+                        android:textColor="@color/black"
+                        app:cornerRadius="15dp"
+                        app:icon="@drawable/flyarrowup"
+                        app:iconGravity="textStart"
+                        app:iconPadding="2dp"
+                        app:iconSize="30dp"
+                        app:iconTint="@color/black" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/ingresarDineroButton"
+                        android:layout_width="0dp"
+                        android:layout_height="65dp"
+                        android:layout_weight="13"
+
+
+                        android:text="Ingresar dinero"
+                        app:cornerRadius="15dp"
+                        app:icon="@drawable/flyarrowdown"
+                        app:iconGravity="textStart"
+                        app:iconPadding="4dp"
+                        app:iconSize="30dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="0dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/MetaProBold"
+                    android:gravity="center"
+                    android:text="Últimas transacciones"
+
+                    android:textColor="@color/black"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <FrameLayout
+                    android:id="@+id/contenedorTransaccionesFragment"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <include layout="@layout/list_item" />
+
+                        <include
+                            layout="@layout/list_item"
+                            android:layout_width="match_parent" />
+
+                        <include
+                            layout="@layout/list_item"
+                            android:layout_width="match_parent" />
+
+                        <include
+                            layout="@layout/list_item"
+                            android:layout_width="match_parent" />
+
+                        <include
+                            layout="@layout/list_item"
+                            android:layout_width="match_parent" />
+
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
