@@ -51,17 +51,7 @@
                             app:srcCompat="@drawable/edit_svgrepo_com"
                             tools:ignore="ContentDescription,HardcodedText" />
 
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/MetaProBlack"
-                            android:text="Mi perfil"
-                            android:textSize="24sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/metaproblack" android:text="Mi perfil" android:textSize="24sp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </FrameLayout>
 
@@ -89,7 +79,7 @@
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:fontFamily="@font/MetaProBold"
+                    android:fontFamily="@font/metaprobold"
                     android:gravity="center"
                     android:text="Usuario AlkeWallet"
                     android:textSize="24sp" />
@@ -150,16 +140,17 @@
                             android:src="@drawable/profile_svgrepo_com" />
 
                         <!-- Texto -->
+
+                        <!-- Flecha derecha -->
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/MetaProNormal"
+                            android:fontFamily="@font/metapronormal"
                             android:text="Mi información"
                             android:textSize="18sp" />
 
-                        <!-- Flecha derecha -->
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
@@ -197,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/MetaProNormal"
+                            android:fontFamily="@font/metapronormal"
                             android:text="Mis Tarjetas"
                             android:textSize="18sp" />
 
@@ -241,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/MetaProNormal"
+                            android:fontFamily="@font/metapronormal"
                             android:text="Opciones"
                             android:textSize="18sp" />
 
@@ -282,7 +273,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/MetaProNormal"
+                            android:fontFamily="@font/metapronormal"
                             android:text="Centro de ayuda"
                             android:textSize="18sp" />
 

@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.databinding.FragmentLoginPageBinding
+import com.jmlucero.alkewallet.databinding.FragmentSignUpPageBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +23,8 @@ class SignUpPageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentSignUpPageBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +39,19 @@ class SignUpPageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up_page, container, false)
+        _binding = FragmentSignUpPageBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.textoYaTieneCuenta.setOnClickListener {
+            findNavController().navigate(R.id.action_signin_to_login)
+        }
+        binding.signUpButton.setOnClickListener {
+            findNavController().navigate(R.id.action_signin_to_home)
+        }
+
     }
 
     companion object {

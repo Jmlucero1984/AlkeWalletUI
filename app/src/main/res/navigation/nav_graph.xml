@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authSelectionFragment">
+
+    <fragment
+        android:id="@+id/authSelectionFragment"
+        android:name="com.jmlucero.alkewallet.AuthSelectionFragment"
+        android:label="AuthSelection">
+
+        <action
+            android:id="@+id/action_auth_to_login"
+            app:destination="@id/loginFragment" />
+
+        <action
+            android:id="@+id/action_auth_to_signin"
+            app:destination="@id/signInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.jmlucero.alkewallet.LoginPageFragment"
+        android:label="Login">
+
+        <action
+            android:id="@+id/action_login_to_signin"
+            app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homePageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.jmlucero.alkewallet.SignUpPageFragment"
+        android:label="SignIn">
+
+        <action
+            android:id="@+id/action_signin_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_signin_to_home"
+            app:destination="@id/homePageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.jmlucero.alkewallet.HomePageFragment"
+        android:label="SignIn">
+    </fragment>
+
+</navigation>
