@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/metaprobold"
+        android:fontFamily="@font/meta_pro_bold"
         android:text="Ingresar Dinero"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/materialDivider"
@@ -110,7 +110,7 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/metaproblack"
+                    android:fontFamily="@font/meta_pro_black"
                     android:text="Sarah Ibrahim"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -122,7 +122,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/metaproblack"
+                    android:fontFamily="@font/meta_pro_black"
                     android:text="anonimo_1984@gmail.com"
                     android:textColor="@color/darkgray"
                     android:textSize="12sp"
@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"
-            android:fontFamily="@font/metaprobold"
+            android:fontFamily="@font/meta_pro_bold"
             android:gravity="center|left"
             android:inputType="text"
             android:text="Cantidad a ingresar" />
@@ -165,7 +165,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingrese cantidad"
+                android:hint="@string/ingrese_cantidad"
 
                 android:textColor="@color/lightblue" />
 
@@ -179,10 +179,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"
-            android:fontFamily="@font/metaprobold"
+            android:fontFamily="@font/meta_pro_bold"
             android:gravity="center|left"
             android:inputType="text"
-            android:text="Notas de transferencia" />
+            android:text="@string/notas_de_transferencia" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 android:layout_height="284dp"
                 android:fontFamily="@font/meta_pro_normal"
                 android:gravity="start|top"
-                android:hint="Agregar notas de transferencia (opcional)"
+                android:hint="@string/agregar_notas_de_transferencia_opcional"
                 android:inputType="textMultiLine"
                 android:textSize="12sp" />
 
@@ -225,9 +225,9 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ingresarDineroButton"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="0dp"
             android:layout_weight="13"
-            android:text="Ingresar dinero"
+            android:text="@string/ingresar_dinero"
             app:cornerRadius="15dp"
             app:elevation="8dp"
             app:icon="@drawable/flyarrowdown"

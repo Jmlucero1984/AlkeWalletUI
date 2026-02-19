@@ -14,7 +14,7 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:fontFamily="@font/meta_pro_bold"
         android:text="Enviar Dinero"
         android:textSize="20sp"
@@ -145,20 +145,20 @@
             android:fontFamily="@font/meta_pro_bold"
             android:gravity="center|left"
             android:inputType="text"
-            android:text="Cantidad a transferir" />
+            android:text="@string/cantidad_a_transferir" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:textColorHint="#72DB31"
-            app:hintTextColor="#72DB31"
+            android:textColorHint="@color/green"
+            app:hintTextColor="@color/green"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="#72DB31"
+            app:boxStrokeColor="@color/green"
             app:boxStrokeWidth="2dp"
             app:boxStrokeWidthFocused="3dp"
             >
@@ -166,9 +166,9 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingrese cantidad"
-                android:textColor="#72DB31"
-                android:textColorHint="#72DB31" />
+                android:hint="@string/ingrese_cantidad"
+                android:textColor="@color/green"
+                android:textColorHint="@color/green" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -184,14 +184,14 @@
             android:fontFamily="@font/meta_pro_normal"
             android:gravity="center|left"
             android:inputType="text"
-            android:text="Notas de transferencia" />
+            android:text="@string/notas_de_transferencia" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
-            android:textColorHint="#72DB31"
-            app:hintTextColor="#72DB31"
+            android:textColorHint="@color/green"
+            app:hintTextColor="@color/green"
 
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
@@ -206,9 +206,9 @@
                 android:layout_height="284dp"
                 android:fontFamily="@font/meta_pro_normal"
                 android:gravity="start|top"
-                android:hint="Agregar notas de transferencia (opcional)"
+                android:hint="@string/agregar_notas_de_transferencia_opcional"
                 android:inputType="textMultiLine"
-                android:textColorHint="#72DB31"
+                android:textColorHint="@color/green"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -230,13 +230,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/ingresarDineroButton"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="0dp"
             android:layout_weight="13"
-
-
-            android:text="Enviar dinero"
+            android:text="@string/enviar_dinero"
             android:textColor="@color/black"
-            app:backgroundTint="#72DB31"
+            app:backgroundTint="@color/green"
             app:cornerRadius="15dp"
             app:elevation="8dp"
             app:icon="@drawable/flyarrowup"

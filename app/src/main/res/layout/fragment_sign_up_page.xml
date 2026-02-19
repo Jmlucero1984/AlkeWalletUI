@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-    android:background="@color/white"
+android:background="@color/white"
 tools:context=".SignUpPageFragment">
 
 <!-- TODO: Update blank fragment layout -->
@@ -19,7 +19,8 @@ tools:context=".SignUpPageFragment">
         android:layout_width="332dp"
         android:layout_height="98dp"
         android:layout_marginTop="24dp"
-        android:text="Registrarse y empezar a transferir"
+        android:text="@string/registrarse_y_empezar_a_transferir"
+        android:fontFamily="@font/meta_pro_bold"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@ tools:context=".SignUpPageFragment">
             android:gravity="center_vertical"
             android:ems="10"
             android:inputType="text"
-            android:text="Nombre"
+            android:text="@string/nombre"
             />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -61,7 +62,7 @@ tools:context=".SignUpPageFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingresar nombre" />
+                android:hint="@string/ingresar_nombre" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,7 +73,7 @@ tools:context=".SignUpPageFragment">
             android:gravity="center_vertical"
             android:ems="10"
             android:inputType="text"
-            android:text="Apellido" />
+            android:text="@string/apellido" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signUpApellidoInput"
@@ -90,8 +91,7 @@ tools:context=".SignUpPageFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingresar apellido" />
-
+                android:hint="@string/ingresar_apellido" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -101,7 +101,7 @@ tools:context=".SignUpPageFragment">
             android:ems="10"
             android:gravity="center_vertical"
             android:inputType="text"
-            android:text="Email" />
+            android:text="@string/email_first_upper" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -112,13 +112,12 @@ tools:context=".SignUpPageFragment">
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingresar Email" />
+                android:hint="@string/ingresar_email" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +126,7 @@ tools:context=".SignUpPageFragment">
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
-            android:text="Ingresar contraseña" />
+            android:text="@string/ingresar_contrasenia" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -144,7 +143,7 @@ tools:context=".SignUpPageFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ingresar contraseña"
+                android:hint="@string/ingresar_contrasenia"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -154,7 +153,7 @@ tools:context=".SignUpPageFragment">
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
-            android:text="Reingresar contraseña" />
+            android:text="@string/reingresar_contrasenia" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -171,7 +170,7 @@ tools:context=".SignUpPageFragment">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Reingresar contraseña"
+                android:hint="@string/reingresar_contrasenia"
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -186,10 +185,8 @@ tools:context=".SignUpPageFragment">
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="24dp"
-
-        android:text="Crear Cuenta"
+        android:text="@string/crear_cuenta"
         android:textColor="@color/white"
-
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toTopOf="@+id/textoYaTieneCuenta"
         app:layout_constraintEnd_toEndOf="parent"
