@@ -48,7 +48,42 @@
     <fragment
         android:id="@+id/homePageFragment"
         android:name="com.jmlucero.alkewallet.HomePageFragment"
-        android:label="SignIn">
+        android:label="Home">
+        <action
+            android:id="@+id/action_home_to_profile"
+            app:destination="@id/profileActivity" />
+        <action
+            android:id="@+id/action_home_to_enviarDinero"
+            app:destination="@id/enviarDineroFragment" />
+        <action
+            android:id="@+id/action_home_to_ingresarDinero"
+            app:destination="@id/ingresarDineroFragment" />
+
     </fragment>
+    <fragment
+        android:id="@+id/enviarDineroFragment"
+        android:name="com.jmlucero.alkewallet.EnviarDineroFragment"
+        android:label="EnviarDinero">
+        <action
+            android:id="@+id/action_back_to_home"
+            app:destination="@id/homePageFragment" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/ingresarDineroFragment"
+        android:name="com.jmlucero.alkewallet.IngresarDineroFragment"
+        android:label="IngresarDinero">
+        <action
+            android:id="@+id/action_back_to_home"
+            app:destination="@id/homePageFragment" />
+
+    </fragment>
+    <activity
+        android:id="@+id/profileActivity"
+        android:name="com.jmlucero.alkewallet.ProfileActivity"
+        android:label="Profile">
+
+    </activity>
+
 
 </navigation>

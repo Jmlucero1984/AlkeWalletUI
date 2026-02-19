@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".TransactionActivity"
+    tools:context=".EnviarDineroFragment"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
@@ -15,15 +15,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:fontFamily="@font/metaprobold"
-        android:text="Ingresar Dinero"
+        android:fontFamily="@font/meta_pro_bold"
+        android:text="Enviar Dinero"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/materialDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
@@ -91,7 +91,7 @@
                             android:clipToOutline="true"
                             android:contentDescription="TODO"
                             android:scaleType="fitXY"
-                            tools:srcCompat="@tools:sample/avatars"  />
+                            app:srcCompat="@drawable/avatar_3" />
 
                     </com.google.android.material.card.MaterialCardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -110,8 +110,8 @@
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/metaproblack"
-                    android:text="@tools:sample/full_names"
+                    android:fontFamily="@font/meta_pro_black"
+                    android:text="Sarah Ibrahim"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -122,7 +122,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/metaproblack"
+                    android:fontFamily="@font/meta_pro_black"
                     android:text="anonimo_1984@gmail.com"
                     android:textColor="@color/darkgray"
                     android:textSize="12sp"
@@ -139,34 +139,36 @@
             android:layout_height="20dp" />
 
         <TextView
-            android:id="@+id/loginEmailTitlefgf"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"
-            android:fontFamily="@font/metaprobold"
+            android:fontFamily="@font/meta_pro_bold"
             android:gravity="center|left"
             android:inputType="text"
-            android:text="Cantidad a ingresar" />
+            android:text="Cantidad a transferir" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:textColorHint="#72DB31"
+            app:hintTextColor="#72DB31"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="@color/lightblue"
+            app:boxStrokeColor="#72DB31"
             app:boxStrokeWidth="2dp"
             app:boxStrokeWidthFocused="3dp"
-           >
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingrese cantidad"
-                android:textColor="@color/lightblue" />
+                android:textColor="#72DB31"
+                android:textColorHint="#72DB31" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"
-            android:fontFamily="@font/metaprobold"
+            android:fontFamily="@font/meta_pro_normal"
             android:gravity="center|left"
             android:inputType="text"
             android:text="Notas de transferencia" />
@@ -188,6 +190,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
+            android:textColorHint="#72DB31"
+            app:hintTextColor="#72DB31"
+
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
@@ -199,10 +204,11 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="284dp"
-                android:fontFamily="@font/metapronormal"
+                android:fontFamily="@font/meta_pro_normal"
                 android:gravity="start|top"
                 android:hint="Agregar notas de transferencia (opcional)"
                 android:inputType="textMultiLine"
+                android:textColorHint="#72DB31"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -226,14 +232,18 @@
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_weight="13"
-            android:text="Ingresar dinero"
+
+
+            android:text="Enviar dinero"
+            android:textColor="@color/black"
+            app:backgroundTint="#72DB31"
             app:cornerRadius="15dp"
             app:elevation="8dp"
-            app:icon="@drawable/flyarrowdown"
+            app:icon="@drawable/flyarrowup"
+            app:iconTint="@color/black"
             app:iconGravity="textStart"
             app:iconPadding="4dp"
             app:iconSize="30dp" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,9 +13,11 @@
         android:theme="@style/Theme.App.Starting">
         <activity
             android:name=".TransactionActivity"
+            android:theme="@style/Base.Theme.AlkeWallet"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
+            android:theme="@style/Base.Theme.AlkeWallet"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

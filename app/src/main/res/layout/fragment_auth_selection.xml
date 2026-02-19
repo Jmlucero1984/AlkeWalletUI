@@ -15,17 +15,17 @@
 
         <Button
             android:id="@+id/botonCrearCuenta"
-            android:layout_width="0dp"
-            android:layout_height="92dp"
-            android:layout_marginStart="48dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="24dp"
+            android:layout_width="304dp"
+            android:layout_height="66dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="28dp"
 
             android:text="@string/crear_cuenta_nueva"
-            app:cornerRadius="25dp"
+            app:cornerRadius="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textoYaTieneCuenta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -41,8 +41,8 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="338dp"
+            android:layout_height="282dp"
             android:src="@drawable/alkewalletisologo"
             app:layout_constraintBottom_toTopOf="@+id/botonCrearCuenta"
             app:layout_constraintEnd_toEndOf="parent"

@@ -51,7 +51,7 @@
                             app:srcCompat="@drawable/edit_svgrepo_com"
                             tools:ignore="ContentDescription,HardcodedText" />
 
-                        <TextView android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/metaproblack" android:text="Mi perfil" android:textSize="24sp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
+                        <TextView android:id="@+id/inicioText" android:layout_width="wrap_content" android:layout_height="wrap_content" android:fontFamily="@font/metaproblack" android:text="Mi perfil" android:textSize="24sp" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </FrameLayout>
 
@@ -72,11 +72,11 @@
                         android:clipToOutline="true"
                         android:contentDescription="TODO"
                         android:scaleType="fitXY"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        app:srcCompat="@drawable/avatar_6" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/greetingText"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:fontFamily="@font/metaprobold"
@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/metapronormal"
+                            android:fontFamily="@font/meta_pro_normal"
                             android:text="Mi información"
                             android:textSize="18sp" />
 
@@ -188,7 +188,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/metapronormal"
+                            android:fontFamily="@font/meta_pro_normal"
                             android:text="Mis Tarjetas"
                             android:textSize="18sp" />
 
@@ -232,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/metapronormal"
+                            android:fontFamily="@font/meta_pro_normal"
                             android:text="Opciones"
                             android:textSize="18sp" />
 
@@ -273,7 +273,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/metapronormal"
+                            android:fontFamily="@font/meta_pro_normal"
                             android:text="Centro de ayuda"
                             android:textSize="18sp" />
 
