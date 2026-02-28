@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Permite HTTP para tu servidor local. Pon tu IP o 'localhost' -->
+        <domain includeSubdomains="true">192.168.1.10</domain>
+        <domain includeSubdomains="true">192.168.100.3</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain> <!-- IP para emulador -->
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+    </domain-config>
+    <!-- El tráfico para otros dominios seguirá las reglas por defecto (solo HTTPS) -->
+</network-security-config>

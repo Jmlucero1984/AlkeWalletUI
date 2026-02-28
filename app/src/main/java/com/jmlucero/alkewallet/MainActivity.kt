@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
             delay(4000) // 2 segundos
             keepSplashOnScreen = false
         }
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
