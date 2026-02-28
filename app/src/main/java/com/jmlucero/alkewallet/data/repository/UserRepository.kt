@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class UserRepository {
-
+/*
     private val userService = RetrofitClient.userService
 
     suspend fun getUserById(userId: Int): Result<Usuario?> = withContext(Dispatchers.IO) {
@@ -50,4 +50,6 @@ class UserRepository {
             Result.failure(e)
         }
     }
+
+ */
 }

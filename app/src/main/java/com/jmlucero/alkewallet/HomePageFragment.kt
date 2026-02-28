@@ -1,6 +1,7 @@
 package com.jmlucero.alkewallet
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
+import com.jmlucero.alkewallet.viewmodel.AuthViewModel
+import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +37,7 @@ class HomePageFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
+    private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,12 +61,13 @@ class HomePageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
         binding.usuarioProfileImg.setOnClickListener {
             findNavController().navigate(R.id.profileActivity)
         }
         binding.enviarDineroButton.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_enviarDinero)
+           // findNavController().navigate(R.id.action_home_to_enviarDinero)
+            viewModel.cargarUsuarios()
         }
         binding.ingresarDineroButton.setOnClickListener {
             findNavController().navigate(R.id.action_home_to_ingresarDinero)
@@ -72,6 +82,37 @@ class HomePageFragment : Fragment() {
 
 
 
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.usuariosState.collect { state ->
+
+                    when (state) {
+
+                        is UiState.Idle -> {}
+
+                        is UiState.Loading -> {
+                            Log.d("HOME_FRAGMENT", "Cargando usuarios...")
+                        }
+
+                        is UiState.Success -> {
+                            Log.d("HOME_FRAGMENT", "Usuarios recibidos:")
+
+                            state.data.forEach { usuario ->
+                                Log.d(
+                                    "HOME_FRAGMENT",
+                                    "ID: ${usuario.usuario_id} | Nombre: ${usuario.nombre} | Email: ${usuario.email}"
+                                )
+                            }
+                        }
+
+                        is UiState.Error -> {
+                            Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

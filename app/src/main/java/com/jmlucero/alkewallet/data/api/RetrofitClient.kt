@@ -1,7 +1,13 @@
 package com.jmlucero.alkewallet.data.api
 
+import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.Response
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
@@ -10,14 +16,57 @@ object RetrofitClient {
     //En el servidor local hay que correr:
     // php -S 0.0.0.0:8000 -t public
 
+
+    // Interceptor para añadir token automáticamente
+    class AuthInterceptor(private var token: String? = null) : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val originalRequest = chain.request()
+
+            val newRequest = if (!token.isNullOrBlank()) {
+                originalRequest.newBuilder()
+                    .header("Authorization", "Bearer $token")
+                    .build()
+            } else {
+                originalRequest
+            }
+
+            return chain.proceed(newRequest)
+        }
+
+        fun setToken(newToken: String?) {
+            token = newToken
+        }
+    }
+
+    private val authInterceptor = AuthInterceptor()
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(authInterceptor)
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        })
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(30, TimeUnit.SECONDS)
+        .writeTimeout(30, TimeUnit.SECONDS)
+        .build()
+
+    private val gson = GsonBuilder()
+        .setLenient()
+        .create()
+
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
-    val userService: UserService by lazy {
-        retrofit.create(UserService::class.java)
+    val apiService: ApiService by lazy {
+        retrofit.create(ApiService::class.java)
+    }
+
+    fun updateToken(token: String?) {
+        authInterceptor.setToken(token)
     }
 }

@@ -5,9 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentAuthSelectionBinding
 import com.jmlucero.alkewallet.databinding.FragmentLoginPageBinding
+import com.jmlucero.alkewallet.viewmodel.AuthViewModel
+
+import kotlinx.coroutines.launch
+import kotlin.time.Duration
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +36,8 @@ class LoginPageFragment : Fragment() {
     private var _binding: FragmentLoginPageBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var viewModel: AuthViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -43,33 +55,63 @@ class LoginPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
         binding.textoCrearCuenta.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signin)
         }
+
+        /*
         binding.loginButton.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_home)
+        }*/
+        // Login button
+        binding.loginButton.setOnClickListener {
+            viewModel.login(
+                binding.emailInput.text.toString(),
+                binding.passwordInput.text.toString()
+            )
         }
+        // Observar estado
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginState.collect { state ->
 
-    }
+                    when (state) {
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginPageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LoginPageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                        is UiState.Idle -> {
+                            // Estado inicial
+                        }
+
+                        is UiState.Loading -> {
+                           // binding.progressBar.visibility = View.VISIBLE
+                            binding.loginButton.isEnabled = false
+                        }
+
+                        is UiState.Success -> {
+                           // binding.progressBar.visibility = View.GONE
+                            binding.loginButton.isEnabled = true
+
+                            findNavController().navigate(R.id.action_login_to_home)
+                        }
+
+                        is UiState.Error -> {
+                            //binding.progressBar.visibility = View.GONE
+                            binding.loginButton.isEnabled = true
+
+                            Toast.makeText(
+                                requireContext(),
+                                state.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
                 }
             }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
