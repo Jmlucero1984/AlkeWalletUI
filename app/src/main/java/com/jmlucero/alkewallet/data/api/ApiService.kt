@@ -3,6 +3,7 @@ package com.jmlucero.alkewallet.data.api
 
 import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.Usuario
 import retrofit2.Response
 
@@ -28,4 +29,17 @@ interface ApiService {
     suspend fun getUsuarioPorId(
         @Path("id") id: Long
     ): Response<Usuario>
+
+    @GET("api/usuarios/me")
+    suspend fun get_profile(): Response<Usuario>
+
+
+    @GET("api/transacciones")
+    suspend fun getTransacciones(): Response<List<Transaccion>>
+
+    @GET("api/transacciones/{id}")
+    suspend fun getTransaccionPorId(
+        @Path("id") id: Long
+    ): Response<Transaccion>
+
 }

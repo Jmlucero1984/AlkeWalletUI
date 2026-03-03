@@ -1,6 +1,7 @@
 package com.jmlucero.alkewallet.data.repository
 
 import com.jmlucero.alkewallet.data.api.RetrofitClient
+
 import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
@@ -10,13 +11,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import retrofit2.Response
-
-class AuthRepository {
+class AuthRepository() {
 
     private val apiService = RetrofitClient.apiService
 
-    // 🔐 LOGIN
-    suspend fun login(email: String, password: String): Flow<UiState<LoginResponse>> =
+    suspend fun login(
+        email: String,
+        password: String
+    ): Flow<UiState<LoginResponse>> =
         safeApiCall {
             apiService.login(LoginRequest(email, password))
         }.onEach { state ->
@@ -25,23 +27,9 @@ class AuthRepository {
             }
         }
 
-    // 👤 Usuario por ID
-    suspend fun getUsuarioPorId(id: Long): Flow<UiState<Usuario>> =
-        safeApiCall {
-            apiService.getUsuarioPorId(id)
-        }
-
-    // 👥 Lista de usuarios
-    suspend fun getUsuarios(): Flow<UiState<List<Usuario>>> =
-        safeApiCall {
-            apiService.getUsuarios()
-        }
-
-    // 🔥 Función genérica reutilizable (la magia)
     private fun <T> safeApiCall(
         apiCall: suspend () -> Response<T>
     ): Flow<UiState<T>> = flow {
-
         emit(UiState.Loading)
 
         val response = apiCall()
@@ -54,7 +42,6 @@ class AuthRepository {
             val error = response.errorBody()?.string() ?: "Error desconocido"
             emit(UiState.Error("Error ${response.code()}: $error"))
         }
-
     }.catch {
         emit(UiState.Error(it.message ?: "Error inesperado"))
     }

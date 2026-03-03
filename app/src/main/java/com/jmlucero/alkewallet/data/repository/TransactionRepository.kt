@@ -1,38 +1,26 @@
 package com.jmlucero.alkewallet.data.repository
 
 import com.jmlucero.alkewallet.data.api.RetrofitClient
-
+import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 
-class UserRepository() {
 
+class TransactionRepository {
     private val apiService = RetrofitClient.apiService
 
-//
-//    fun getUsuario(id: Int) = usuarioDao.getUsuarioById(id)
-//
-//    fun getUsuario(): Flow<UsuarioEntity?> {
-//        return usuarioDao.get_current_user()
-//    }
-//    suspend fun saveUsuario(usuario: UsuarioEntity) {
-//        usuarioDao.insert(usuario)
-//    }
-
-    suspend fun getUsuarioPorId(id: Long): Flow<UiState<Usuario>> =
+    suspend fun getTransaccionPorId(id: Long): Flow<UiState<Transaccion>> =
         safeApiCall {
-            apiService.getUsuarioPorId(id)
+            apiService.getTransaccionPorId(id)
         }
 
-    suspend fun getUsuarios(): Flow<UiState<List<Usuario>>> =
+    suspend fun getTransacciones(): Flow<UiState<List<Transaccion>>> =
         safeApiCall {
-            apiService.getUsuarios()
+            apiService.getTransacciones()
         }
 
     private fun <T> safeApiCall(

@@ -12,18 +12,14 @@
 
         <action
             android:id="@+id/action_auth_to_login"
-            app:destination="@+id/UserFragment" />
+            app:destination="@+id/loginFragment" />
 
         <action
             android:id="@+id/action_auth_to_signin"
             app:destination="@id/signInFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/UserFragment"
-        android:name="com.jmlucero.alkewallet.ui.UserFragment"
-        android:label="UserFragment">
-    </fragment>
+
 
     <fragment
         android:id="@+id/loginFragment"

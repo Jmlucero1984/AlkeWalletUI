@@ -239,18 +239,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragmentContainerView"
-                    android:name="com.jmlucero.alkewallet.TransactionListFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                <!-- RecyclerView -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/transactionsRecyclerView"
+                    android:layout_width="412dp"
+                    android:layout_height="466dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ultTransText"
-                    tools:layout="@layout/fragment_transaction_list" />
+                    app:layout_constraintTop_toBottomOf="@+id/ultTransText" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
 

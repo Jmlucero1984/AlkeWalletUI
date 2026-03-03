@@ -6,18 +6,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
-import com.jmlucero.alkewallet.viewmodel.AuthViewModel
+import com.jmlucero.alkewallet.ui.home.TransaccionAdapter
+import com.jmlucero.alkewallet.ui.home.UsuarioAdapter
+import com.jmlucero.alkewallet.viewmodel.HomeViewModel
+import com.jmlucero.alkewallet.viewmodel.TransactionViewModel
+import com.jmlucero.alkewallet.viewmodel.UserViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 
 
@@ -37,7 +40,12 @@ class HomePageFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel: AuthViewModel
+    private lateinit var userViewModel: UserViewModel
+    private lateinit var transactionViewModel: TransactionViewModel
+    private lateinit var usuarioAdapter: UsuarioAdapter
+    private lateinit var transaccionAdapter: TransaccionAdapter
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,56 +69,136 @@ class HomePageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        usuarioAdapter = UsuarioAdapter()
+
+        transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+        transaccionAdapter = TransaccionAdapter()
+
+
+
+
+
         binding.usuarioProfileImg.setOnClickListener {
             findNavController().navigate(R.id.profileActivity)
         }
         binding.enviarDineroButton.setOnClickListener {
+            binding.transactionsRecyclerView.apply {
+                adapter = usuarioAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
            // findNavController().navigate(R.id.action_home_to_enviarDinero)
-            viewModel.cargarUsuarios()
+            userViewModel.cargarUsuarios()
         }
         binding.ingresarDineroButton.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_ingresarDinero)
+            binding.transactionsRecyclerView.apply {
+                adapter = transaccionAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+           // findNavController().navigate(R.id.action_home_to_ingresarDinero)
+            transactionViewModel.cargarTransacciones()
         }
 
-        binding.campanitaIcon.setOnClickListener {
-            binding.frameLayoutEmptyTransactions.isVisible =
-                !binding.frameLayoutEmptyTransactions.isVisible
-            binding.fragmentContainerView.isVisible =
-                !binding.fragmentContainerView.isVisible
-        }
+//        binding.campanitaIcon.setOnClickListener {
+//            binding.frameLayoutEmptyTransactions.isVisible =
+//                !binding.frameLayoutEmptyTransactions.isVisible
+//            binding.fragmentContainerView.isVisible =
+//                !binding.fragmentContainerView.isVisible
+//        }
 
 
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.usuariosState.collect { state ->
+//                launch {
+//                    homeViewModel.usuario.collect { usuario ->
+//
+//                        if (usuario != null) {
+//
+//                            binding.greetingText.text =
+//                                "Hola ${usuario.nombre} ${usuario.apellido}"
+//
+//                            Picasso.get()
+//                                .load(usuario.avatar_url)
+//                                .into(binding.usuarioProfileImg)
+//
+//                        }
+//                    }
+//                }
 
-                    when (state) {
+                launch {
+                    userViewModel.usuariosState.collect { state ->
 
-                        is UiState.Idle -> {}
+                        when (state) {
 
-                        is UiState.Loading -> {
-                            Log.d("HOME_FRAGMENT", "Cargando usuarios...")
-                        }
+                            is UiState.Idle -> {}
 
-                        is UiState.Success -> {
-                            Log.d("HOME_FRAGMENT", "Usuarios recibidos:")
-
-                            state.data.forEach { usuario ->
-                                Log.d(
-                                    "HOME_FRAGMENT",
-                                    "ID: ${usuario.usuario_id} | Nombre: ${usuario.nombre} | Email: ${usuario.email}"
-                                )
+                            is UiState.Loading -> {
+                                Log.d("HOME_FRAGMENT", "Cargando usuarios...")
                             }
-                        }
+                            /*
+                                                    is UiState.Success -> {
+                                                        Log.d("HOME_FRAGMENT", "Usuarios recibidos:")
 
-                        is UiState.Error -> {
-                            Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                                                        state.data.forEach { usuario ->
+                                                            Log.d(
+                                                                "HOME_FRAGMENT",
+                                                                "ID: ${usuario.usuario_id} | Nombre: ${usuario.nombre} | Email: ${usuario.email}"
+                                                            )
+                                                        }
+                                                    }*/
+                            is UiState.Success -> {
+
+                                if (state.data.isEmpty()) {
+                                    binding.frameLayoutEmptyTransactions.isVisible = true
+                                    binding.transactionsRecyclerView.isVisible = false
+                                } else {
+                                    binding.frameLayoutEmptyTransactions.isVisible = false
+                                    binding.transactionsRecyclerView.isVisible = true
+
+                                    usuarioAdapter.submitList(state.data)
+                                }
+                            }
+
+                            is UiState.Error -> {
+                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                            }
                         }
                     }
                 }
+                launch {
+                    transactionViewModel.transaccionesState.collect { state ->
+
+                        when (state) {
+
+                            is UiState.Idle -> {}
+
+                            is UiState.Loading -> {
+                                Log.d("HOME_FRAGMENT", "Cargando transacciones...")
+                            }
+
+                            is UiState.Success -> {
+
+                                if (state.data.isEmpty()) {
+                                    binding.frameLayoutEmptyTransactions.isVisible = true
+                                    binding.transactionsRecyclerView.isVisible = false
+                                } else {
+                                    binding.frameLayoutEmptyTransactions.isVisible = false
+                                    binding.transactionsRecyclerView.isVisible = true
+
+                                    transaccionAdapter.submitList(state.data)
+                                }
+                            }
+
+                            is UiState.Error -> {
+                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+                    }
+                }
+
+
             }
         }
     }
