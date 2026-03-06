@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
-    val usuario: Flow<Usuario> = repository.getUsuario()
+    val usuario: Flow<Usuario> = repository.getUsuarioLocal()
     // Usuario individual
     private val _usuarioState = MutableStateFlow<UiState<Usuario>>(UiState.Idle)
     val usuarioState: StateFlow<UiState<Usuario>> = _usuarioState

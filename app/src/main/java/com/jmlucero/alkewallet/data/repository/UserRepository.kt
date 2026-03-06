@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.jmlucero.alkewallet.data.api.ApiError
 import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.model.Balance
+import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Retiro
@@ -11,16 +12,17 @@ import com.jmlucero.alkewallet.data.model.RetiroResponse
 
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.room.CuentaDAO
 import com.jmlucero.alkewallet.data.room.UsuarioDAO
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRepository @Inject constructor( private val usuarioDao: UsuarioDAO) {
+class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
+                                         private val cuentaDAO: CuentaDAO
+) {
 
     private val apiService = RetrofitClient.apiService
 
@@ -29,12 +31,19 @@ class UserRepository @Inject constructor( private val usuarioDao: UsuarioDAO) {
     //
 
     suspend fun insertLoggedUsuario(usuario: Usuario) {
-        usuarioDao.insertUser(usuario)
+        usuarioDAO.insertUser(usuario)
     }
 
 
-    fun getUsuario(): Flow<Usuario> {
-        return  usuarioDao.getUsuario()
+    fun getUsuarioLocal(): Flow<Usuario> {
+        return  usuarioDAO.getUsuario()
+    }
+    fun getCuentaLocal():Flow<Cuenta> {
+        return cuentaDAO.getCuenta()
+    }
+
+    fun getCuenta(): Flow<Cuenta> {
+        return  cuentaDAO.getCuenta()
     }
     //    suspend fun saveUsuario(usuario: UsuarioEntity) {
     //        usuarioDao.insert(usuario)

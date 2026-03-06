@@ -29,7 +29,7 @@ class TransaccionAdapter : RecyclerView.Adapter<TransaccionAdapter.TransaccionVi
             var url = transaccionSimple.usuario_avatar.substring(1, transaccionSimple.usuario_avatar.length-1)
             binding.itemName.text = transaccionSimple.usuario_nombre
 
-
+Log.i("DATETIME",transaccionSimple.fecha_creacion.toString())
             binding.itemEmail.text = transaccionSimple.fecha_creacion.date.split(" ")[0]+" | "+transaccionSimple.tipo_transaccion
             if(transaccionSimple.tipo_transaccion.equals("DEPOSITO")) {
                 binding.itemId.text = "+"+transaccionSimple.cantidad_efectiva.toString()

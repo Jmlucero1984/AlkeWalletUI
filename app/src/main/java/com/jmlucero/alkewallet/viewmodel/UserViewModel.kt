@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
-import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.repository.AuthRepository
 import com.jmlucero.alkewallet.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +19,7 @@ class UserViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
 
-       val usuario: Flow<Usuario> = repository.getUsuario()
+       val usuario: Flow<Usuario> = repository.getUsuarioLocal()
         // Usuario individual
         private val _usuarioState = MutableStateFlow<UiState<Usuario>>(UiState.Idle)
         val usuarioState: StateFlow<UiState<Usuario>> = _usuarioState
