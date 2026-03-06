@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AlkeWallet</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hola fragmento vacio</string>
     <string name="ya_tiene_cuenta_pregunta">Ya tiene cuenta?</string>
     <string name="crear_cuenta_nueva">Crear cuenta nueva</string>
     <string name="app_lema">El lugar más seguro para tu dinero</string>
@@ -25,7 +25,7 @@
     <string name="inicio">Inicio</string>
     <string name="ltimas_transacciones">Últimas transacciones</string>
     <string name="olvidaste_tu_contrase_a">Olvidaste tu contraseña?</string>
-    <string name="password">password</string>
+    <string name="password">contraseña</string>
     <string name="contrasenia">Contraseña</string>
     <string name="email">email</string>
     <string name="loguea_y_empez_a_transferir">Loguea y empezá a transferir!</string>

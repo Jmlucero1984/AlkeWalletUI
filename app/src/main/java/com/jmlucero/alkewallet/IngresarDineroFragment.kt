@@ -1,38 +1,40 @@
 package com.jmlucero.alkewallet
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.data.model.Deposito
+import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
+import com.jmlucero.alkewallet.viewmodel.UserViewModel
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
+import java.math.BigDecimal
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [IngresarDineroFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class IngresarDineroFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentIngresarDineroBinding? = null
     private val binding get() = _binding!!
+    private lateinit var userViewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -45,30 +47,68 @@ class IngresarDineroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.homePageFragment)
         }
+        binding.ingresarDineroButton.setOnClickListener {
+            val monto = BigDecimal(binding.ingreseCantidad.getText().toString())
 
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment IngresarDineroFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            IngresarDineroFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+            userViewModel.depositar(Deposito(monto))
+
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    userViewModel.depositoState.collect { state ->
+                        when (state) {
+                            is UiState.Idle -> {}
+                            is UiState.Loading -> {
+                                Log.d("INGRESAR_DINERO_FRAGMENT", "Enviando depósito...")
+                            }
+
+                            is UiState.Success -> {
+                                Toast.makeText(context,state.data.mensaje, Toast.LENGTH_LONG).show()
+                                binding.ingreseCantidad.setText("")
+                                binding.ingreseNota.setText("")
+                            }
+
+                            is UiState.Error -> {
+                                Toast.makeText(context,state.message, Toast.LENGTH_LONG).show()
+                                Log.e("INGRESAR_DINERO_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+
+                    }
+
+                }
+                launch {
+                    userViewModel.usuario.collect { usuario ->
+
+                        if (usuario != null) {
+                            binding.nombreUsuario.text =
+                                "${usuario.nombre} ${usuario.apellido}"
+                            binding.emailUsuario.text =
+                                usuario.email.toString()
+
+                            var url = usuario.avatar_url.substring(1,usuario.avatar_url.length-1)
+
+                            Picasso.get()
+                                .load(url)
+                                .placeholder(R.drawable.profile_svgrepo_com)
+                                .error(R.drawable.profile_svgrepo_com)
+                                .fit()
+                                .centerCrop()
+                                .into(binding.avatarUsuario)
+
+                        }
+                    }
                 }
             }
+        }
+
     }
 }
+

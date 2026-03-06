@@ -2,11 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileFragment">
+
 
     <FrameLayout
         android:id="@+id/superiorFrameLayout"
@@ -38,6 +39,17 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/backButton"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/leftarrow" />
 
                         <ImageView
                             android:id="@+id/avatar_usuario"
@@ -81,8 +93,7 @@
                         android:adjustViewBounds="true"
                         android:clipToOutline="true"
                         android:contentDescription="TODO"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/avatar_6" />
+                        android:scaleType="fitXY" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <TextView

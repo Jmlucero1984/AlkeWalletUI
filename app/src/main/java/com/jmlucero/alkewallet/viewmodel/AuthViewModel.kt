@@ -1,23 +1,67 @@
 package com.jmlucero.alkewallet.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AuthViewModel(
-    private val repository: AuthRepository = AuthRepository( )
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val repository: AuthRepository
 ) : ViewModel() {
 
     // Login
     private val _loginState = MutableStateFlow<UiState<LoginResponse>>(UiState.Idle)
     val loginState: StateFlow<UiState<LoginResponse>> = _loginState
+    private val _loggedUser = MutableStateFlow<UiState<Usuario>>(UiState.Idle)
+    val loggedUser: StateFlow<UiState<Usuario>> = _loggedUser
 
     // Usuario individual
+
+    fun saveCurrentLoggedUser(){
+        viewModelScope.launch {
+
+            repository.getCurrentUser().collect { state ->
+
+                when (state) {
+
+                    is UiState.Loading -> {
+                        _loggedUser.value = UiState.Loading
+                    }
+
+                    is UiState.Error -> {
+                        _loggedUser.value = state
+                    }
+
+                    is UiState.Success -> {
+
+                        try {
+
+                            Log.e("DAOO",state.data.avatar_url)
+                            _loggedUser.value = UiState.Success(state.data)
+
+
+                        } catch (e: Exception) {
+                            _loggedUser.value =
+                                UiState.Error(e.message ?: "Error obteniendo perfil")
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+        }
+
+    }
+
 
 
     fun login(email: String, password: String) {
@@ -41,13 +85,6 @@ class AuthViewModel(
                         try {
                             val token = state.data.token
 
-                            // 1️⃣ Guardar token
-                            // repository.saveToken(token)
-
-                            // 2️⃣ Obtener perfil y guardarlo en Room
-                            //repository.refreshUsuario()
-
-                            // 3️⃣ Emitir success real
                             _loginState.value = UiState.Success(state.data)
 
                         } catch (e: Exception) {

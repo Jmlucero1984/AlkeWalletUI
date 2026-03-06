@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.data.model
 
+import retrofit2.http.Url
 import java.math.BigDecimal
 import java.sql.Date
 import java.time.Instant
@@ -8,10 +9,14 @@ import java.time.OffsetDateTime
 
 data class Transaccion(
     val cuenta_origen_nombre:String,
+    val usuario_origen_avatar: String,
     val cuenta_destino_nombre:String,
+    val usuario_destino_avatar:String,
     val tipo_transaccion:String,
     val monto: BigDecimal,
+    val cantidad_efectiva: BigDecimal,
     val fecha_creacion: DateTime
+
 
 //    val transaccion_id: Int,
 //    val tipo_transaccion: String,

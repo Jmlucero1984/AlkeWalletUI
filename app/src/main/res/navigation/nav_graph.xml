@@ -2,6 +2,7 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/authSelectionFragment">
 
@@ -52,14 +53,14 @@
         android:name="com.jmlucero.alkewallet.HomePageFragment"
         android:label="Home">
         <action
-            android:id="@+id/action_home_to_profile"
-            app:destination="@id/profileActivity" />
-        <action
             android:id="@+id/action_home_to_enviarDinero"
             app:destination="@id/enviarDineroFragment" />
         <action
             android:id="@+id/action_home_to_ingresarDinero"
             app:destination="@id/ingresarDineroFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
 
     </fragment>
     <fragment
@@ -80,12 +81,15 @@
             app:destination="@id/homePageFragment" />
 
     </fragment>
-    <activity
-        android:id="@+id/profileActivity"
-        android:name="com.jmlucero.alkewallet.ProfileActivity"
-        android:label="Profile">
-
-    </activity>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.jmlucero.alkewallet.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+    </fragment>
 
 
 </navigation>

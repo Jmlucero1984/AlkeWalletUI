@@ -9,10 +9,11 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.delay
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private var keepSplashOnScreen = true
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,9 +1,15 @@
 package com.jmlucero.alkewallet.data.api
 
 
+import com.jmlucero.alkewallet.data.model.Balance
+import com.jmlucero.alkewallet.data.model.Deposito
+import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.Retiro
+import com.jmlucero.alkewallet.data.model.RetiroResponse
 import com.jmlucero.alkewallet.data.model.Transaccion
+import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.Usuario
 import retrofit2.Response
 
@@ -34,12 +40,27 @@ interface ApiService {
     suspend fun get_profile(): Response<Usuario>
 
 
-    @GET("api/transacciones")
+    @GET("api/transacciones/owner")
     suspend fun getTransacciones(): Response<List<Transaccion>>
+
+    @GET("api/transacciones/owner_simple")
+    suspend fun getTransaccionesSimple(): Response<List<TransaccionSimple>>
+
+
+    @GET("api/usuarios/me/balance")
+    suspend fun getBalance(): Response<Balance>
+
 
     @GET("api/transacciones/{id}")
     suspend fun getTransaccionPorId(
         @Path("id") id: Long
     ): Response<Transaccion>
+
+
+    @POST("api/retiro")
+    suspend fun retiro(@Body request: Retiro): Response<RetiroResponse>
+
+    @POST("api/deposito")
+    suspend fun deposito(@Body request: Deposito): Response<DepositoResponse>
 
 }

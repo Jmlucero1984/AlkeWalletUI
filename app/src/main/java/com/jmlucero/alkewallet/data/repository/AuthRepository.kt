@@ -6,15 +6,27 @@ import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.room.UsuarioDAO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import retrofit2.Response
-class AuthRepository() {
+import javax.inject.Inject
+
+class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO){
 
     private val apiService = RetrofitClient.apiService
-
+    suspend fun getCurrentUser(
+    ): Flow<UiState<Usuario>> =
+        safeApiCall {
+            apiService.get_profile()
+        }.onEach { state ->
+            if (state is UiState.Success) {
+                state.data.isLoggedUser=true
+                usuarioDao.insertUser(state.data)
+            }
+        }
     suspend fun login(
         email: String,
         password: String

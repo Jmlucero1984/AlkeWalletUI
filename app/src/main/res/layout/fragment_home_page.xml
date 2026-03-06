@@ -105,7 +105,7 @@
                                 app:srcCompat="@drawable/campanita" />
 
                             <TextView
-                                android:id="@+id/greetingText"
+                                android:id="@+id/perfilNombreUsuario"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:fontFamily="@font/meta_pro_bold"
@@ -126,7 +126,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="24sp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/greetingText" />
+                                app:layout_constraintTop_toBottomOf="@+id/perfilNombreUsuario" />
 
                             <TextView
                                 android:id="@+id/actualBalanceText"
@@ -228,7 +228,7 @@
                     android:layout_width="0dp"
                     android:layout_height="28dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="4dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/meta_pro_bold"
                     android:gravity="center"
@@ -244,6 +244,7 @@
                     android:id="@+id/transactionsRecyclerView"
                     android:layout_width="412dp"
                     android:layout_height="466dp"
+                    android:layout_marginTop="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AlkeWallet</string>
+    <string name="hello_blank_fragment">Hello Blank Fragment</string>
+    <string name="ya_tiene_cuenta_pregunta">Already have account?</string>
+    <string name="crear_cuenta_nueva">Create new account</string>
+    <string name="app_lema">The safest place for your money</string>
+    <string name="crear_nueva_cuenta">Create a new account</string>
+    <string name="login">Login</string>
+    <string name="mi_perfil">My profile</string>
+    <string name="usuario_alkewallet">AlkeWallet user</string>
+    <string name="mi_informacion">My info</string>
+    <string name="mis_tarjetas">My cards</string>
+    <string name="opciones">Options</string>
+    <string name="centro_de_ayuda">Help center</string>
+    <string name="no_hay_transacciones_registradas">No registered transactions!</string>
+    <string name="ingrese_cantidad">Introduce amount</string>
+    <string name="notas_de_transferencia">Transfer notes</string>
+    <string name="agregar_notas_de_transferencia_opcional">Add a transfer note (optional)</string>
+    <string name="enviar_dinero">Send money</string>
+    <string name="cantidad_a_transferir">Amount to transfer</string>
+    <string name="ingresar_dinero">Introduce money</string>
+    <string name="balance_total">Total balance</string>
+    <string name="hola_usuario">Hello user!</string>
+    <string name="inicio">Home</string>
+    <string name="ltimas_transacciones">Recent transactions</string>
+    <string name="olvidaste_tu_contrase_a">Forgot password?</string>
+    <string name="password">password</string>
+    <string name="contrasenia">Password</string>
+    <string name="email">Email</string>
+    <string name="loguea_y_empez_a_transferir">Log in and start to transfer!</string>
+    <string name="registrarse_y_empezar_a_transferir">Register and start to transfer!</string>
+    <string name="nombre">Name</string>
+    <string name="ingresar_nombre">Introduce your name</string>
+    <string name="apellido">Last name</string>
+    <string name="ingresar_apellido">Introduce lastname</string>
+    <string name="email_first_upper">Email</string>
+    <string name="ingresar_email">Introduce email</string>
+    <string name="ingresar_contrasenia">Introduce password</string>
+    <string name="reingresar_contrasenia">Re introduce password</string>
+    <string name="crear_cuenta">Create account</string>
+</resources>

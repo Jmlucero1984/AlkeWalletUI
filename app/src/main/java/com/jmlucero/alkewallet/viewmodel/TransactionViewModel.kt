@@ -3,6 +3,7 @@ package com.jmlucero.alkewallet.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.Transaccion
+import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.repository.TransactionRepository
@@ -17,24 +18,18 @@ class TransactionViewModel (
 
 
 
-        private val _transaccionState = MutableStateFlow<UiState<Transaccion>>(UiState.Idle)
-        val transaccionState: StateFlow<UiState<Transaccion>> = _transaccionState
+        private val _transaccionState = MutableStateFlow<UiState<TransaccionSimple>>(UiState.Idle)
+        val transaccionState: StateFlow<UiState<TransaccionSimple>> = _transaccionState
 
 
-        private val _transaccionesState = MutableStateFlow<UiState<List<Transaccion>>>(UiState.Idle)
-        val transaccionesState: StateFlow<UiState<List<Transaccion>>> = _transaccionesState
+        private val _transaccionesState = MutableStateFlow<UiState<List<TransaccionSimple>>>(UiState.Idle)
+        val transaccionesState: StateFlow<UiState<List<TransaccionSimple>>> = _transaccionesState
 
-        fun cargarTransaccion(id: Long) {
+
+
+        fun getTransaccionesSimple() {
             viewModelScope.launch {
-                repository.getTransaccionPorId(id).collect {
-                    _transaccionState.value = it
-                }
-            }
-        }
-
-        fun cargarTransacciones() {
-            viewModelScope.launch {
-                repository.getTransacciones().collect {
+                repository.getTransaccionesSimple().collect {
                     _transaccionesState.value = it
                 }
             }

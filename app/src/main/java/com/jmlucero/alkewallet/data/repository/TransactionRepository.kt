@@ -2,6 +2,7 @@ package com.jmlucero.alkewallet.data.repository
 
 import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.model.Transaccion
+import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +22,11 @@ class TransactionRepository {
     suspend fun getTransacciones(): Flow<UiState<List<Transaccion>>> =
         safeApiCall {
             apiService.getTransacciones()
+        }
+
+    suspend fun getTransaccionesSimple():  Flow<UiState<List<TransaccionSimple>>> =
+        safeApiCall {
+            apiService.getTransaccionesSimple()
         }
 
     private fun <T> safeApiCall(

@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,26 +15,20 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.ui.home.TransaccionAdapter
 import com.jmlucero.alkewallet.ui.home.UsuarioAdapter
 import com.jmlucero.alkewallet.viewmodel.HomeViewModel
 import com.jmlucero.alkewallet.viewmodel.TransactionViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomePageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomePageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -44,15 +39,13 @@ class HomePageFragment : Fragment() {
     private lateinit var transactionViewModel: TransactionViewModel
     private lateinit var usuarioAdapter: UsuarioAdapter
     private lateinit var transaccionAdapter: TransaccionAdapter
+    private lateinit var homeViewModel: HomeViewModel
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
 
 
         //findNavController().navigate(R.id.homeActivity)
@@ -67,9 +60,11 @@ class HomePageFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         usuarioAdapter = UsuarioAdapter()
 
         transactionViewModel = ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
@@ -80,74 +75,96 @@ class HomePageFragment : Fragment() {
 
 
         binding.usuarioProfileImg.setOnClickListener {
-            findNavController().navigate(R.id.profileActivity)
+            findNavController().navigate(R.id.action_homePageFragment_to_profileFragment)
         }
-        binding.enviarDineroButton.setOnClickListener {
-            binding.transactionsRecyclerView.apply {
-                adapter = usuarioAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-            }
-           // findNavController().navigate(R.id.action_home_to_enviarDinero)
-            userViewModel.cargarUsuarios()
+    binding.enviarDineroButton.setOnClickListener {
+//            binding.transactionsRecyclerView.apply {
+//                adapter = usuarioAdapter
+//                layoutManager = LinearLayoutManager(requireContext())
+//            }
+//            userViewModel.cargarUsuarios()
+          findNavController().navigate(R.id.action_home_to_enviarDinero)
+
         }
         binding.ingresarDineroButton.setOnClickListener {
+
+            findNavController().navigate(R.id.action_home_to_ingresarDinero)
+
+        }
+
+        binding.campanitaIcon.setOnClickListener {
             binding.transactionsRecyclerView.apply {
                 adapter = transaccionAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
-           // findNavController().navigate(R.id.action_home_to_ingresarDinero)
-            transactionViewModel.cargarTransacciones()
-        }
-
-//        binding.campanitaIcon.setOnClickListener {
+            transactionViewModel.getTransaccionesSimple()
 //            binding.frameLayoutEmptyTransactions.isVisible =
 //                !binding.frameLayoutEmptyTransactions.isVisible
 //            binding.fragmentContainerView.isVisible =
 //                !binding.fragmentContainerView.isVisible
-//        }
+        }
 
 
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                launch {
-//                    homeViewModel.usuario.collect { usuario ->
-//
-//                        if (usuario != null) {
-//
-//                            binding.greetingText.text =
-//                                "Hola ${usuario.nombre} ${usuario.apellido}"
-//
-//                            Picasso.get()
-//                                .load(usuario.avatar_url)
-//                                .into(binding.usuarioProfileImg)
-//
-//                        }
-//                    }
-//                }
+                launch {
+                    homeViewModel.balance.collect {state->
+                        when (state) {
+                            is UiState.Idle -> {}
+                            is UiState.Loading -> {
+                                Log.d("HOME_FRAGMENT", "Cargando balance...")
+                            }
+                            is UiState.Success -> {
+                                binding.actualBalanceText.setText(state.data.balance.toString())
+                            }
+
+                            is UiState.Error -> {
+                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+
+                    }
+
+                }
+                launch {
+                    homeViewModel.usuario.collect { usuario ->
+
+                        if (usuario != null) {
+
+                            binding.perfilNombreUsuario.text =
+                                "Hola ${usuario.nombre} ${usuario.apellido}"
+
+                            var url = usuario.avatar_url.substring(1,usuario.avatar_url.length-1)
+
+                            Picasso.get()
+                                .load(url)
+                                .placeholder(R.drawable.profile_svgrepo_com)
+                                .error(R.drawable.profile_svgrepo_com)
+                                .fit()
+                                .centerCrop()
+                                .into(binding.usuarioProfileImg, object : Callback {
+                                    override fun onSuccess() {
+                                        Log.d("Picasso", "Imagen cargada exitosamente")
+                                    }
+
+                                    override fun onError(e: Exception) {
+                                        Log.e("Picasso", "Error cargando imagen: ${e.message}")
+                                        e.printStackTrace()
+                                    }
+                                })
+                        }
+                    }
+                }
 
                 launch {
                     userViewModel.usuariosState.collect { state ->
-
                         when (state) {
-
                             is UiState.Idle -> {}
-
                             is UiState.Loading -> {
                                 Log.d("HOME_FRAGMENT", "Cargando usuarios...")
                             }
-                            /*
-                                                    is UiState.Success -> {
-                                                        Log.d("HOME_FRAGMENT", "Usuarios recibidos:")
-
-                                                        state.data.forEach { usuario ->
-                                                            Log.d(
-                                                                "HOME_FRAGMENT",
-                                                                "ID: ${usuario.usuario_id} | Nombre: ${usuario.nombre} | Email: ${usuario.email}"
-                                                            )
-                                                        }
-                                                    }*/
                             is UiState.Success -> {
 
                                 if (state.data.isEmpty()) {
@@ -197,30 +214,8 @@ class HomePageFragment : Fragment() {
                         }
                     }
                 }
-
-
             }
         }
     }
 
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomePageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomePageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

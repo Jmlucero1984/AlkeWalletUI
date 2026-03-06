@@ -15,6 +15,7 @@ import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentAuthSelectionBinding
 import com.jmlucero.alkewallet.databinding.FragmentLoginPageBinding
 import com.jmlucero.alkewallet.viewmodel.AuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.coroutines.launch
 import kotlin.time.Duration
@@ -29,6 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LoginPageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class LoginPageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -74,38 +76,81 @@ class LoginPageFragment : Fragment() {
         // Observar estado
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.loginState.collect { state ->
+                launch {
+                    viewModel.loginState.collect { state ->
 
-                    when (state) {
+                        when (state) {
 
-                        is UiState.Idle -> {
-                            // Estado inicial
-                        }
+                            is UiState.Idle -> {
+                                // Estado inicial
+                            }
 
-                        is UiState.Loading -> {
-                           // binding.progressBar.visibility = View.VISIBLE
-                            binding.loginButton.isEnabled = false
-                        }
+                            is UiState.Loading -> {
+                                // binding.progressBar.visibility = View.VISIBLE
+                                binding.loginButton.isEnabled = false
+                            }
 
-                        is UiState.Success -> {
-                           // binding.progressBar.visibility = View.GONE
-                            binding.loginButton.isEnabled = true
+                            is UiState.Success -> {
+                                // binding.progressBar.visibility = View.GONE
+                                binding.loginButton.isEnabled = true
 
-                            findNavController().navigate(R.id.action_login_to_home)
-                        }
+                                //findNavController().navigate(R.id.action_login_to_home)
+                                viewModel.saveCurrentLoggedUser()
+                            }
 
-                        is UiState.Error -> {
-                            //binding.progressBar.visibility = View.GONE
-                            binding.loginButton.isEnabled = true
+                            is UiState.Error -> {
+                                //binding.progressBar.visibility = View.GONE
+                                binding.loginButton.isEnabled = true
 
-                            Toast.makeText(
-                                requireContext(),
-                                state.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
                 }
+
+                launch {
+                    viewModel.loggedUser.collect { state ->
+
+                        when (state) {
+
+                            is UiState.Idle -> {
+                                // Estado inicial
+                            }
+
+                            is UiState.Loading -> {
+                                // binding.progressBar.visibility = View.VISIBLE
+                              //  binding.loginButton.isEnabled = false
+                            }
+
+                            is UiState.Success -> {
+                                // binding.progressBar.visibility = View.GONE
+                              //  binding.loginButton.isEnabled = true
+
+
+
+                                findNavController().navigate(R.id.action_login_to_home)
+
+                            }
+
+                            is UiState.Error -> {
+                                //binding.progressBar.visibility = View.GONE
+                                //binding.loginButton.isEnabled = true
+
+                                Toast.makeText(
+                                    requireContext(),
+                                    state.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+
+
             }
         }
     }
