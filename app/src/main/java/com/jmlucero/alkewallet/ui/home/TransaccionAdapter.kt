@@ -26,7 +26,7 @@ class TransaccionAdapter : RecyclerView.Adapter<TransaccionAdapter.TransaccionVi
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(transaccionSimple: TransaccionSimple) {
-            var url = transaccionSimple.usuario_avatar.substring(1, transaccionSimple.usuario_avatar.length-1)
+            var url = transaccionSimple.usuario_avatar//.substring(1, transaccionSimple.usuario_avatar.length-1)
             binding.itemName.text = transaccionSimple.usuario_nombre
 
 Log.i("DATETIME",transaccionSimple.fecha_creacion.toString())

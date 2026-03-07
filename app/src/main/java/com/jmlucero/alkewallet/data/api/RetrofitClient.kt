@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.data.api
 
+import android.util.Log
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -30,7 +31,8 @@ object RetrofitClient {
                 originalRequest
             }
 
-            return chain.proceed(newRequest)
+
+             return chain.proceed(newRequest)
         }
 
         fun setToken(newToken: String?) {
@@ -42,9 +44,9 @@ object RetrofitClient {
 
     private val client = OkHttpClient.Builder()
         .addInterceptor(authInterceptor)
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
+//        .addInterceptor(HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        })
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)

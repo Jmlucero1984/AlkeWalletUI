@@ -1,6 +1,8 @@
 package com.jmlucero.alkewallet.data.repository
 
 import com.jmlucero.alkewallet.data.api.RetrofitClient
+import com.jmlucero.alkewallet.data.mapper.toMoneda
+import com.jmlucero.alkewallet.data.mapper.toUsuario
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.DateTime
 
@@ -8,8 +10,11 @@ import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.room.CuentaDAO
+import com.jmlucero.alkewallet.data.room.MonedaDAO
 import com.jmlucero.alkewallet.data.room.UsuarioDAO
+import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -21,18 +26,22 @@ import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO,
-    private val cuentaDAO: CuentaDAO){
+    private val cuentaDAO: CuentaDAO,
+    private val monedaDAO: MonedaDAO){
 
     private val apiService = RetrofitClient.apiService
     suspend fun getCurrentUser(
-    ): Flow<UiState<Usuario>> =
+    ): Flow<UiState<UsuarioMonedaDTO>> =
         safeApiCall {
             apiService.get_profile()
         }.onEach { state ->
             if (state is UiState.Success) {
-                state.data.isLoggedUser=true
-                usuarioDao.insertUser(state.data)
-                cuentaDAO.insertCuenta(Cuenta(state.data.usuario_id,state.data.balance, System.currentTimeMillis()))
+                val usuario = state.data.toUsuario(true)
+                val moneda = state.data.moneda.toMoneda()
+
+                usuarioDao.insertUser(usuario)
+                monedaDAO.insertMoneda(moneda)
+                cuentaDAO.insertCuenta(Cuenta(usuario.usuario_id,usuario.balance, System.currentTimeMillis()))
 
             }
         }

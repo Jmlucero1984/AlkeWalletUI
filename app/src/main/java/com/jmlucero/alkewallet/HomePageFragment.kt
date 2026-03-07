@@ -25,6 +25,7 @@ import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 
@@ -107,6 +108,7 @@ class HomePageFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                var codigo: String? = ""
 //                launch {
 //                    homeViewModel.balance.collect {state->
 //                        when (state) {
@@ -127,16 +129,33 @@ class HomePageFragment : Fragment() {
 //
 //                }
                 launch {
-                    homeViewModel.cuenta.collect { cuenta ->
-                        binding.actualBalanceText.text = "$" + cuenta.balance.toString()
+                    combine(
+                        homeViewModel.usuarioConMoneda,
+                        homeViewModel.cuenta
+                    ) { usuarioConMoneda, cuenta ->
+
+                        Pair(usuarioConMoneda, cuenta)
+
+                    }.collect { (usuarioConMoneda, cuenta) ->
+
+                        val codigo = usuarioConMoneda.moneda.codigo
+
+                        Log.i("INFORMACION MONEDA", codigo)
+                        Log.i("INFORMACION CUENTA", cuenta.balance.toString())
+
+                        binding.actualBalanceText.text =
+                            "$${cuenta.balance} $codigo"
+
                     }
                 }
 
+
                 launch {
-                    homeViewModel.usuario.collect { usuario ->
+                    homeViewModel.usuarioConMoneda.collect { usuarioConMoneda ->
+
                         binding.perfilNombreUsuario.text =
-                            "Hola ${usuario.nombre} ${usuario.apellido}"
-                        var url = usuario.avatar_url.substring(1, usuario.avatar_url.length - 1)
+                            "Hola ${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
+                        var url = usuarioConMoneda.usuario.avatar_url
                         Picasso.get()
                             .load(url)
                             .placeholder(R.drawable.profile_svgrepo_com)
@@ -155,6 +174,31 @@ class HomePageFragment : Fragment() {
                             })
                     }
                 }
+
+//                launch {
+//                    homeViewModel.usuario.collect { usuario ->
+//                    .
+//                        binding.perfilNombreUsuario.text =
+//                            "Hola ${usuario.nombre} ${usuario.apellido}"
+//                        var url = usuario.avatar_url.substring(1, usuario.avatar_url.length - 1)
+//                        Picasso.get()
+//                            .load(url)
+//                            .placeholder(R.drawable.profile_svgrepo_com)
+//                            .error(R.drawable.profile_svgrepo_com)
+//                            .fit()
+//                            .centerCrop()
+//                            .into(binding.usuarioProfileImg, object : Callback {
+//                                override fun onSuccess() {
+//                                    Log.d("Picasso", "Imagen cargada exitosamente")
+//                                }
+//
+//                                override fun onError(e: Exception) {
+//                                    Log.e("Picasso", "Error cargando imagen: ${e.message}")
+//                                    e.printStackTrace()
+//                                }
+//                            })
+//                    }
+//                }
 
                 launch {
                     userViewModel.usuariosState.collect { state ->
@@ -211,4 +255,6 @@ class HomePageFragment : Fragment() {
         }
     }
 }
+
+
 

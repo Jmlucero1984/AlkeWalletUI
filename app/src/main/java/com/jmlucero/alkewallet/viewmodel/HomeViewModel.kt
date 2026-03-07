@@ -5,6 +5,7 @@ import com.jmlucero.alkewallet.data.model.Balance
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 
 import com.jmlucero.alkewallet.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,7 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val usuario: Flow<Usuario> = repository.getUsuarioLocal()
-
+    val usuarioConMoneda: Flow<UsuarioConMoneda> = repository.getUsuarioConMonedaLocal()
     val balance: Flow<UiState<Balance>> = repository.getBalance()
     val cuenta: Flow<Cuenta> = repository.getCuenta()
 

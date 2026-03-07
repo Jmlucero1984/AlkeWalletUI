@@ -25,7 +25,8 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "wallet_db"
-        ).addMigrations(MIGRATION_1_2)
+        )//.addMigrations(MIGRATION_1_2)
+           // .addMigrations(MIGRATION_2_3)
             .build()
     }
     val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -37,8 +38,24 @@ object DatabaseModule {
             )
             db.execSQL(
                 "  CREATE TABLE cuentas (usuario_id INTEGER PRIMARY KEY NOT NULL,\n" +
-                        "                balance TEXT NOT NULL DEFAULT 0.00,\n" +
+                        "                balance TEXT NOT NULL DEFAULT '0.00',\n" +
                         "                updatedAt INTEGER NOT NULL DEFAULT 0)"
+
+            )
+
+        }
+    }
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+
+            db.execSQL(
+                "ALTER TABLE usuarios ADD COLUMN moneda_codigo TEXT NOT NULL DEFAULT ''"
+
+            )
+            db.execSQL(
+                "  CREATE TABLE monedas (codigo TEXT PRIMARY KEY NOT NULL,\n" +
+                        "                nombre TEXT NOT NULL DEFAULT '',\n" +
+                        "                ratio_a_usd DOUBLE NOT NULL DEFAULT 1.0)"
 
             )
 
@@ -52,5 +69,10 @@ object DatabaseModule {
     @Provides
     fun provideCuentaDao(db: AppDatabase): CuentaDAO {
         return db.cuentaDAO()
+    }
+
+    @Provides
+    fun provideMonedaDao(db: AppDatabase): MonedaDAO {
+        return db.monedaDAO()
     }
 }

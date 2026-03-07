@@ -39,4 +39,5 @@
     <string name="ingresar_contrasenia">Introduce password</string>
     <string name="reingresar_contrasenia">Re introduce password</string>
     <string name="crear_cuenta">Create account</string>
+    <string name="ingrese_email_destinatario">Itroduce email destiny</string>
 </resources>

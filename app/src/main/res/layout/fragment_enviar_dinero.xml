@@ -134,65 +134,282 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="30dp"
             android:ems="10"
             android:fontFamily="@font/meta_pro_bold"
-            android:gravity="center|left"
+            android:gravity="bottom|center|left"
             android:inputType="text"
-            android:text="@string/cantidad_a_transferir" />
+            android:text="@string/ingrese_email_destinatario" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:textColorHint="@color/green"
-            app:hintTextColor="@color/green"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="@color/green"
-            app:boxStrokeWidth="2dp"
-            app:boxStrokeWidthFocused="3dp"
-            >
+            android:layout_height="80dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingreseCantidad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/ingrese_cantidad"
-                android:textColor="@color/green"
-                android:textColorHint="@color/green" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="12"
+                android:background="@android:color/white"
+                android:paddingBottom="4dp"
+                android:textColorHint="@color/orange"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxStrokeColor="@color/orange"
+                app:boxStrokeWidth="2dp"
+                app:boxStrokeWidthFocused="3dp"
+                app:hintTextColor="@color/orange">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ingreseEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Ingrese email"
+                    android:textColor="@color/orange"
+                    android:textColorHint="@color/orange" />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/btnBuscarUsuario"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_icon_button"
+                android:src="@drawable/flyarrowup"
+                android:textColor="@color/black"
+                app:backgroundTint="@color/orange"
+                app:iconTint="@color/black" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <TextView
-            android:id="@+id/loginEmailTitle"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/usuarioDestinoContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            tools:showIn="@layout/fragment_home_page">
+
+            <LinearLayout
+                android:layout_width="294dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingEnd="15dp">
+
+                <TextView
+                    android:id="@+id/nombreUsuarioDestino"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/meta_pro_black"
+                    android:text="Sarah Ibrahim"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/emailUsuarioDestino"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/meta_pro_black"
+                    android:text="anonimo_1984@gmail.com"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/darkgray"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/infoCuentaDestino"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/meta_pro_black"
+                    android:text="Moneda Cuenta Destino"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/darkgray"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_weight="2"
+                        android:textAlignment="center"
+                        app:cardCornerRadius="50dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ImageView
+                            android:id="@+id/avatar_usuario_destino"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="16dp"
+                            android:adjustViewBounds="true"
+                            android:clipToOutline="true"
+                            android:contentDescription="TODO"
+                            android:scaleType="fitXY"
+                            app:srcCompat="@drawable/avatar_3" />
+
+                    </com.google.android.material.card.MaterialCardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtIngreseCantidadTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:ems="10"
+            android:fontFamily="@font/meta_pro_bold"
+            android:gravity="bottom|center|left"
+            android:inputType="text"
+            android:text="@string/ingrese_cantidad" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtInpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:textColorHint="@color/orange"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/orange"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="3dp"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ingreseCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ingresar_dinero"
+                android:textColor="@color/orange"
+                android:textColorHint="@color/orange" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <FrameLayout
+            android:id="@+id/monedaSelectionContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/switchSelectionMoneda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Moneda de Origen"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/switchSelectionMoneda"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+
+                    android:text="Moneda de Destino"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/switchSelectionMoneda"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEnviarTransferencia"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Transferir"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/orange"
+            app:cornerRadius="15dp"
+            app:elevation="8dp"
+            app:icon="@drawable/flyarrowup"
+            app:iconGravity="textStart"
+            app:iconPadding="4dp"
+            app:iconSize="30dp"
+            app:iconTint="@color/black" />
+
+        <TextView
+            android:id="@+id/notaTransTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:ems="10"
             android:fontFamily="@font/meta_pro_normal"
-            android:gravity="center|left"
+            android:gravity="bottom|center|left"
             android:inputType="text"
             android:text="@string/notas_de_transferencia" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:textColorHint="@color/green"
-            app:hintTextColor="@color/green"
+            android:textColorHint="@color/orange"
+            app:hintTextColor="@color/orange"
 
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
@@ -203,13 +420,14 @@
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/notaTransfInput"
                 android:layout_width="match_parent"
-                android:layout_height="284dp"
+                android:layout_height="match_parent"
                 android:fontFamily="@font/meta_pro_normal"
                 android:gravity="start|top"
                 android:hint="@string/agregar_notas_de_transferencia_opcional"
                 android:inputType="textMultiLine"
-                android:textColorHint="@color/green"
+                android:textColorHint="@color/orange"
                 android:textSize="12sp" />
 
         </com.google.android.material.textfield.TextInputLayout>

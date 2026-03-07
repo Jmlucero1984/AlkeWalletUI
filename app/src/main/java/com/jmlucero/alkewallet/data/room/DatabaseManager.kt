@@ -18,5 +18,6 @@ object DatabaseManager {
     }
 
     fun getUserDao(): UsuarioDAO = getDatabase().usuarioDAO()
-    fun getCeuntaDao(): CuentaDAO = getDatabase().cuentaDAO()
+    fun getCuentaDao(): CuentaDAO = getDatabase().cuentaDAO()
+    fun getMonedaDao(): MonedaDAO = getDatabase().monedaDAO()
 }

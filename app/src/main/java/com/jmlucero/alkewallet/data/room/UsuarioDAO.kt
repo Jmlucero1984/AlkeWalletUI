@@ -5,8 +5,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,6 +20,12 @@ interface UsuarioDAO {
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
     fun getUsuario(): Flow<Usuario>
 
+
+    @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
+    fun getUsuarioConMoneda(): Flow<UsuarioConMoneda>
+    @Transaction
+    @Query("SELECT * FROM usuarios WHERE usuario_id = :id")
+    suspend fun obtenerUsuarioConMoneda(id: Int): UsuarioConMoneda
 //    @Query("DELETE FROM users WHERE token = :token")
 //    suspend fun deleteUserByToken(token: String)
 

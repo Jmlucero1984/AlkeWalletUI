@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.repository.AuthRepository
+import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,8 +23,8 @@ class AuthViewModel @Inject constructor(
     // Login
     private val _loginState = MutableStateFlow<UiState<LoginResponse>>(UiState.Idle)
     val loginState: StateFlow<UiState<LoginResponse>> = _loginState
-    private val _loggedUser = MutableStateFlow<UiState<Usuario>>(UiState.Idle)
-    val loggedUser: StateFlow<UiState<Usuario>> = _loggedUser
+    private val _loggedUser = MutableStateFlow<UiState<UsuarioMonedaDTO>>(UiState.Idle)
+    val loggedUser: StateFlow<UiState<UsuarioMonedaDTO>> = _loggedUser
 
     // Usuario individual
 
@@ -45,7 +47,7 @@ class AuthViewModel @Inject constructor(
 
                         try {
 
-                            Log.e("DAOO",state.data.avatar_url)
+
                             _loggedUser.value = UiState.Success(state.data)
 
 

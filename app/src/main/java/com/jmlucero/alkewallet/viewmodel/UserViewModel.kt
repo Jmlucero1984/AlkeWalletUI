@@ -6,7 +6,9 @@ import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.repository.UserRepository
+import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +23,9 @@ class UserViewModel @Inject constructor(
 
        val usuario: Flow<Usuario> = repository.getUsuarioLocal()
         // Usuario individual
-        private val _usuarioState = MutableStateFlow<UiState<Usuario>>(UiState.Idle)
-        val usuarioState: StateFlow<UiState<Usuario>> = _usuarioState
+        val usuarioConMoneda: Flow<UsuarioConMoneda> = repository.getUsuarioConMonedaLocal()
+        private val _usuarioState = MutableStateFlow<UiState<UsuarioMonedaDTO>>(UiState.Idle)
+        val usuarioState: StateFlow<UiState<UsuarioMonedaDTO>> = _usuarioState
 
         // Lista usuarios
         private val _usuariosState = MutableStateFlow<UiState<List<Usuario>>>(UiState.Idle)
@@ -33,9 +36,9 @@ class UserViewModel @Inject constructor(
 
 
 
-        fun cargarUsuario(id: Long) {
+        fun cargarUsuario(email: String) {
             viewModelScope.launch {
-                repository.getUsuarioPorId(id).collect {
+                repository.getUsuarioPorEmail(email).collect {
                     _usuarioState.value = it
                 }
             }

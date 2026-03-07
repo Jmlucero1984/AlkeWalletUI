@@ -13,5 +13,6 @@ data class Usuario(
     val email: String,
     val avatar_url: String,
     var isLoggedUser: Boolean = false,
-    var balance: String="0.00"
+    var balance: String="0.00",
+    val moneda_codigo: String,
 )

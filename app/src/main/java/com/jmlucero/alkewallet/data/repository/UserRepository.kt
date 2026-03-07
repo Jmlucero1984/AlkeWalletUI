@@ -3,6 +3,8 @@ package com.jmlucero.alkewallet.data.repository
 import com.google.gson.Gson
 import com.jmlucero.alkewallet.data.api.ApiError
 import com.jmlucero.alkewallet.data.api.RetrofitClient
+import com.jmlucero.alkewallet.data.mapper.toMoneda
+import com.jmlucero.alkewallet.data.mapper.toUsuario
 import com.jmlucero.alkewallet.data.model.Balance
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Deposito
@@ -12,31 +14,34 @@ import com.jmlucero.alkewallet.data.model.RetiroResponse
 
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.room.CuentaDAO
+import com.jmlucero.alkewallet.data.room.MonedaDAO
 import com.jmlucero.alkewallet.data.room.UsuarioDAO
+import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
-                                         private val cuentaDAO: CuentaDAO
+                                         private val cuentaDAO: CuentaDAO,
+    private val monedaDAO: MonedaDAO
 ) {
 
     private val apiService = RetrofitClient.apiService
-
-    //
-    //    fun getUsuario(id: Int) = usuarioDao.getUsuarioById(id)
-    //
 
     suspend fun insertLoggedUsuario(usuario: Usuario) {
         usuarioDAO.insertUser(usuario)
     }
 
-
     fun getUsuarioLocal(): Flow<Usuario> {
         return  usuarioDAO.getUsuario()
+    }
+    fun getUsuarioConMonedaLocal(): Flow<UsuarioConMoneda> {
+        return  usuarioDAO.getUsuarioConMoneda()
     }
     fun getCuentaLocal():Flow<Cuenta> {
         return cuentaDAO.getCuenta()
@@ -45,14 +50,20 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
     fun getCuenta(): Flow<Cuenta> {
         return  cuentaDAO.getCuenta()
     }
-    //    suspend fun saveUsuario(usuario: UsuarioEntity) {
-    //        usuarioDao.insert(usuario)
-    //    }
 
-    suspend fun getUsuarioPorId(id: Long): Flow<UiState<Usuario>> =
+    suspend fun getUsuarioPorEmail(email: String): Flow<UiState<UsuarioMonedaDTO>> =
         safeApiCall {
-            apiService.getUsuarioPorId(id)
+            apiService.getUsuarioPorEmail(email)
+        }.onEach { state ->
+            if (state is UiState.Success) {
+                val usuario = state.data.toUsuario(false)
+                val moneda = state.data.moneda.toMoneda()
+                usuarioDAO.insertUser(usuario)
+                monedaDAO.insertMoneda(moneda)
+            }
         }
+
+
     fun getBalance(): Flow<UiState<Balance>> =
         safeApiCall {
             apiService.getBalance()

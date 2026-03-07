@@ -6,11 +6,15 @@ import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.LoginRequest
 import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.RetiroResponse
 import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
+import com.jmlucero.alkewallet.data.room.MonedaDTO
+import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import retrofit2.Response
 
 import retrofit2.http.Body
@@ -31,13 +35,13 @@ interface ApiService {
     @GET("api/usuarios")
     suspend fun getUsuarios(): Response<List<Usuario>>
 
-    @GET("api/usuarios/{id}")
-    suspend fun getUsuarioPorId(
-        @Path("id") id: Long
-    ): Response<Usuario>
+    @GET("api/usuarios/{email}")
+    suspend fun getUsuarioPorEmail(
+        @Path("email") email: String
+    ): Response<UsuarioMonedaDTO>
 
     @GET("api/usuarios/me")
-    suspend fun get_profile(): Response<Usuario>
+    suspend fun get_profile(): Response<UsuarioMonedaDTO>
 
 
     @GET("api/transacciones/owner")
@@ -62,5 +66,7 @@ interface ApiService {
 
     @POST("api/deposito")
     suspend fun deposito(@Body request: Deposito): Response<DepositoResponse>
+
+
 
 }
