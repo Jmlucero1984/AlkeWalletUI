@@ -64,7 +64,7 @@ class ProfileFragment : Fragment() {
                         binding.perfilNombreUsuario.setText(
                             "${usuario.nombre} ${usuario.apellido}")
 
-                        var url = usuario.avatar_url.substring(1, usuario.avatar_url.length - 1)
+                        var url = usuario.avatar_url//.substring(1, usuario.avatar_url.length - 1)
 
                         Picasso.get()
                             .load(url)

@@ -379,20 +379,6 @@
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEnviarTransferencia"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="Transferir"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/orange"
-            app:cornerRadius="15dp"
-            app:elevation="8dp"
-            app:icon="@drawable/flyarrowup"
-            app:iconGravity="textStart"
-            app:iconPadding="4dp"
-            app:iconSize="30dp"
-            app:iconTint="@color/black" />
 
         <TextView
             android:id="@+id/notaTransTitulo"
@@ -405,11 +391,11 @@
             android:text="@string/notas_de_transferencia" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/notaTransfTextInpLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
             android:textColorHint="@color/orange"
-            app:hintTextColor="@color/orange"
 
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="12dp"
@@ -417,7 +403,8 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
 
-            app:boxStrokeColor="#094464">
+            app:boxStrokeColor="#094464"
+            app:hintTextColor="@color/orange">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/notaTransfInput"
@@ -446,21 +433,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/ingresarDineroButton"
+            android:id="@+id/btnEnviarTransferencia"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="13"
-            android:text="@string/enviar_dinero"
+            android:layout_height="55dp"
+            android:text="Transferir"
             android:textColor="@color/black"
-            app:backgroundTint="@color/green"
+            app:backgroundTint="@color/orange"
             app:cornerRadius="15dp"
             app:elevation="8dp"
             app:icon="@drawable/flyarrowup"
-            app:iconTint="@color/black"
             app:iconGravity="textStart"
             app:iconPadding="4dp"
-            app:iconSize="30dp" />
+            app:iconSize="30dp"
+            app:iconTint="@color/black" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

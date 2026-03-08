@@ -11,13 +11,12 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
-import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
@@ -31,13 +30,14 @@ class EnviarDineroFragment : Fragment() {
     private var param2: String? = null
     private var _binding: FragmentEnviarDineroBinding? = null
     private val binding get() = _binding!!
+
     //private lateinit var userViewModel: UserViewModel
     private var ratio_a_dolar_usuario_emisor: Double? = null
-    private var codigo_moneda_emisor:String =""
-    private var codigo_moneda_destino:String=""
-    private var ratio_a_dolar_usuario_destino: Double? =null
-
-    private var balanceActual: BigDecimal? =null
+    private var codigo_moneda_emisor: String = ""
+    private var codigo_moneda_destino: String = ""
+    private var ratio_a_dolar_usuario_destino: Double? = null
+    private var email_usuario_destino: String = ""
+    private var balanceActual: BigDecimal? = null
 
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,28 +52,39 @@ class EnviarDineroFragment : Fragment() {
         _binding = FragmentEnviarDineroBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     fun hideAllElements() {
-        binding.usuarioDestinoContainer.isVisible=false
-        binding.txtIngreseCantidadTitulo.isVisible=false
-        binding.txtInpLayout.isVisible=false
-        binding.monedaSelectionContainer.isVisible=false
-        binding.btnEnviarTransferencia.isVisible=false
-        binding.notaTransTitulo.isVisible=false
-        binding.notaTransfInput.isVisible=false
+        binding.usuarioDestinoContainer.isVisible = false
+        binding.txtIngreseCantidadTitulo.isVisible = false
+        binding.txtInpLayout.isVisible = false
+        binding.monedaSelectionContainer.isVisible = false
+
+        binding.notaTransTitulo.isVisible = false
+        binding.notaTransfTextInpLayout.isVisible = false
     }
 
     fun showAllElements(showSeleccionTransferencia: Boolean = false) {
-        binding.usuarioDestinoContainer.isVisible=true
-        binding.txtIngreseCantidadTitulo.isVisible=true
-        binding.txtInpLayout.isVisible=true
-        binding.monedaSelectionContainer.isVisible=showSeleccionTransferencia
-        binding.btnEnviarTransferencia.isVisible=true
-        binding.notaTransTitulo.isVisible=true
-        binding.notaTransfInput.isVisible=true
+        binding.usuarioDestinoContainer.isVisible = true
+        binding.txtIngreseCantidadTitulo.isVisible = true
+        binding.txtInpLayout.isVisible = true
+        binding.monedaSelectionContainer.isVisible = showSeleccionTransferencia
+
+        binding.notaTransTitulo.isVisible = true
+        binding.notaTransfTextInpLayout.isVisible = true
     }
+
+    fun resetFields() {
+        binding.ingreseCantidad.text=null
+        binding.notaTransfInput.text = null
+        binding.switchSelectionMoneda.isChecked = false
+        binding.notaTransfInput.text?.clear()
+        binding.ingreseEmail.requestFocus()
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        // userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.homePageFragment)
         }
@@ -82,12 +93,12 @@ class EnviarDineroFragment : Fragment() {
 
         binding.btnBuscarUsuario.setOnClickListener {
             val email = binding.ingreseEmail.text.toString()
-           userViewModel.cargarUsuario(email)
+            userViewModel.cargarUsuario(email)
         }
 
         binding.btnEnviarTransferencia.setOnClickListener {
-            var factorConversion: Double =1.1
-             /*
+            var factorConversion: Double = 1.0
+            /*
              TRANSFERENCIA EN MONEDA DESTINO
              factorConversion = ratio_a_dolar_destino/ratio_a_dolar_origen
              cantidadEfectia = monto*factorConversion
@@ -100,49 +111,109 @@ class EnviarDineroFragment : Fragment() {
               */
             val cantidadIngresada = binding.ingreseCantidad.text.toString().toDouble()
             var montoEfectivo: BigDecimal = BigDecimal("0.00")
-
-            if(binding.switchSelectionMoneda.isChecked) {
-                ratio_a_dolar_usuario_emisor?.let { emisor ->
-                    ratio_a_dolar_usuario_destino?.let { destino ->
-
-                        factorConversion= destino / emisor
-
-                        montoEfectivo = BigDecimal(cantidadIngresada*factorConversion).setScale(2, RoundingMode.HALF_UP)
+            if (binding.monedaSelectionContainer.isVisible) {
+                if (binding.switchSelectionMoneda.isChecked) {
+                    // EN MONEDA DESTINO  ///
+                    ratio_a_dolar_usuario_emisor?.let { emisor ->
+                        ratio_a_dolar_usuario_destino?.let { destino ->
+                            factorConversion = destino / emisor
+                            montoEfectivo =
+                                BigDecimal(cantidadIngresada * factorConversion).setScale(
+                                    2,
+                                    RoundingMode.HALF_UP
+                                )
+                        }
                     }
-                }
-                if(montoEfectivo>balanceActual) {
-                    mostrarAlertaPorFondos("Para transferir "+cantidadIngresada+ " "+codigo_moneda_destino+ " se requieren "+montoEfectivo+" "+codigo_moneda_emisor)
+                    if (montoEfectivo > balanceActual) {
+                        mostrarAlertaPorFondos("Para transferir " + cantidadIngresada + " " + codigo_moneda_destino + " se requieren " + montoEfectivo + " " + codigo_moneda_emisor)
+                    } else {
+                        mostrarConfirmacion("Transfiere " + cantidadIngresada + " " + codigo_moneda_destino + " ( -" + montoEfectivo + " " + codigo_moneda_emisor + " )") {
+                            userViewModel.transferir(
+                                Transferencia(
+                                    email_usuario_destino,
+                                    binding.ingreseCantidad.text.toString(),
+                                    "REALIZA TCDM MMD"
+                                )
+                            )
+                        }
+                    }
                 } else {
-                    mostrarConfirmacion("Transfiere "+cantidadIngresada+ " "+codigo_moneda_destino+ " ( -"+montoEfectivo+" "+codigo_moneda_emisor+" )")
-                }
-
-
-
-            } else {
-                ratio_a_dolar_usuario_emisor?.let { emisor ->
-                    ratio_a_dolar_usuario_destino?.let { destino ->
-                        factorConversion= emisor / destino
-                        montoEfectivo = BigDecimal(cantidadIngresada*factorConversion).setScale(2, RoundingMode.HALF_UP)
+                    // EN MONEDA ORIGEN  ///
+                    ratio_a_dolar_usuario_emisor?.let { emisor ->
+                        ratio_a_dolar_usuario_destino?.let { destino ->
+                            factorConversion = emisor / destino
+                            montoEfectivo =
+                                BigDecimal(cantidadIngresada * factorConversion).setScale(
+                                    2,
+                                    RoundingMode.HALF_UP
+                                )
+                        }
+                    }
+                    if (BigDecimal(cantidadIngresada).setScale(
+                            2,
+                            RoundingMode.HALF_UP
+                        ) > balanceActual
+                    ) {
+                        binding.ingreseCantidad.setError("No hay fondos suficientes")
+                    } else {
+                        mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino + " ( -" + cantidadIngresada + " " + codigo_moneda_emisor + " )") {
+                            userViewModel.transferir(
+                                Transferencia(
+                                    email_usuario_destino,
+                                    binding.ingreseCantidad.text.toString(),
+                                    "REALIZA TCDM MMO"
+                                )
+                            )
+                        }
                     }
                 }
-                if(BigDecimal(cantidadIngresada).setScale(2, RoundingMode.HALF_UP)>balanceActual) {
+            } else {
+                montoEfectivo = BigDecimal(cantidadIngresada).setScale(2, RoundingMode.HALF_UP)
+                if (montoEfectivo > balanceActual) {
                     binding.ingreseCantidad.setError("No hay fondos suficientes")
-                } else{
-                    mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino + " ( -" + cantidadIngresada + " " + codigo_moneda_emisor + " )")
+                } else {
+                    mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino) {
+                        userViewModel.transferir(
+                            Transferencia(
+                                email_usuario_destino,
+                                montoEfectivo.toString(),
+                                "REALIZA TCIM"
+                            )
+                        )
+                    }
                 }
-
             }
-
         }
-
-
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                var usuarioLogueadoMoneda: String =""
+                var usuarioLogueadoMoneda: String = ""
                 launch {
-                    userViewModel.usuarioState.collect { state ->
+                    userViewModel.transferenciaEvent.collect { state ->
+                        when (state) {
+                            is UiState.Idle -> {}
+                            is UiState.Loading -> {
+                                Log.d("ENVIAR_DINERO_FRAGMENT", "Enviando transferencia...")
+                            }
+
+                            is UiState.Success -> {
+                                resetFields()
+                                hideAllElements()
+                                Toast.makeText(context, state.data.mensaje, Toast.LENGTH_LONG).show()
+                            }
+
+                            is UiState.Error -> {
+                                Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()
+                                Log.e("ENVIAR_DINERO_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+
+                    }
+
+                }
+                launch {
+                    userViewModel.usuarioDestinoEvent.collect { state ->
                         when (state) {
                             is UiState.Idle -> {}
                             is UiState.Loading -> {
@@ -152,15 +223,24 @@ class EnviarDineroFragment : Fragment() {
                             is UiState.Success -> {
                                 //  Toast.makeText(context,state.data.mensaje, Toast.LENGTH_LONG).show()
 
-                                binding.nombreUsuarioDestino.text = state.data.nombre+" "+state.data.apellido
+                                binding.nombreUsuarioDestino.text =
+                                    state.data.nombre + " " + state.data.apellido
                                 binding.emailUsuarioDestino.text = state.data.email
-                                binding.infoCuentaDestino.text=state.data.moneda.nombre
-                                Log.i("INFORMACION","MONEDA USUARIO LOGUEADO: " +usuarioLogueadoMoneda)
-                                Log.i("INFORMACION","MONEDA USUARIO ENCONTRADO: " +state.data.moneda.codigo)
-                                ratio_a_dolar_usuario_destino= state.data.moneda.ratio_a_usd
+                                binding.infoCuentaDestino.text = state.data.moneda.nombre
+                                Log.i(
+                                    "INFORMACION",
+                                    "MONEDA USUARIO LOGUEADO: " + usuarioLogueadoMoneda
+                                )
+                                Log.i(
+                                    "INFORMACION",
+                                    "MONEDA USUARIO ENCONTRADO: " + state.data.moneda.codigo
+                                )
+                                ratio_a_dolar_usuario_destino = state.data.moneda.ratio_a_usd
                                 codigo_moneda_destino = state.data.moneda.codigo
+                                email_usuario_destino = state.data.email
 
-                                var url = state.data.avatar_url//.substring(1, state.data.avatar_url.length - 1)
+                                var url =
+                                    state.data.avatar_url//.substring(1, state.data.avatar_url.length - 1)
                                 Picasso.get()
                                     .load(url)
                                     .placeholder(R.drawable.profile_svgrepo_com)
@@ -169,7 +249,8 @@ class EnviarDineroFragment : Fragment() {
                                     .centerCrop()
                                     .into(binding.avatarUsuarioDestino)
 
-                                val showSeleccionTransferencia: Boolean =!usuarioLogueadoMoneda.equals(state.data.moneda.codigo)
+                                val showSeleccionTransferencia: Boolean =
+                                    !usuarioLogueadoMoneda.equals(state.data.moneda.codigo)
                                 showAllElements(showSeleccionTransferencia)
 
                             }
@@ -186,23 +267,24 @@ class EnviarDineroFragment : Fragment() {
                 launch {
                     userViewModel.usuarioConMoneda.collect { usuarioConMoneda ->
                         usuarioLogueadoMoneda = usuarioConMoneda.moneda.codigo
-                           ratio_a_dolar_usuario_emisor = usuarioConMoneda.moneda.ratio_a_usd
-                            codigo_moneda_emisor = usuarioConMoneda.moneda.codigo
-                           balanceActual = BigDecimal(usuarioConMoneda.usuario.balance)
-                            binding.nombreUsuario.text =
-                                "${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
-                            binding.emailUsuario.text =
-                                usuarioConMoneda.usuario.email.toString()
+                        ratio_a_dolar_usuario_emisor = usuarioConMoneda.moneda.ratio_a_usd
+                        codigo_moneda_emisor = usuarioConMoneda.moneda.codigo
+                        balanceActual = BigDecimal(usuarioConMoneda.usuario.balance)
+                        binding.nombreUsuario.text =
+                            "${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
+                        binding.emailUsuario.text =
+                            usuarioConMoneda.usuario.email.toString()
 
-                            var url = usuarioConMoneda.usuario.avatar_url//.substring(1, usuarioConMoneda.usuario.avatar_url.length - 1)
+                        var url =
+                            usuarioConMoneda.usuario.avatar_url//.substring(1, usuarioConMoneda.usuario.avatar_url.length - 1)
 
-                            Picasso.get()
-                                .load(url)
-                                .placeholder(R.drawable.profile_svgrepo_com)
-                                .error(R.drawable.profile_svgrepo_com)
-                                .fit()
-                                .centerCrop()
-                                .into(binding.avatarUsuario)
+                        Picasso.get()
+                            .load(url)
+                            .placeholder(R.drawable.profile_svgrepo_com)
+                            .error(R.drawable.profile_svgrepo_com)
+                            .fit()
+                            .centerCrop()
+                            .into(binding.avatarUsuario)
 
                     }
                 }
@@ -210,12 +292,15 @@ class EnviarDineroFragment : Fragment() {
         }
     }
 
-    private fun mostrarConfirmacion(mensaje:String) {
+    private fun mostrarConfirmacion(
+        mensaje: String,
+        onConfirm: () -> Unit
+    ) {
         AlertDialog.Builder(requireContext())
             .setTitle("Confirmar transferencia")
             .setMessage(mensaje)
             .setPositiveButton("Confirmar") { _, _ ->
-                enviarDinero()
+                onConfirm()
             }
             .setNegativeButton("Corregir") { dialog, _ ->
                 dialog.dismiss()
@@ -223,7 +308,7 @@ class EnviarDineroFragment : Fragment() {
             .show()
     }
 
-    private fun mostrarAlertaPorFondos(mensaje:String) {
+    private fun mostrarAlertaPorFondos(mensaje: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Problema con la transferencia")
             .setMessage(mensaje)
@@ -234,7 +319,7 @@ class EnviarDineroFragment : Fragment() {
     }
 
     fun enviarDinero() {
-        Toast.makeText(context,"CACA FRITA", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, "CACA FRITA", Toast.LENGTH_LONG).show()
     }
 
 
