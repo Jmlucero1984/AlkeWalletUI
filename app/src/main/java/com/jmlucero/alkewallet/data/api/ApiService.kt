@@ -11,6 +11,8 @@ import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.RetiroResponse
 import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.TransaccionSimple
+import com.jmlucero.alkewallet.data.model.Transferencia
+import com.jmlucero.alkewallet.data.model.TransferenciaResponse
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.room.MonedaDTO
@@ -66,6 +68,9 @@ interface ApiService {
 
     @POST("api/deposito")
     suspend fun deposito(@Body request: Deposito): Response<DepositoResponse>
+
+    @POST("api/transferencia")
+    suspend fun transferencia(@Body request: Transferencia): Response<TransferenciaResponse>
 
 
 

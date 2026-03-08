@@ -11,6 +11,8 @@ import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.RetiroResponse
+import com.jmlucero.alkewallet.data.model.Transferencia
+import com.jmlucero.alkewallet.data.model.TransferenciaResponse
 
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
@@ -76,6 +78,11 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
     fun doDeposito(deposito: Deposito): Flow<UiState<DepositoResponse>> =
         safeApiCall {
             apiService.deposito(deposito)
+        }
+
+    fun doTransferencia(transferencia: Transferencia): Flow<UiState<TransferenciaResponse>> =
+        safeApiCall {
+            apiService.transferencia(transferencia)
         }
     suspend fun getUsuarios(): Flow<UiState<List<Usuario>>> =
         safeApiCall {

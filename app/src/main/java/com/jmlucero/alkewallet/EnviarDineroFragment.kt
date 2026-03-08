@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
@@ -36,7 +37,7 @@ class EnviarDineroFragment : Fragment() {
     private var codigo_moneda_emisor:String =""
     private var codigo_moneda_destino:String=""
     private var ratio_a_dolar_usuario_destino: Double? =null
-
+    private var email_usuario_destino: String = ""
     private var balanceActual: BigDecimal? =null
 
     private val userViewModel: UserViewModel by activityViewModels()
@@ -86,8 +87,8 @@ class EnviarDineroFragment : Fragment() {
         }
 
         binding.btnEnviarTransferencia.setOnClickListener {
-            var factorConversion: Double =1.1
-             /*
+            var factorConversion: Double = 1.0
+            /*
              TRANSFERENCIA EN MONEDA DESTINO
              factorConversion = ratio_a_dolar_destino/ratio_a_dolar_origen
              cantidadEfectia = monto*factorConversion
@@ -100,40 +101,83 @@ class EnviarDineroFragment : Fragment() {
               */
             val cantidadIngresada = binding.ingreseCantidad.text.toString().toDouble()
             var montoEfectivo: BigDecimal = BigDecimal("0.00")
-
-            if(binding.switchSelectionMoneda.isChecked) {
-                ratio_a_dolar_usuario_emisor?.let { emisor ->
-                    ratio_a_dolar_usuario_destino?.let { destino ->
-
-                        factorConversion= destino / emisor
-
-                        montoEfectivo = BigDecimal(cantidadIngresada*factorConversion).setScale(2, RoundingMode.HALF_UP)
+            if (binding.monedaSelectionContainer.isVisible) {
+                if (binding.switchSelectionMoneda.isChecked) {
+                    // EN MONEDA DESTINO  ///
+                    ratio_a_dolar_usuario_emisor?.let { emisor ->
+                        ratio_a_dolar_usuario_destino?.let { destino ->
+                            factorConversion = destino / emisor
+                            montoEfectivo =
+                                BigDecimal(cantidadIngresada * factorConversion).setScale(
+                                    2,
+                                    RoundingMode.HALF_UP
+                                )
+                        }
                     }
-                }
-                if(montoEfectivo>balanceActual) {
-                    mostrarAlertaPorFondos("Para transferir "+cantidadIngresada+ " "+codigo_moneda_destino+ " se requieren "+montoEfectivo+" "+codigo_moneda_emisor)
+                    if (montoEfectivo > balanceActual) {
+                        mostrarAlertaPorFondos("Para transferir " + cantidadIngresada + " " + codigo_moneda_destino + " se requieren " + montoEfectivo + " " + codigo_moneda_emisor)
+                    } else {
+                        mostrarConfirmacion("Transfiere " + cantidadIngresada + " " + codigo_moneda_destino + " ( -" + montoEfectivo + " " + codigo_moneda_emisor + " )") {
+                            userViewModel.transferir(
+                                Transferencia(
+                                    email_usuario_destino,
+                                    binding.ingreseCantidad.text.toString(),
+                                    "REALIZA TCDM MMD"
+                                )
+                            )
+                        }
+                    }
+
+
                 } else {
-                    mostrarConfirmacion("Transfiere "+cantidadIngresada+ " "+codigo_moneda_destino+ " ( -"+montoEfectivo+" "+codigo_moneda_emisor+" )")
+                    // EN MONEDA ORIGEN  ///
+                    ratio_a_dolar_usuario_emisor?.let { emisor ->
+                        ratio_a_dolar_usuario_destino?.let { destino ->
+                            factorConversion = emisor / destino
+                            montoEfectivo =
+                                BigDecimal(cantidadIngresada * factorConversion).setScale(
+                                    2,
+                                    RoundingMode.HALF_UP
+                                )
+                        }
+                    }
+                    if (BigDecimal(cantidadIngresada).setScale(
+                            2,
+                            RoundingMode.HALF_UP
+                        ) > balanceActual
+                    ) {
+                        binding.ingreseCantidad.setError("No hay fondos suficientes")
+                    } else {
+                        mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino + " ( -" + cantidadIngresada + " " + codigo_moneda_emisor + " )") {
+                            userViewModel.transferir(
+                                Transferencia(
+                                    email_usuario_destino,
+                                    binding.ingreseCantidad.text.toString(),
+                                    "REALIZA TCDM MMO"
+                                )
+                            )
+                        }
+                    }
+
                 }
-
-
-
             } else {
-                ratio_a_dolar_usuario_emisor?.let { emisor ->
-                    ratio_a_dolar_usuario_destino?.let { destino ->
-                        factorConversion= emisor / destino
-                        montoEfectivo = BigDecimal(cantidadIngresada*factorConversion).setScale(2, RoundingMode.HALF_UP)
+                montoEfectivo = BigDecimal(cantidadIngresada).setScale(2, RoundingMode.HALF_UP)
+                if (montoEfectivo > balanceActual) {
+                    binding.ingreseCantidad.setError("No hay fondos suficientes")
+                } else {
+                    mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino) {
+                        userViewModel.transferir(
+                            Transferencia(
+                                email_usuario_destino,
+                                montoEfectivo.toString(),
+                                "REALIZA TCIM"
+                            )
+                        )
                     }
                 }
-                if(BigDecimal(cantidadIngresada).setScale(2, RoundingMode.HALF_UP)>balanceActual) {
-                    binding.ingreseCantidad.setError("No hay fondos suficientes")
-                } else{
-                    mostrarConfirmacion("Transfiere " + montoEfectivo + " " + codigo_moneda_destino + " ( -" + cantidadIngresada + " " + codigo_moneda_emisor + " )")
-                }
-
             }
-
         }
+
 
 
 
@@ -141,6 +185,29 @@ class EnviarDineroFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var usuarioLogueadoMoneda: String =""
+                launch {
+                    userViewModel.transferenciaState.collect { state ->
+                        when (state) {
+                            is UiState.Idle -> {}
+                            is UiState.Loading -> {
+                                Log.d("ENVIAR_DINERO_FRAGMENT", "Enviando transferencia...")
+                            }
+
+                            is UiState.Success -> {
+                                Toast.makeText(context,state.data.mensaje, Toast.LENGTH_LONG).show()
+
+
+                            }
+
+                            is UiState.Error -> {
+                                Toast.makeText(context,state.message, Toast.LENGTH_LONG).show()
+                                Log.e("ENVIAR_DINERO_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+
+                    }
+
+                }
                 launch {
                     userViewModel.usuarioState.collect { state ->
                         when (state) {
@@ -159,6 +226,7 @@ class EnviarDineroFragment : Fragment() {
                                 Log.i("INFORMACION","MONEDA USUARIO ENCONTRADO: " +state.data.moneda.codigo)
                                 ratio_a_dolar_usuario_destino= state.data.moneda.ratio_a_usd
                                 codigo_moneda_destino = state.data.moneda.codigo
+                                email_usuario_destino = state.data.email
 
                                 var url = state.data.avatar_url//.substring(1, state.data.avatar_url.length - 1)
                                 Picasso.get()
@@ -210,12 +278,14 @@ class EnviarDineroFragment : Fragment() {
         }
     }
 
-    private fun mostrarConfirmacion(mensaje:String) {
+    private fun mostrarConfirmacion(mensaje:String,
+                                    onConfirm: () -> Unit
+    ) {
         AlertDialog.Builder(requireContext())
             .setTitle("Confirmar transferencia")
             .setMessage(mensaje)
             .setPositiveButton("Confirmar") { _, _ ->
-                enviarDinero()
+                onConfirm()
             }
             .setNegativeButton("Corregir") { dialog, _ ->
                 dialog.dismiss()

@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
+import com.jmlucero.alkewallet.data.model.Transferencia
+import com.jmlucero.alkewallet.data.model.TransferenciaResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
@@ -31,8 +33,12 @@ class UserViewModel @Inject constructor(
         private val _usuariosState = MutableStateFlow<UiState<List<Usuario>>>(UiState.Idle)
         val usuariosState: StateFlow<UiState<List<Usuario>>> = _usuariosState
 
-    private val _depositoState = MutableStateFlow<UiState<DepositoResponse>>(UiState.Idle)
-    val depositoState: StateFlow<UiState<DepositoResponse>> = _depositoState
+        private val _depositoState = MutableStateFlow<UiState<DepositoResponse>>(UiState.Idle)
+        val depositoState: StateFlow<UiState<DepositoResponse>> = _depositoState
+
+
+    private val _transferenciaState = MutableStateFlow<UiState<TransferenciaResponse>>(UiState.Idle)
+    val transferenciaState: StateFlow<UiState<TransferenciaResponse>> = _transferenciaState
 
 
 
@@ -48,6 +54,14 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             repository.doDeposito(deposito).collect {
                 _depositoState.value = it
+            }
+        }
+    }
+
+    fun transferir(transferencia: Transferencia) {
+        viewModelScope.launch {
+            repository.doTransferencia(transferencia).collect {
+                _transferenciaState.value = it
             }
         }
     }
