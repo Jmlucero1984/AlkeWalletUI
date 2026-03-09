@@ -8,7 +8,7 @@ import java.util.Date
 @Entity(tableName = "cuentas")
 data class Cuenta(
     @PrimaryKey
-    val usuario_id:Int,
+    val usuario_email:String,
     val balance: String,
     val updatedAt: Long
 )

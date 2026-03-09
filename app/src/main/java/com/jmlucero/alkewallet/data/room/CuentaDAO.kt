@@ -12,8 +12,8 @@ interface CuentaDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCuenta(cuenta: Cuenta)
 
-    @Query("SELECT * FROM cuentas")
-    fun getCuenta(): Flow<Cuenta>
+    @Query("SELECT * FROM cuentas WHERE usuario_email= :usuario_email")
+    fun getCuenta(usuario_email:String): Flow<Cuenta>
 }
 
 

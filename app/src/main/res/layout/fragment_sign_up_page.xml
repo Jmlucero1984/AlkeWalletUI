@@ -16,11 +16,11 @@ tools:context=".SignUpPageFragment">
 
     <TextView
         android:id="@+id/singUpMainTitle"
-        android:layout_width="332dp"
-        android:layout_height="98dp"
+        android:layout_width="334dp"
+        android:layout_height="78dp"
         android:layout_marginTop="24dp"
-        android:text="@string/registrarse_y_empezar_a_transferir"
         android:fontFamily="@font/meta_pro_bold"
+        android:text="@string/registrarse_y_empezar_a_transferir"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@ tools:context=".SignUpPageFragment">
         android:layout_width="340dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintBottom_toTopOf="@+id/btnCrearCuenta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/singUpMainTitle">
@@ -39,12 +39,10 @@ tools:context=".SignUpPageFragment">
         <TextView
             android:id="@+id/signUpNombre"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
+            android:layout_height="40dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="@string/nombre"
-            />
+            android:gravity="bottom"
+            android:text="@string/nombre" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/signUpNombreInput"
@@ -60,6 +58,7 @@ tools:context=".SignUpPageFragment">
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ingresar_nombre" />
@@ -69,10 +68,9 @@ tools:context=".SignUpPageFragment">
         <TextView
             android:id="@+id/signUpApellido"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
+            android:layout_height="40dp"
             android:ems="10"
-            android:inputType="text"
+            android:gravity="bottom"
             android:text="@string/apellido" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -89,6 +87,7 @@ tools:context=".SignUpPageFragment">
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputApellido"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ingresar_apellido" />
@@ -97,10 +96,10 @@ tools:context=".SignUpPageFragment">
         <TextView
             android:id="@+id/loginEmailTitle"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="40dp"
             android:ems="10"
-            android:gravity="center_vertical"
-            android:inputType="text"
+            android:gravity="bottom"
+
             android:text="@string/email_first_upper" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -115,6 +114,7 @@ tools:context=".SignUpPageFragment">
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ingresar_email" />
@@ -124,8 +124,8 @@ tools:context=".SignUpPageFragment">
         <TextView
             android:id="@+id/ingresarPassword"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:gravity="bottom"
             android:text="@string/ingresar_contrasenia" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -141,6 +141,7 @@ tools:context=".SignUpPageFragment">
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputContrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/ingresar_contrasenia"
@@ -151,8 +152,8 @@ tools:context=".SignUpPageFragment">
         <TextView
             android:id="@+id/reingresarPassword"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:gravity="center_vertical"
+            android:layout_height="40dp"
+            android:gravity="bottom"
             android:text="@string/reingresar_contrasenia" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -168,6 +169,7 @@ tools:context=".SignUpPageFragment">
             app:endIconMode="password_toggle">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtInputConfirmaContrasenia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/reingresar_contrasenia"
@@ -175,11 +177,30 @@ tools:context=".SignUpPageFragment">
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="bottom"
+            android:text="@string/seleccione_moneda" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/monedaLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Moneda">
+
+            <AutoCompleteTextView
+                android:id="@+id/monedaDropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/btnCrearCuenta"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="24dp"

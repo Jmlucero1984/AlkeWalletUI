@@ -36,12 +36,13 @@ class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO,
             apiService.get_profile()
         }.onEach { state ->
             if (state is UiState.Success) {
+                usuarioDao.logoutAllUsers()
                 val usuario = state.data.toUsuario(true)
                 val moneda = state.data.moneda.toMoneda()
 
                 usuarioDao.insertUser(usuario)
                 monedaDAO.insertMoneda(moneda)
-                cuentaDAO.insertCuenta(Cuenta(usuario.usuario_id,usuario.balance, System.currentTimeMillis()))
+                cuentaDAO.insertCuenta(Cuenta(usuario.email,usuario.balance, System.currentTimeMillis()))
 
             }
         }

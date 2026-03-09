@@ -5,12 +5,15 @@ import com.jmlucero.alkewallet.data.api.ApiError
 import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.mapper.toMoneda
 import com.jmlucero.alkewallet.data.mapper.toUsuario
+import com.jmlucero.alkewallet.data.model.AvatarResponse
 import com.jmlucero.alkewallet.data.model.Balance
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.RetiroResponse
+import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
+import com.jmlucero.alkewallet.data.model.SignUpResponse
 import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.TransferenciaResponse
 
@@ -25,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
+import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -45,12 +49,12 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
     fun getUsuarioConMonedaLocal(): Flow<UsuarioConMoneda> {
         return  usuarioDAO.getUsuarioConMoneda()
     }
-    fun getCuentaLocal():Flow<Cuenta> {
-        return cuentaDAO.getCuenta()
+    fun getCuentaLocal(usuario_email:String):Flow<Cuenta> {
+        return cuentaDAO.getCuenta(usuario_email)
     }
 
-    fun getCuenta(): Flow<Cuenta> {
-        return  cuentaDAO.getCuenta()
+    fun getCuenta(usuario_email:String): Flow<Cuenta> {
+        return  cuentaDAO.getCuenta(usuario_email)
     }
 
     suspend fun getUsuarioPorEmail(email: String): Flow<UiState<UsuarioMonedaDTO>> =
@@ -80,6 +84,11 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
             apiService.deposito(deposito)
         }
 
+    fun uploadAvatar(avatar: MultipartBody.Part):Flow<UiState<AvatarResponse>> =
+        safeApiCall {
+            apiService.uploadAvatar(avatar)
+        }
+
     fun doTransferencia(transferencia: Transferencia): Flow<UiState<TransferenciaResponse>> =
         safeApiCall {
             apiService.transferencia(transferencia)
@@ -88,6 +97,11 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
         safeApiCall {
             apiService.getUsuarios()
         }
+    suspend fun signUpUsuario(signUpNuevoUsuario: SignUpNuevoUsuario): Flow<UiState<SignUpResponse>> =
+        safeApiCall {
+            apiService.signUpUsuario(signUpNuevoUsuario)
+        }
+
 
     private fun <T> safeApiCall(
         apiCall: suspend () -> Response<T>

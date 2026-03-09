@@ -40,4 +40,6 @@
     <string name="reingresar_contrasenia">Reingresar contraseña</string>
     <string name="crear_cuenta">Crear Cuenta</string>
     <string name="ingrese_email_destinatario">Ingrese email destinatario</string>
+    <string name="seleccione_moneda">Seleccione moneda</string>
+
 </resources>

@@ -2,6 +2,7 @@ package com.jmlucero.alkewallet.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jmlucero.alkewallet.data.model.AvatarResponse
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Transferencia
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,9 +49,12 @@ class UserViewModel @Inject constructor(
         private val _transferenciaEvent =MutableSharedFlow<UiState<TransferenciaResponse>>()
         val transferenciaEvent= _transferenciaEvent.asSharedFlow()
 
+        private val _uploadAvatarEvent =MutableSharedFlow<UiState<AvatarResponse>>()
+        val uploadAvatarEvent= _uploadAvatarEvent.asSharedFlow()
 
 
-        fun cargarUsuario(email: String) {
+
+    fun cargarUsuario(email: String) {
             viewModelScope.launch {
                 repository.getUsuarioPorEmail(email).collect {
                     _usuarioDestinoEvent.emit(it)
@@ -69,6 +74,13 @@ class UserViewModel @Inject constructor(
         viewModelScope.launch {
             repository.doTransferencia(transferencia).collect {
                 _transferenciaEvent.emit(  it)
+            }
+        }
+    }
+    fun uploadAvatar(avatar: MultipartBody.Part) {
+        viewModelScope.launch {
+            repository.uploadAvatar(avatar).collect {
+                _uploadAvatarEvent.emit(it)
             }
         }
     }

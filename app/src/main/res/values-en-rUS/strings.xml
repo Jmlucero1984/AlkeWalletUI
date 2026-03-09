@@ -40,4 +40,5 @@
     <string name="reingresar_contrasenia">Re introduce password</string>
     <string name="crear_cuenta">Create account</string>
     <string name="ingrese_email_destinatario">Itroduce email destiny</string>
+    <string name="seleccione_moneda">Seleccione moneda</string>
 </resources>

@@ -1,12 +1,15 @@
 package com.jmlucero.alkewallet
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +30,14 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
+import java.sql.Date
+import java.text.SimpleDateFormat
+import kotlin.text.format
 
 
 class HomePageFragment : Fragment() {
@@ -56,6 +67,47 @@ class HomePageFragment : Fragment() {
 
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
         return binding.root
+    }
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            bitmap?.let { procesarBitmap(it) }
+        }
+
+    fun resizeBitmap(bitmap: Bitmap): Bitmap {
+        return Bitmap.createScaledBitmap(bitmap, 256, 256, true)
+    }
+
+    fun procesarBitmap(bitmap: Bitmap) {
+        Log.i("PROCESAR BITMAP", "Procesando Bitmap")
+
+        val resized = resizeBitmap(bitmap)
+
+        val file = bitmapToFile(resized, requireContext())
+
+        val nombreArchivo = "AVATAR_"
+        subirAvatar(file)
+    }
+    fun subirAvatar(file: File) {
+        Log.i("SUBIR AVATAR", "Subiendo Avatar")
+        val requestFile =
+            file.asRequestBody("image/png".toMediaTypeOrNull())
+
+        val body =
+            MultipartBody.Part.createFormData("avatar", file.name, requestFile)
+
+        homeViewModel.uploadAvatar(body)
+    }
+
+    fun bitmapToFile(bitmap: Bitmap, context: Context): File {
+        val file = File(context.cacheDir, "avatar.png")
+        val stream = FileOutputStream(file)
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+        stream.flush()
+        stream.close()
+
+        return file
     }
 
     @SuppressLint("SetTextI18n")
@@ -92,42 +144,44 @@ class HomePageFragment : Fragment() {
         }
 
         binding.campanitaIcon.setOnClickListener {
+
+          /*
             binding.transactionsRecyclerView.apply {
                 adapter = transaccionAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
             transactionViewModel.getTransaccionesSimple()
-//            binding.frameLayoutEmptyTransactions.isVisible =
-//                !binding.frameLayoutEmptyTransactions.isVisible
-//            binding.fragmentContainerView.isVisible =
-//                !binding.fragmentContainerView.isVisible
-        }
+           */
 
+          //  pickImage.launch("image/*")
+            takePicture.launch(null)
+
+        }
 
 
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var codigo: String? = ""
-//                launch {
-//                    homeViewModel.balance.collect {state->
-//                        when (state) {
-//                            is UiState.Idle -> {}
-//                            is UiState.Loading -> {
-//                                Log.d("HOME_FRAGMENT", "Cargando balance...")
-//                            }
-//                            is UiState.Success -> {
-//                                binding.actualBalanceText.setText(state.data.balance.toString())
-//                            }
-//
-//                            is UiState.Error -> {
-//                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
-//                            }
-//                        }
-//
-//                    }
-//
-//                }
+                launch {
+                    homeViewModel.uploadAvatarEvent.collect {state->
+                        when (state) {
+                            is UiState.Idle -> {}
+                            is UiState.Loading -> {
+                                Log.d("HOME_FRAGMENT", "Subiendo Avatar...")
+                            }
+                            is UiState.Success -> {
+                                Log.i("HOME_FRAGMENT", "AVATAR SUBIDO")
+                            }
+
+                            is UiState.Error -> {
+                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+                            }
+                        }
+
+                    }
+
+                }
                 launch {
                     combine(
                         homeViewModel.usuarioConMoneda,

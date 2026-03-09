@@ -20,6 +20,8 @@ interface UsuarioDAO {
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
     fun getUsuario(): Flow<Usuario>
 
+    @Query("UPDATE usuarios SET isLoggedUser = 0")
+    suspend fun logoutAllUsers()
 
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
     fun getUsuarioConMoneda(): Flow<UsuarioConMoneda>

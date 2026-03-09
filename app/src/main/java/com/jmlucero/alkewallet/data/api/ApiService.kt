@@ -1,6 +1,7 @@
 package com.jmlucero.alkewallet.data.api
 
 
+import com.jmlucero.alkewallet.data.model.AvatarResponse
 import com.jmlucero.alkewallet.data.model.Balance
 import com.jmlucero.alkewallet.data.model.Deposito
 import com.jmlucero.alkewallet.data.model.DepositoResponse
@@ -9,6 +10,8 @@ import com.jmlucero.alkewallet.data.model.LoginResponse
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.RetiroResponse
+import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
+import com.jmlucero.alkewallet.data.model.SignUpResponse
 import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.Transferencia
@@ -17,12 +20,15 @@ import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.room.MonedaDTO
 import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
+import okhttp3.MultipartBody
 import retrofit2.Response
 
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiService {
@@ -53,6 +59,9 @@ interface ApiService {
     suspend fun getTransaccionesSimple(): Response<List<TransaccionSimple>>
 
 
+    @GET("api/monedas")
+    suspend fun  getCurrencies(): Response<List<Moneda>>
+
     @GET("api/usuarios/me/balance")
     suspend fun getBalance(): Response<Balance>
 
@@ -71,7 +80,14 @@ interface ApiService {
 
     @POST("api/transferencia")
     suspend fun transferencia(@Body request: Transferencia): Response<TransferenciaResponse>
+    @Multipart
+    @POST("api/avatar")
+    suspend fun uploadAvatar(
+        @Part avatar: MultipartBody.Part
+    ): Response<AvatarResponse>
 
+    @POST("api/signup")
+    suspend fun signUpUsuario(@Body signUpNuevoUsuario: SignUpNuevoUsuario): Response<SignUpResponse>
 
 
 }

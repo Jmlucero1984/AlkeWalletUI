@@ -12,12 +12,13 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-   private const val BASE_URL = "http://10.0.2.2:8000/"
+    private const val BASE_URL = "http://10.0.2.2:8000/"
+
     //private const val BASE_URL = "https://alkewallet.stehenmed.cl/"
     //En el servidor local hay que correr:
     // php -S 0.0.0.0:8000 -t public
-
-
+    //private const val BASE_URL = "http://192.168.100.11:8000/"
+    //php -S 0.0.0.0:8000 -t public
     // Interceptor para añadir token automáticamente
     class AuthInterceptor(private var token: String? = null) : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
