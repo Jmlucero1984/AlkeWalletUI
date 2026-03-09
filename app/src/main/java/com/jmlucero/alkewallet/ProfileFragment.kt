@@ -1,5 +1,7 @@
 package com.jmlucero.alkewallet
 
+import android.content.Context
+import android.graphics.Bitmap
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentProviderCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +24,11 @@ import com.jmlucero.alkewallet.viewmodel.ProfileViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.io.FileOutputStream
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -47,12 +56,42 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
+    fun onPhotoTaken(bitmap: Bitmap) {
+        val resized = resizeBitmap(bitmap)
+        val file = bitmapToFile(resized,requireContext())
+        profileViewModel.subirAvatar(file)
+    }
+    fun bitmapToFile(bitmap: Bitmap, context: Context): File {
+        val file = File(context.cacheDir, "avatar.png")
+        val stream = FileOutputStream(file)
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+        stream.flush()
+        stream.close()
+
+        return file
+    }
+    fun resizeBitmap(bitmap: Bitmap): Bitmap {
+        return Bitmap.createScaledBitmap(bitmap, 256, 256, true)
+    }
+
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            bitmap?.let {
+                onPhotoTaken(it)
+            }
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         profileViewModel = ViewModelProvider(requireActivity())[ProfileViewModel::class.java]
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_homePageFragment)
+        }
+
+        binding.avatarUsuario.setOnClickListener {
+            takePicture.launch(null)
         }
 
     viewLifecycleOwner.lifecycleScope.launch {

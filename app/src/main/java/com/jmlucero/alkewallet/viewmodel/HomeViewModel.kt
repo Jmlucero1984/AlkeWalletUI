@@ -42,16 +42,7 @@ class HomeViewModel @Inject constructor(
             }
 
 
-    private val _uploadAvatarEvent =MutableSharedFlow<UiState<AvatarResponse>>()
-    val uploadAvatarEvent= _uploadAvatarEvent.asSharedFlow()
 
-    fun uploadAvatar(avatar: MultipartBody.Part) {
-        viewModelScope.launch {
-            repository.uploadAvatar(avatar).collect {
-                _uploadAvatarEvent.emit(it)
-            }
-        }
-    }
 
 }
 

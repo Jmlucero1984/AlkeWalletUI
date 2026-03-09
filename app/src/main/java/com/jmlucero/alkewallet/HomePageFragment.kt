@@ -68,47 +68,7 @@ class HomePageFragment : Fragment() {
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
         return binding.root
     }
-    private val takePicture =
-        registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
-            bitmap?.let { procesarBitmap(it) }
-        }
 
-    fun resizeBitmap(bitmap: Bitmap): Bitmap {
-        return Bitmap.createScaledBitmap(bitmap, 256, 256, true)
-    }
-
-    fun procesarBitmap(bitmap: Bitmap) {
-        Log.i("PROCESAR BITMAP", "Procesando Bitmap")
-
-        val resized = resizeBitmap(bitmap)
-
-        val file = bitmapToFile(resized, requireContext())
-
-        val nombreArchivo = "AVATAR_"
-        subirAvatar(file)
-    }
-    fun subirAvatar(file: File) {
-        Log.i("SUBIR AVATAR", "Subiendo Avatar")
-        val requestFile =
-            file.asRequestBody("image/png".toMediaTypeOrNull())
-
-        val body =
-            MultipartBody.Part.createFormData("avatar", file.name, requestFile)
-
-        homeViewModel.uploadAvatar(body)
-    }
-
-    fun bitmapToFile(bitmap: Bitmap, context: Context): File {
-        val file = File(context.cacheDir, "avatar.png")
-        val stream = FileOutputStream(file)
-
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-
-        stream.flush()
-        stream.close()
-
-        return file
-    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -145,16 +105,16 @@ class HomePageFragment : Fragment() {
 
         binding.campanitaIcon.setOnClickListener {
 
-          /*
+
             binding.transactionsRecyclerView.apply {
                 adapter = transaccionAdapter
                 layoutManager = LinearLayoutManager(requireContext())
             }
             transactionViewModel.getTransaccionesSimple()
-           */
+
 
           //  pickImage.launch("image/*")
-            takePicture.launch(null)
+           // takePicture.launch(null)
 
         }
 

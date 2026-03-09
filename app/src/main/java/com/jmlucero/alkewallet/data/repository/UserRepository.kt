@@ -57,6 +57,8 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
         return  cuentaDAO.getCuenta(usuario_email)
     }
 
+
+
     suspend fun getUsuarioPorEmail(email: String): Flow<UiState<UsuarioMonedaDTO>> =
         safeApiCall {
             apiService.getUsuarioPorEmail(email)
@@ -84,7 +86,7 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
             apiService.deposito(deposito)
         }
 
-    fun uploadAvatar(avatar: MultipartBody.Part):Flow<UiState<AvatarResponse>> =
+    suspend fun uploadAvatar(avatar: MultipartBody.Part):Flow<UiState<AvatarResponse>> =
         safeApiCall {
             apiService.uploadAvatar(avatar)
         }
