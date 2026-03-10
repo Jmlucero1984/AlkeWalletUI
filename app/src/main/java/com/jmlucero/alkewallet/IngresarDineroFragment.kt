@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -17,15 +18,17 @@ import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
+import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 
 class IngresarDineroFragment : Fragment() {
-
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var _binding: FragmentIngresarDineroBinding? = null
     private val binding get() = _binding!!
     private lateinit var userViewModel: UserViewModel
@@ -60,7 +63,7 @@ class IngresarDineroFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
-                    userViewModel.depositoState.collect { state ->
+                    userViewModel.depositoEvent.collect { state ->
                         when (state) {
                             is UiState.Idle -> {}
                             is UiState.Loading -> {
@@ -68,9 +71,16 @@ class IngresarDineroFragment : Fragment() {
                             }
 
                             is UiState.Success -> {
-                                Toast.makeText(context,state.data.mensaje, Toast.LENGTH_LONG).show()
+
+                                sharedViewModel.setMensaje(state.data.mensaje)
                                 binding.ingreseCantidad.setText("")
                                 binding.ingreseNota.setText("")
+                                userViewModel.onDepositoSuccess(
+                                    state.data.nuevo_saldo.toString())
+                                findNavController().navigate(R.id.action_back_to_home)
+
+
+
                             }
 
                             is UiState.Error -> {
@@ -82,6 +92,8 @@ class IngresarDineroFragment : Fragment() {
                     }
 
                 }
+
+
                 launch {
                     userViewModel.usuario.collect { usuario ->
 
@@ -91,10 +103,10 @@ class IngresarDineroFragment : Fragment() {
                             binding.emailUsuario.text =
                                 usuario.email.toString()
 
-                            var url = usuario.avatar_url.substring(1,usuario.avatar_url.length-1)
+
 
                             Picasso.get()
-                                .load(url)
+                                .load(usuario.avatar_url)
                                 .placeholder(R.drawable.profile_svgrepo_com)
                                 .error(R.drawable.profile_svgrepo_com)
                                 .fit()

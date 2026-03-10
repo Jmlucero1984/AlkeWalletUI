@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
+import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
@@ -38,7 +39,7 @@ class EnviarDineroFragment : Fragment() {
     private var ratio_a_dolar_usuario_destino: Double? = null
     private var email_usuario_destino: String = ""
     private var balanceActual: BigDecimal? = null
-
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -200,8 +201,15 @@ class EnviarDineroFragment : Fragment() {
                             is UiState.Success -> {
                                 resetFields()
                                 hideAllElements()
-                                Toast.makeText(context, state.data.mensaje, Toast.LENGTH_LONG).show()
-                            }
+                                sharedViewModel.setMensaje(state.data.mensaje)
+                                userViewModel.onTransferSuccess(
+                                    state.data.nuevo_saldo.toString())
+                                findNavController().navigate(R.id.action_back_to_home)
+
+
+
+                                }
+
 
                             is UiState.Error -> {
                                 Toast.makeText(context, state.message, Toast.LENGTH_LONG).show()

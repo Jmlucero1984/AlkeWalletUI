@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Usuario
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +13,12 @@ interface CuentaDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCuenta(cuenta: Cuenta)
 
-    @Query("SELECT * FROM cuentas WHERE usuario_email= :usuario_email")
+    @Query("UPDATE cuentas SET balance = :balance WHERE usuarioEmail = :usuario_email")
+    suspend fun updateBalance(balance: String, usuario_email: String)
+
+
+
+    @Query("SELECT * FROM cuentas WHERE usuarioEmail= :usuario_email")
     fun getCuenta(usuario_email:String): Flow<Cuenta>
 }
 

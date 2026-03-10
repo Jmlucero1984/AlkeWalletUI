@@ -52,6 +52,7 @@
         android:id="@+id/homePageFragment"
         android:name="com.jmlucero.alkewallet.HomePageFragment"
         android:label="Home">
+
         <action
             android:id="@+id/action_home_to_enviarDinero"
             app:destination="@id/enviarDineroFragment" />

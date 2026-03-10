@@ -15,8 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.time.delay
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     private var keepSplashOnScreen = true
     override fun onCreate(savedInstanceState: Bundle?) {
+
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition {
             keepSplashOnScreen

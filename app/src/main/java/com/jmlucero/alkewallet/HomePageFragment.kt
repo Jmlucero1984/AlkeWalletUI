@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -23,6 +25,7 @@ import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.ui.home.TransaccionAdapter
 import com.jmlucero.alkewallet.ui.home.UsuarioAdapter
 import com.jmlucero.alkewallet.viewmodel.HomeViewModel
+import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.TransactionViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Callback
@@ -51,6 +54,7 @@ class HomePageFragment : Fragment() {
     private lateinit var usuarioAdapter: UsuarioAdapter
     private lateinit var transaccionAdapter: TransaccionAdapter
     private lateinit var homeViewModel: HomeViewModel
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +77,8 @@ class HomePageFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         usuarioAdapter = UsuarioAdapter()
@@ -80,8 +86,6 @@ class HomePageFragment : Fragment() {
         transactionViewModel =
             ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
         transaccionAdapter = TransaccionAdapter()
-
-
 
 
 
@@ -121,27 +125,42 @@ class HomePageFragment : Fragment() {
 
 
         viewLifecycleOwner.lifecycleScope.launch {
+
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var codigo: String? = ""
+//                launch {
+//                    homeViewModel.uploadAvatarEvent.collect {state->
+//                        when (state) {
+//                            is UiState.Idle -> {}
+//                            is UiState.Loading -> {
+//                                Log.d("HOME_FRAGMENT", "Subiendo Avatar...")
+//                            }
+//                            is UiState.Success -> {
+//                                Log.i("HOME_FRAGMENT", "AVATAR SUBIDO")
+//                            }
+//
+//                            is UiState.Error -> {
+//                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
+//                            }
+//                        }
+//
+//                    }
+//
+//                }
                 launch {
-                    homeViewModel.uploadAvatarEvent.collect {state->
-                        when (state) {
-                            is UiState.Idle -> {}
-                            is UiState.Loading -> {
-                                Log.d("HOME_FRAGMENT", "Subiendo Avatar...")
-                            }
-                            is UiState.Success -> {
-                                Log.i("HOME_FRAGMENT", "AVATAR SUBIDO")
-                            }
+                    sharedViewModel.mensajePendiente.observe(viewLifecycleOwner) { mensaje ->
+                        Log.i("VIEW CREATED", "mensajePendiente: ")
+                        if (!mensaje.isNullOrEmpty()) {
+                            Log.i("VIEW CREATED", "Mensaje: "+mensaje)
+                            // 3. Mostrar el mensaje
+                            Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show()
 
-                            is UiState.Error -> {
-                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
-                            }
+                            // 4. Limpiar para que no se repita si el fragment se recrea
+                            sharedViewModel.limpiarMensaje()
                         }
-
                     }
-
                 }
+
                 launch {
                     combine(
                         homeViewModel.usuarioConMoneda,
