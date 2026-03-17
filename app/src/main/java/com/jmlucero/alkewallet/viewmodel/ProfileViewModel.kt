@@ -32,6 +32,10 @@ class ProfileViewModel @Inject constructor(
     private val _uploadAvatarEvent =MutableSharedFlow<UiState<AvatarResponse>>()
     val uploadAvatarEvent= _uploadAvatarEvent.asSharedFlow()
 
+
+    suspend fun updateAvatarUrl(avatarUrl: String) {
+        repository.updateUsuarioLocalAvatar(avatarUrl)
+    }
     fun uploadAvatar(avatar: MultipartBody.Part) {
         viewModelScope.launch {
             repository.uploadAvatar(avatar).collect {

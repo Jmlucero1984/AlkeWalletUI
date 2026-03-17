@@ -2,5 +2,5 @@ package com.jmlucero.alkewallet.data.model.response
 
 data class AvatarResponse(
     val mensaje:String,
-    val nombreArchivo:String
+    val nuevaUrlAvatar:String
 )

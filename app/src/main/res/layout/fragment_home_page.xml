@@ -15,7 +15,7 @@
         <FrameLayout
             android:id="@+id/superiorFrameLayout"
             android:layout_width="0dp"
-            android:layout_height="295dp"
+            android:layout_height="250dp"
             android:background="@drawable/home_page_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,12 +79,6 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </FrameLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-
-                        />
-
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -111,7 +105,7 @@
                                 android:fontFamily="@font/meta_pro_bold"
                                 android:gravity="center|left"
                                 android:text="@string/hola_usuario"
-                                android:textColor="#CBDEDEDE"
+                                android:textColor="#CBEFEFEF"
                                 android:textSize="16sp"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />

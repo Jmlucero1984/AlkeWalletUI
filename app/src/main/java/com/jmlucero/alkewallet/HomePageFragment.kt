@@ -153,7 +153,7 @@ class HomePageFragment : Fragment() {
                     homeViewModel.usuarioConMoneda.collect { usuarioConMoneda ->
 
                         binding.perfilNombreUsuario.text =
-                            "Hola ${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
+                            "Hola ${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}!"
                         var url = usuarioConMoneda.usuario.avatar_url
                         Picasso.get()
                             .load(url)

@@ -46,6 +46,10 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
     suspend fun updateBalance(balance: String, usuarioEmail:String) {
         cuentaDAO.updateBalance(balance,usuarioEmail)
     }
+
+    suspend fun updateUsuarioLocalAvatar(url:String) {
+        usuarioDAO.updateAvatar(url)
+    }
     fun getUsuarioLocal(): Flow<Usuario> {
         return  usuarioDAO.getUsuario()
     }

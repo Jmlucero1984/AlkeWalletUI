@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.response.AvatarResponse
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
 import com.jmlucero.alkewallet.databinding.FragmentProfileBinding
 import com.jmlucero.alkewallet.viewmodel.ProfileViewModel
@@ -56,11 +57,13 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     fun onPhotoTaken(bitmap: Bitmap) {
         val resized = resizeBitmap(bitmap)
-        val file = bitmapToFile(resized,requireContext())
+        val file = bitmapToFile(resized, requireContext())
         profileViewModel.subirAvatar(file)
     }
+
     fun bitmapToFile(bitmap: Bitmap, context: Context): File {
         val file = File(context.cacheDir, "avatar.png")
         val stream = FileOutputStream(file)
@@ -72,6 +75,7 @@ class ProfileFragment : Fragment() {
 
         return file
     }
+
     fun resizeBitmap(bitmap: Bitmap): Bitmap {
         return Bitmap.createScaledBitmap(bitmap, 256, 256, true)
     }
@@ -94,14 +98,30 @@ class ProfileFragment : Fragment() {
             takePicture.launch(null)
         }
 
-    viewLifecycleOwner.lifecycleScope.launch {
-        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            launch {
-                profileViewModel.usuario.collect { usuario ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    profileViewModel.uploadAvatarEvent.collect { state ->
+                        when (state) {
+                            is UiState.Error -> Log.i("UPLOAD_ERROR",state.message)
+                            UiState.Idle -> Log.i("UPLOAD_IDLE","IDDLE")
+                            UiState.Loading -> Log.i("UPLOAD_LOADING","LOADING")
+                            is UiState.Success<AvatarResponse> -> {
+                                Log.i("UPLOAD_SUCCESS",state.data.nuevaUrlAvatar)
+                                profileViewModel.updateAvatarUrl(state.data.nuevaUrlAvatar)
+                            }
+
+                        }
+                    }
+                }
+
+                launch {
+                    profileViewModel.usuario.collect { usuario ->
 
 
                         binding.perfilNombreUsuario.setText(
-                            "${usuario.nombre} ${usuario.apellido}")
+                            "${usuario.nombre} ${usuario.apellido}"
+                        )
 
                         var url = usuario.avatar_url//.substring(1, usuario.avatar_url.length - 1)
 
