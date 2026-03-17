@@ -1,16 +1,18 @@
-package com.jmlucero.alkewallet.data.room
+package com.jmlucero.alkewallet.data.room.db
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
+import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import kotlin.String
 
 @Module
 @InstallIn(SingletonComponent::class)

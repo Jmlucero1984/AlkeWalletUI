@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet.data.model
+package com.jmlucero.alkewallet.data.model.response
 
 data class LoginResponse(
     val token: String,

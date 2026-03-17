@@ -2,8 +2,8 @@ package com.jmlucero.alkewallet.data.mapper
 
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.room.MonedaDTO
-import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
+import com.jmlucero.alkewallet.data.room.dto.MonedaDTO
+import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 
 
     fun UsuarioMonedaDTO.toUsuario(owner: Boolean): Usuario {

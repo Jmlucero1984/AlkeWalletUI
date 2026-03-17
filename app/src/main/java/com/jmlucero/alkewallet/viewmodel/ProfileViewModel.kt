@@ -1,13 +1,9 @@
 package com.jmlucero.alkewallet.viewmodel
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jmlucero.alkewallet.data.model.AvatarResponse
+import com.jmlucero.alkewallet.data.model.response.AvatarResponse
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.repository.UserRepository
@@ -22,7 +18,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.io.FileOutputStream
 import javax.inject.Inject
 
 @HiltViewModel

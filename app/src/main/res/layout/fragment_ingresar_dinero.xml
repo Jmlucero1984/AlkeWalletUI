@@ -180,9 +180,10 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:ems="10"
+
             android:fontFamily="@font/meta_pro_bold"
             android:gravity="center|left"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:text="@string/notas_de_transferencia" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -199,7 +200,7 @@
             app:boxStrokeColor="#094464">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingreseNota"
+                android:id="@+id/notaDepositoInput"
                 android:layout_width="match_parent"
                 android:layout_height="284dp"
                 android:fontFamily="@font/meta_pro_normal"

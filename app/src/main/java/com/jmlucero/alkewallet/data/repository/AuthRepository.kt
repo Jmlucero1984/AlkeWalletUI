@@ -4,25 +4,19 @@ import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.mapper.toMoneda
 import com.jmlucero.alkewallet.data.mapper.toUsuario
 import com.jmlucero.alkewallet.data.model.Cuenta
-import com.jmlucero.alkewallet.data.model.DateTime
 
 import com.jmlucero.alkewallet.data.model.LoginRequest
-import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.response.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
-import com.jmlucero.alkewallet.data.room.CuentaDAO
-import com.jmlucero.alkewallet.data.room.MonedaDAO
-import com.jmlucero.alkewallet.data.room.UsuarioDAO
-import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
+import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
+import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
+import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import retrofit2.Response
-import java.sql.Date
-import java.sql.Time
-import java.time.ZonedDateTime
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO,

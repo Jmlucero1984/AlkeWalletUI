@@ -1,4 +1,6 @@
-package com.jmlucero.alkewallet.data.room
+package com.jmlucero.alkewallet.data.room.dto
+
+import com.jmlucero.alkewallet.data.room.dto.MonedaDTO
 
 data class UsuarioMonedaDTO(
     val usuario_id: Int,

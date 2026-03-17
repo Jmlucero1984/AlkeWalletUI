@@ -1,25 +1,23 @@
 package com.jmlucero.alkewallet.data.api
 
 
-import com.jmlucero.alkewallet.data.model.AvatarResponse
+import com.jmlucero.alkewallet.data.model.response.AvatarResponse
 import com.jmlucero.alkewallet.data.model.Balance
 import com.jmlucero.alkewallet.data.model.Deposito
-import com.jmlucero.alkewallet.data.model.DepositoResponse
+import com.jmlucero.alkewallet.data.model.response.DepositoResponse
 import com.jmlucero.alkewallet.data.model.LoginRequest
-import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.response.LoginResponse
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.Retiro
-import com.jmlucero.alkewallet.data.model.RetiroResponse
+import com.jmlucero.alkewallet.data.model.response.RetiroResponse
 import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
-import com.jmlucero.alkewallet.data.model.SignUpResponse
+import com.jmlucero.alkewallet.data.model.response.SignUpResponse
 import com.jmlucero.alkewallet.data.model.Transaccion
 import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.data.model.Transferencia
-import com.jmlucero.alkewallet.data.model.TransferenciaResponse
+import com.jmlucero.alkewallet.data.model.response.TransferenciaResponse
 import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
-import com.jmlucero.alkewallet.data.room.MonedaDTO
-import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
+import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import okhttp3.MultipartBody
 import retrofit2.Response
 

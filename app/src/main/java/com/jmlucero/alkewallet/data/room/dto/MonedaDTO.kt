@@ -1,5 +1,4 @@
-package com.jmlucero.alkewallet.data.room
-
+package com.jmlucero.alkewallet.data.room.dto
 
 data class MonedaDTO(
     val codigo: String,

@@ -2,8 +2,8 @@
     <string name="app_name">AlkeWallet</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hola fragmento vacio</string>
-    <string name="ya_tiene_cuenta_pregunta">Ya tiene cuenta?</string>
-    <string name="crear_cuenta_nueva">Crear cuenta nueva</string>
+    <string name="no_tiene_cuenta_pregunta">Aún no tiene cuenta?</string>
+    <string name="btn_login">Login</string>
     <string name="app_lema">El lugar más seguro para tu dinero</string>
     <string name="crear_nueva_cuenta">Crear una nueva cuenta</string>
     <string name="login">Login</string>

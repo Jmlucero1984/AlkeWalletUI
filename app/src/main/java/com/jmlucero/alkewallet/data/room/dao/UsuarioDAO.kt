@@ -1,12 +1,10 @@
-package com.jmlucero.alkewallet.data.room
+package com.jmlucero.alkewallet.data.room.dao
 
-import androidx.lifecycle.Lifecycle
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import kotlinx.coroutines.flow.Flow

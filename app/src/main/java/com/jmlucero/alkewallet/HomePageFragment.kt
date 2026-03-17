@@ -1,8 +1,6 @@
 package com.jmlucero.alkewallet
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -20,7 +17,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.ui.home.TransaccionAdapter
 import com.jmlucero.alkewallet.ui.home.UsuarioAdapter
@@ -30,17 +26,9 @@ import com.jmlucero.alkewallet.viewmodel.TransactionViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import java.io.File
-import java.io.FileOutputStream
-import java.sql.Date
-import java.text.SimpleDateFormat
-import kotlin.text.format
+import java.math.BigDecimal
 
 
 class HomePageFragment : Fragment() {
@@ -106,19 +94,19 @@ class HomePageFragment : Fragment() {
             findNavController().navigate(R.id.action_home_to_ingresarDinero)
 
         }
-
+        binding.transactionsRecyclerView.apply {
+            adapter = transaccionAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+        transactionViewModel.getTransaccionesSimple()
         binding.campanitaIcon.setOnClickListener {
 
 
-            binding.transactionsRecyclerView.apply {
-                adapter = transaccionAdapter
-                layoutManager = LinearLayoutManager(requireContext())
-            }
-            transactionViewModel.getTransaccionesSimple()
+            // transactionViewModel.getTransaccionesSimple()
 
 
-          //  pickImage.launch("image/*")
-           // takePicture.launch(null)
+            //  pickImage.launch("image/*")
+            // takePicture.launch(null)
 
         }
 
@@ -128,34 +116,12 @@ class HomePageFragment : Fragment() {
 
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var codigo: String? = ""
-//                launch {
-//                    homeViewModel.uploadAvatarEvent.collect {state->
-//                        when (state) {
-//                            is UiState.Idle -> {}
-//                            is UiState.Loading -> {
-//                                Log.d("HOME_FRAGMENT", "Subiendo Avatar...")
-//                            }
-//                            is UiState.Success -> {
-//                                Log.i("HOME_FRAGMENT", "AVATAR SUBIDO")
-//                            }
-//
-//                            is UiState.Error -> {
-//                                Log.e("HOME_FRAGMENT", "Error: ${state.message}")
-//                            }
-//                        }
-//
-//                    }
-//
-//                }
                 launch {
                     sharedViewModel.mensajePendiente.observe(viewLifecycleOwner) { mensaje ->
                         Log.i("VIEW CREATED", "mensajePendiente: ")
                         if (!mensaje.isNullOrEmpty()) {
-                            Log.i("VIEW CREATED", "Mensaje: "+mensaje)
-                            // 3. Mostrar el mensaje
+                            Log.i("VIEW CREATED", "Mensaje: " + mensaje)
                             Toast.makeText(context, mensaje, Toast.LENGTH_SHORT).show()
-
-                            // 4. Limpiar para que no se repita si el fragment se recrea
                             sharedViewModel.limpiarMensaje()
                         }
                     }
@@ -175,9 +141,9 @@ class HomePageFragment : Fragment() {
 
                         Log.i("INFORMACION MONEDA", codigo)
                         Log.i("INFORMACION CUENTA", cuenta.balance.toString())
+                        val bf = BigDecimal(cuenta.balance).setScale(2, BigDecimal.ROUND_HALF_UP)
 
-                        binding.actualBalanceText.text =
-                            "$${cuenta.balance} $codigo"
+                        binding.actualBalanceText.text = "$${bf} $codigo"
 
                     }
                 }
@@ -274,7 +240,7 @@ class HomePageFragment : Fragment() {
                                     binding.frameLayoutEmptyTransactions.isVisible = false
                                     binding.transactionsRecyclerView.isVisible = true
 
-                                    transaccionAdapter.submitList(state.data)
+                                    transaccionAdapter.submitList(state.data,context)
                                 }
                             }
 

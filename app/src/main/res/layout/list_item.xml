@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="75dp"
     android:orientation="horizontal"
+    android:paddingLeft="8dp"
     android:paddingTop="5dp"
+    android:paddingRight="13dp"
     android:paddingBottom="10dp">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_weight="2"
@@ -31,8 +34,8 @@
                 <ImageView
                     android:id="@+id/avatar_usuario"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="5dp"
                     android:adjustViewBounds="true"
                     android:clipToOutline="true"
                     android:contentDescription="TODO"
@@ -40,6 +43,23 @@
                     tools:srcCompat="@drawable/avatar_1" />
 
             </com.google.android.material.card.MaterialCardView>
+
+            <ImageView
+                android:id="@+id/iconSaleDinero"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+                app:srcCompat="@drawable/up_orange" />
+
+            <ImageView
+                android:id="@+id/iconEntraDinero"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+                app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+                app:srcCompat="@drawable/down_blue" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
@@ -57,7 +77,19 @@
             android:fontFamily="@font/metaproblack"
             android:text="@tools:sample/full_names"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/metaproblack"
+            android:text="Oct 12, 02:13 PM"
+            android:textColor="@color/darkgray"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -69,7 +101,7 @@
             android:fontFamily="@font/metaproblack"
             android:text="Oct 12, 02:13 PM"
             android:textColor="@color/darkgray"
-            android:textSize="16sp"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -79,12 +111,12 @@
         android:id="@+id/itemId"
         android:layout_width="20dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="6"
         android:fontFamily="@font/metaproblack"
-        android:gravity="center"
+        android:gravity="center|right"
         android:text="-$15.00"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

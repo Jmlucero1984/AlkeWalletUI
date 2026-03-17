@@ -45,11 +45,11 @@ class AuthSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textoYaTieneCuenta.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             findNavController().navigate(R.id.action_auth_to_login)
         }
 
-        binding.botonCrearCuenta.setOnClickListener {
+        binding.txtNoTieneCuenta.setOnClickListener {
             findNavController().navigate(R.id.action_auth_to_signin)
         }
     }

@@ -1,14 +1,11 @@
 package com.jmlucero.alkewallet.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jmlucero.alkewallet.data.model.LoginResponse
+import com.jmlucero.alkewallet.data.model.response.LoginResponse
 import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.repository.AuthRepository
-import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
+import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

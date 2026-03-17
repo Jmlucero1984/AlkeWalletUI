@@ -66,7 +66,7 @@ class SignUpPageFragment : Fragment() {
         signUpViewModel = ViewModelProvider(this)[SignUpViewModel::class.java]
         signUpViewModel.getCurrencies()
 
-        binding.textoYaTieneCuenta.setOnClickListener {
+        binding.txtYaTieneCuenta.setOnClickListener {
             findNavController().navigate(R.id.action_signin_to_login)
         }
 

@@ -1,12 +1,14 @@
-package com.jmlucero.alkewallet.data.room
+package com.jmlucero.alkewallet.data.room.db
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
-import android.service.chooser.AdditionalContentContract
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
+import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 
 @Database(
     entities = [Usuario::class, Cuenta::class, Moneda::class],

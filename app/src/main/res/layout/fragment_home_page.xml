@@ -193,7 +193,7 @@
                         android:layout_width="0dp"
                         android:layout_height="65dp"
                         android:layout_weight="13"
-                        android:backgroundTint="@color/green"
+                        android:backgroundTint="@color/orange"
                         android:text="@string/enviar_dinero"
                         android:textColor="@color/black"
                         app:cornerRadius="15dp"

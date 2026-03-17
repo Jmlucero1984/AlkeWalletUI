@@ -1,11 +1,10 @@
-package com.jmlucero.alkewallet.data.room
+package com.jmlucero.alkewallet.data.room.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.jmlucero.alkewallet.data.model.Moneda
-import com.jmlucero.alkewallet.data.model.Usuario
 import kotlinx.coroutines.flow.Flow
 @Dao
 interface MonedaDAO{

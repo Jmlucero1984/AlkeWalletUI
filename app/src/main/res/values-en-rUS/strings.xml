@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">AlkeWallet</string>
     <string name="hello_blank_fragment">Hello Blank Fragment</string>
-    <string name="ya_tiene_cuenta_pregunta">Already have account?</string>
-    <string name="crear_cuenta_nueva">Create new account</string>
+    <string name="no_tiene_cuenta_pregunta">Not have account?</string>
+    <string name="btn_login">Create new account</string>
     <string name="app_lema">The safest place for your money</string>
     <string name="crear_nueva_cuenta">Create a new account</string>
     <string name="login">Login</string>

@@ -133,7 +133,8 @@ class EnviarDineroFragment : Fragment() {
                                 Transferencia(
                                     email_usuario_destino,
                                     binding.ingreseCantidad.text.toString(),
-                                    "REALIZA TCDM MMD"
+                                    "REALIZA TCDM MMD",
+                                    binding.notaTransfInput.text.toString(),
                                 )
                             )
                         }
@@ -162,7 +163,8 @@ class EnviarDineroFragment : Fragment() {
                                 Transferencia(
                                     email_usuario_destino,
                                     binding.ingreseCantidad.text.toString(),
-                                    "REALIZA TCDM MMO"
+                                    "REALIZA TCDM MMO",
+                                    binding.notaTransfInput.text.toString(),
                                 )
                             )
                         }
@@ -178,7 +180,9 @@ class EnviarDineroFragment : Fragment() {
                             Transferencia(
                                 email_usuario_destino,
                                 montoEfectivo.toString(),
-                                "REALIZA TCIM"
+                                "REALIZA TCIM",
+                                binding.notaTransfInput.text.toString(),
+
                             )
                         )
                     }

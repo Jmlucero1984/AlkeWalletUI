@@ -56,7 +56,7 @@ class IngresarDineroFragment : Fragment() {
             val monto = BigDecimal(binding.ingreseCantidad.getText().toString())
 
 
-            userViewModel.depositar(Deposito(monto))
+            userViewModel.depositar(Deposito(monto,binding.notaDepositoInput.text.toString()))
 
         }
 
@@ -74,7 +74,7 @@ class IngresarDineroFragment : Fragment() {
 
                                 sharedViewModel.setMensaje(state.data.mensaje)
                                 binding.ingreseCantidad.setText("")
-                                binding.ingreseNota.setText("")
+                                binding.notaDepositoInput.setText("")
                                 userViewModel.onDepositoSuccess(
                                     state.data.nuevo_saldo.toString())
                                 findNavController().navigate(R.id.action_back_to_home)

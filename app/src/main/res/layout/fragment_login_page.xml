@@ -108,6 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center|left"
+                android:inputType="textEmailAddress"
                 android:text="@string/contrasenia" />
 
             <com.google.android.material.textfield.TextInputLayout

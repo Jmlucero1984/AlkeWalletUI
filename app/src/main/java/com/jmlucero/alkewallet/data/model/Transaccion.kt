@@ -15,6 +15,7 @@ data class Transaccion(
     val tipo_transaccion:String,
     val monto: BigDecimal,
     val cantidad_efectiva: BigDecimal,
+    val comentario: String,
     val fecha_creacion: DateTime
 
 

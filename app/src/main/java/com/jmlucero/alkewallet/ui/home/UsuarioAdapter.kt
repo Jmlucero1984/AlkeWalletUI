@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.ui.home
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,9 +10,11 @@ import com.jmlucero.alkewallet.databinding.ListItemBinding
 class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
 
     private var usuarios: List<Usuario> = emptyList()
+    private lateinit var context: Context
 
     fun submitList(lista: List<Usuario>) {
         usuarios = lista
+
         notifyDataSetChanged()
     }
 

@@ -2,29 +2,18 @@ package com.jmlucero.alkewallet.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jmlucero.alkewallet.data.model.AvatarResponse
-import com.jmlucero.alkewallet.data.model.Deposito
-import com.jmlucero.alkewallet.data.model.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
-import com.jmlucero.alkewallet.data.model.SignUpResponse
-import com.jmlucero.alkewallet.data.model.TransaccionSimple
-import com.jmlucero.alkewallet.data.model.Transferencia
-import com.jmlucero.alkewallet.data.model.TransferenciaResponse
+import com.jmlucero.alkewallet.data.model.response.SignUpResponse
 import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.repository.MonedaRepository
 import com.jmlucero.alkewallet.data.repository.UserRepository
-import com.jmlucero.alkewallet.data.room.UsuarioMonedaDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
 import javax.inject.Inject
 
 
