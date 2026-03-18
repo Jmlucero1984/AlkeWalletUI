@@ -1,6 +1,8 @@
 package com.jmlucero.alkewallet.data.repository
 
+import com.jmlucero.alkewallet.data.api.ApiService
 import com.jmlucero.alkewallet.data.api.RetrofitClient
+import com.jmlucero.alkewallet.data.api.SessionManager
 import com.jmlucero.alkewallet.data.mapper.toMoneda
 import com.jmlucero.alkewallet.data.mapper.toUsuario
 import com.jmlucero.alkewallet.data.model.Cuenta
@@ -19,11 +21,14 @@ import kotlinx.coroutines.flow.onEach
 import retrofit2.Response
 import javax.inject.Inject
 
-class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO,
+class AuthRepository @Inject constructor(
+    private val sessionManager: SessionManager,
+    private val apiService: ApiService,
+    private val usuarioDao: UsuarioDAO,
     private val cuentaDAO: CuentaDAO,
     private val monedaDAO: MonedaDAO){
 
-    private val apiService = RetrofitClient.apiService
+
     suspend fun getCurrentUser(
     ): Flow<UiState<UsuarioMonedaDTO>> =
         safeApiCall {
@@ -50,7 +55,8 @@ class AuthRepository @Inject constructor( private val usuarioDao: UsuarioDAO,
             apiService.login(LoginRequest(email, password))
         }.onEach { state ->
             if (state is UiState.Success) {
-                RetrofitClient.updateToken(state.data.token)
+                sessionManager.saveToken(state.data.token)
+            //RetrofitClient.updateToken(state.data.token)
             }
         }
 

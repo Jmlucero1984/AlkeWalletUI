@@ -1,35 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AlkeWallet</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hola fragmento vacio</string>
-    <string name="no_tiene_cuenta_pregunta">Aún no tiene cuenta?</string>
-    <string name="btn_login">Login</string>
-    <string name="app_lema">El lugar más seguro para tu dinero</string>
-    <string name="crear_nueva_cuenta">Crear una nueva cuenta</string>
-    <string name="login">Login</string>
+    <string name="no_tiene_cuenta_pregunta">No tenei cuenta?</string>
+    <string name="btn_login">Logueate!</string>
+    <string name="app_lema">Tus lucas, bien piola</string>
+    <string name="crear_nueva_cuenta">"Crear una nueva cuenta "</string>
+    <string name="login">Logueate!</string>
+    <string name="ingresar_dinero">Ingresar dinero</string>
+    <string name="balance_total">Total lucas</string>
+    <string name="ultimas_transacciones">Últimas transacciones</string>
+    <string name="olvidaste_tu_contrase_a">Te la olvidaste wn?</string>
     <string name="mi_perfil">Mi perfil</string>
     <string name="usuario_alkewallet">Usuario AlkeWallet</string>
     <string name="mi_informacion">Mi información</string>
-    <string name="mis_tarjetas">Mis Tarjetas</string>
+    <string name="mis_tarjetas">Mis tarjetas</string>
     <string name="opciones">Opciones</string>
     <string name="centro_de_ayuda">Centro de ayuda</string>
-    <string name="no_hay_transacciones_registradas">No hay transacciones registradas!</string>
+    <string name="no_hay_transacciones_registradas">No tenei ni una transacción po\' compadre!</string>
     <string name="ingrese_cantidad">Ingrese cantidad</string>
     <string name="notas_de_transferencia">Notas de transferencia</string>
     <string name="agregar_notas_de_transferencia_opcional">Agregar notas de transferencia (opcional)</string>
     <string name="enviar_dinero">Enviar dinero</string>
     <string name="cantidad_a_transferir">Cantidad a transferir</string>
-    <string name="ingresar_dinero">Ingresar dinero</string>
-    <string name="balance_total">Balance Total</string>
-    <string name="hola_usuario">Hola usuario!</string>
+    <string name="hola_usuario">Como andai!</string>
     <string name="inicio">Inicio</string>
-    <string name="ultimas_transacciones">Últimas transacciones</string>
-    <string name="olvidaste_tu_contrase_a">Olvidaste tu contraseña?</string>
     <string name="password">contraseña</string>
     <string name="contrasenia">Contraseña</string>
     <string name="email">email</string>
-    <string name="loguea_y_empez_a_transferir">Loguea y empezá a transferir!</string>
-    <string name="registrarse_y_empezar_a_transferir">Registrarse y empezar a transferir</string>
+    <string name="loguea_y_empez_a_transferir">Logueate y transfiere al tiro!</string>
+    <string name="registrarse_y_empezar_a_transferir">Refistrate y transfiere al tiro!</string>
     <string name="nombre">Nombre</string>
     <string name="ingresar_nombre">Ingresar nombre</string>
     <string name="apellido">Apellido</string>
@@ -42,7 +42,5 @@
     <string name="ingrese_email_destinatario">Ingrese email destinatario</string>
     <string name="seleccione_moneda">Seleccione moneda</string>
     <string name="detalleTransaccion">Detalle de la transacción</string>
-    <string name="ok">Ok</string>
-
-
+    <string name="ok">Ya</string>
 </resources>

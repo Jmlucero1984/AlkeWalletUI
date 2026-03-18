@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.data.repository
 
+import com.jmlucero.alkewallet.data.api.ApiService
 import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.model.Moneda
 import com.jmlucero.alkewallet.data.model.UiState
@@ -11,10 +12,12 @@ import retrofit2.Response
 import javax.inject.Inject
 
 
-class MonedaRepository @Inject constructor(private val monedaDAO: MonedaDAO
+class MonedaRepository @Inject constructor(
+    private val apiService: ApiService,
+    private val monedaDAO: MonedaDAO
 ) {
 
-    private val apiService = RetrofitClient.apiService
+
 
     suspend fun getCurrencies():  Flow<UiState<List<Moneda>>> =
         safeApiCall {

@@ -23,7 +23,7 @@
     <string name="balance_total">Total balance</string>
     <string name="hola_usuario">Hello user!</string>
     <string name="inicio">Home</string>
-    <string name="ltimas_transacciones">Recent transactions</string>
+    <string name="ultimas_transacciones">Recent transactions</string>
     <string name="olvidaste_tu_contrase_a">Forgot password?</string>
     <string name="password">password</string>
     <string name="contrasenia">Password</string>
@@ -41,4 +41,6 @@
     <string name="crear_cuenta">Create account</string>
     <string name="ingrese_email_destinatario">Itroduce email destiny</string>
     <string name="seleccione_moneda">Seleccione moneda</string>
+    <string name="detalleTransaccion">Detalle de la transacción</string>
+    <string name="ok">Ok</string>
 </resources>

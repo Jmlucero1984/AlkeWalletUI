@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.jmlucero.alkewallet.R
 import com.jmlucero.alkewallet.data.model.TransaccionSimple
 import com.jmlucero.alkewallet.databinding.ListItemBinding
 import com.squareup.picasso.Picasso
@@ -37,13 +38,11 @@ class TransaccionAdapter : RecyclerView.Adapter<TransaccionAdapter.TransaccionVi
             var url = transaccionSimple.usuario_avatar//.substring(1, transaccionSimple.usuario_avatar.length-1)
             binding.itemName.text = transaccionSimple.usuario_nombre
             if(!transaccionSimple.comentario.isNullOrEmpty() && transaccionSimple.comentario!=""){
-                Log.i("COMENTARIO",transaccionSimple.comentario)
-                Log.i("COMENTARIO LENGHT",transaccionSimple.comentario.length.toString())
                 binding.itemDetalle.setOnClickListener {
                     AlertDialog.Builder(context)
-                        .setTitle("Detalle de transacción")
+                        .setTitle(R.string.detalleTransaccion)
                         .setMessage(transaccionSimple.comentario)
-                        .setPositiveButton("OK", null)
+                        .setPositiveButton(R.string.ok, null)
                         .show()
                 }
                 binding.itemDetalle.text = transaccionSimple.tipo_transaccion+" (+info)"

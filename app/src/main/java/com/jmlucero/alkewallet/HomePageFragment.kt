@@ -1,6 +1,7 @@
 package com.jmlucero.alkewallet
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jmlucero.alkewallet.data.model.UiState
@@ -26,11 +30,12 @@ import com.jmlucero.alkewallet.viewmodel.TransactionViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-
+@AndroidEntryPoint
 class HomePageFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -38,7 +43,7 @@ class HomePageFragment : Fragment() {
     private var _binding: FragmentHomePageBinding? = null
     private val binding get() = _binding!!
     private lateinit var userViewModel: UserViewModel
-    private lateinit var transactionViewModel: TransactionViewModel
+    private val transactionViewModel: TransactionViewModel by viewModels()
     private lateinit var usuarioAdapter: UsuarioAdapter
     private lateinit var transaccionAdapter: TransaccionAdapter
     private lateinit var homeViewModel: HomeViewModel
@@ -47,16 +52,39 @@ class HomePageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         //findNavController().navigate(R.id.homeActivity)
+
+
+    }
+
+    private fun mostrarDialogoSalir() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Salir")
+            .setMessage("¿Quieres cerrar sesión?")
+            .setPositiveButton("Sí") { _, _ ->
+                logout()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+    private fun logout() {
+        // 1. Limpiar datos (Room / token)
+         homeViewModel.logout()
+
+        // 2. Navegar limpiando todo el stack
+        findNavController().navigate(
+            R.id.loginFragment,
+            null,
+            NavOptions.Builder()
+                .setPopUpTo(R.id.nav_graph, true) // limpia TODO
+                .build()
+        )
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHomePageBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,21 +93,23 @@ class HomePageFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner
+        ) {
+            mostrarDialogoSalir()
+        }
 
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
         homeViewModel = ViewModelProvider(requireActivity())[HomeViewModel::class.java]
         usuarioAdapter = UsuarioAdapter()
 
-        transactionViewModel =
-            ViewModelProvider(requireActivity())[TransactionViewModel::class.java]
+
         transaccionAdapter = TransaccionAdapter()
-
-
 
         binding.usuarioProfileImg.setOnClickListener {
             findNavController().navigate(R.id.action_homePageFragment_to_profileFragment)
         }
+
         binding.enviarDineroButton.setOnClickListener {
 //            binding.transactionsRecyclerView.apply {
 //                adapter = usuarioAdapter
@@ -87,30 +117,23 @@ class HomePageFragment : Fragment() {
 //            }
 //            userViewModel.cargarUsuarios()
             findNavController().navigate(R.id.action_home_to_enviarDinero)
-
         }
+
         binding.ingresarDineroButton.setOnClickListener {
-
             findNavController().navigate(R.id.action_home_to_ingresarDinero)
-
         }
+
         binding.transactionsRecyclerView.apply {
             adapter = transaccionAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
         transactionViewModel.getTransaccionesSimple()
         binding.campanitaIcon.setOnClickListener {
-
-
             // transactionViewModel.getTransaccionesSimple()
-
-
             //  pickImage.launch("image/*")
             // takePicture.launch(null)
-
         }
-
-
 
         viewLifecycleOwner.lifecycleScope.launch {
 

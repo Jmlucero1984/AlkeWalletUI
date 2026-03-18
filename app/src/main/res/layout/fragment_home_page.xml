@@ -226,7 +226,7 @@
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/meta_pro_bold"
                     android:gravity="center"
-                    android:text="@string/ltimas_transacciones"
+                    android:text="@string/ultimas_transacciones"
                     android:textColor="@color/black"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"

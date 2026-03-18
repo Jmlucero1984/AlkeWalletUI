@@ -8,12 +8,14 @@ import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.repository.TransactionRepository
 import com.jmlucero.alkewallet.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-
-class TransactionViewModel (
-    private val repository: TransactionRepository = TransactionRepository()
+import javax.inject.Inject
+@HiltViewModel
+class TransactionViewModel @Inject constructor(
+    private val repository: TransactionRepository
     ) : ViewModel() {
 
 

@@ -2,7 +2,9 @@ package com.jmlucero.alkewallet.data.repository
 
 import com.google.gson.Gson
 import com.jmlucero.alkewallet.data.api.ApiError
+import com.jmlucero.alkewallet.data.api.ApiService
 import com.jmlucero.alkewallet.data.api.RetrofitClient
+import com.jmlucero.alkewallet.data.api.SessionManager
 import com.jmlucero.alkewallet.data.mapper.toMoneda
 import com.jmlucero.alkewallet.data.mapper.toUsuario
 import com.jmlucero.alkewallet.data.model.response.AvatarResponse
@@ -32,12 +34,15 @@ import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
-                                         private val cuentaDAO: CuentaDAO,
+class UserRepository @Inject constructor(
+    private val apiService: ApiService,
+    private val sessionManager: SessionManager,
+    private val usuarioDAO: UsuarioDAO,
+    private val cuentaDAO: CuentaDAO,
     private val monedaDAO: MonedaDAO
 ) {
 
-    private val apiService = RetrofitClient.apiService
+
 
     suspend fun insertLoggedUsuario(usuario: Usuario) {
         usuarioDAO.insertUser(usuario)
@@ -131,5 +136,17 @@ class UserRepository @Inject constructor(private val usuarioDAO: UsuarioDAO,
         }
     }.catch {
         emit(UiState.Error(it.message ?: "Error inesperado"))
+    }
+
+    suspend fun logout() {
+        // 1. Limpiar usuario logueado
+        usuarioDAO.logoutAllUsers()
+
+        // 2. Borrar token (MUY importante)
+        sessionManager.clearToken()
+
+        // 3. (Opcional pero recomendado) limpiar otras tablas cacheadas
+        //transactionDao.clearAll()
+        //contactsDao.clearAll()
     }
 }
