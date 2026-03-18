@@ -55,17 +55,17 @@ class UserRepository @Inject constructor(
     suspend fun updateUsuarioLocalAvatar(url:String) {
         usuarioDAO.updateAvatar(url)
     }
-    fun getUsuarioLocal(): Flow<Usuario> {
+    fun getUsuarioLocal(): Flow<Usuario?> {
         return  usuarioDAO.getUsuario()
     }
-    fun getUsuarioConMonedaLocal(): Flow<UsuarioConMoneda> {
+    fun getUsuarioConMonedaLocal(): Flow<UsuarioConMoneda?> {
         return  usuarioDAO.getUsuarioConMoneda()
     }
-    fun getCuentaLocal(usuario_email:String):Flow<Cuenta> {
+    fun getCuentaLocal(usuario_email:String):Flow<Cuenta?> {
         return cuentaDAO.getCuenta(usuario_email)
     }
 
-    fun getCuenta(usuario_email:String): Flow<Cuenta> {
+    fun getCuenta(usuario_email:String): Flow<Cuenta?> {
         return  cuentaDAO.getCuenta(usuario_email)
     }
 

@@ -25,8 +25,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    val usuario: Flow<Usuario> = repository.getUsuarioLocal()
-    val usuarioConMoneda: Flow<UsuarioConMoneda> = repository.getUsuarioConMonedaLocal()
+    val usuario: Flow<Usuario?> = repository.getUsuarioLocal()
+    val usuarioConMoneda: Flow<UsuarioConMoneda?> = repository.getUsuarioConMonedaLocal()
     val balance: Flow<UiState<Balance>> = repository.getBalance()
     val cuenta = repository.getUsuarioLocal().flatMapLatest { usuario ->
                 usuario?.let { repository.getCuenta(it.email) } ?: emptyFlow()

@@ -16,7 +16,7 @@ interface UsuarioDAO {
     suspend fun insertUser(user: Usuario)
 
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
-    fun getUsuario(): Flow<Usuario>
+    fun getUsuario(): Flow<Usuario?>
 
     @Query("UPDATE usuarios SET isLoggedUser = 0")
     suspend fun logoutAllUsers()
@@ -25,7 +25,7 @@ interface UsuarioDAO {
     suspend fun updateAvatar(avatarUrl: String)
 
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
-    fun getUsuarioConMoneda(): Flow<UsuarioConMoneda>
+    fun getUsuarioConMoneda(): Flow<UsuarioConMoneda?>
     @Transaction
     @Query("SELECT * FROM usuarios WHERE usuario_id = :id")
     suspend fun obtenerUsuarioConMoneda(id: Int): UsuarioConMoneda

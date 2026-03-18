@@ -278,25 +278,27 @@ class EnviarDineroFragment : Fragment() {
 
                 launch {
                     userViewModel.usuarioConMoneda.collect { usuarioConMoneda ->
-                        usuarioLogueadoMoneda = usuarioConMoneda.moneda.codigo
-                        ratio_a_dolar_usuario_emisor = usuarioConMoneda.moneda.ratio_a_usd
-                        codigo_moneda_emisor = usuarioConMoneda.moneda.codigo
-                        balanceActual = BigDecimal(usuarioConMoneda.usuario.balance)
-                        binding.nombreUsuario.text =
-                            "${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
-                        binding.emailUsuario.text =
-                            usuarioConMoneda.usuario.email.toString()
+                        if (usuarioConMoneda != null) {
+                            usuarioLogueadoMoneda = usuarioConMoneda.moneda.codigo
+                            ratio_a_dolar_usuario_emisor = usuarioConMoneda.moneda.ratio_a_usd
+                            codigo_moneda_emisor = usuarioConMoneda.moneda.codigo
+                            balanceActual = BigDecimal(usuarioConMoneda.usuario.balance)
+                            binding.nombreUsuario.text =
+                                "${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
+                            binding.emailUsuario.text =
+                                usuarioConMoneda.usuario.email.toString()
 
-                        var url =
-                            usuarioConMoneda.usuario.avatar_url//.substring(1, usuarioConMoneda.usuario.avatar_url.length - 1)
+                            var url =
+                                usuarioConMoneda.usuario.avatar_url//.substring(1, usuarioConMoneda.usuario.avatar_url.length - 1)
 
-                        Picasso.get()
-                            .load(url)
-                            .placeholder(R.drawable.profile_svgrepo_com)
-                            .error(R.drawable.profile_svgrepo_com)
-                            .fit()
-                            .centerCrop()
-                            .into(binding.avatarUsuario)
+                            Picasso.get()
+                                .load(url)
+                                .placeholder(R.drawable.profile_svgrepo_com)
+                                .error(R.drawable.profile_svgrepo_com)
+                                .fit()
+                                .centerCrop()
+                                .into(binding.avatarUsuario)
+                        }
 
                     }
                 }

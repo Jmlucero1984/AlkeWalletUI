@@ -239,19 +239,21 @@ class ProfileFragment : Fragment() {
                     profileViewModel.usuario.collect { usuario ->
 
 
-                        binding.perfilNombreUsuario.setText(
-                            "${usuario.nombre} ${usuario.apellido}"
-                        )
+                        if (usuario != null) {
+                            binding.perfilNombreUsuario.setText("${usuario.nombre} ${usuario.apellido}")
 
-                        var url = usuario.avatar_url//.substring(1, usuario.avatar_url.length - 1)
 
-                        Picasso.get()
-                            .load(url)
-                            .placeholder(R.drawable.profile_svgrepo_com)
-                            .error(R.drawable.profile_svgrepo_com)
-                            .fit()
-                            .centerCrop()
-                            .into(binding.perfilAvatarUsuario)
+                            var url =
+                                usuario.avatar_url//.substring(1, usuario.avatar_url.length - 1)
+
+                            Picasso.get()
+                                .load(url)
+                                .placeholder(R.drawable.profile_svgrepo_com)
+                                .error(R.drawable.profile_svgrepo_com)
+                                .fit()
+                                .centerCrop()
+                                .into(binding.perfilAvatarUsuario)
+                        }
                     }
 
 

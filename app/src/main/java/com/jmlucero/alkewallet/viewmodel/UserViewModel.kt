@@ -27,8 +27,8 @@ class UserViewModel @Inject constructor(
     private val repository: UserRepository
 ) : ViewModel() {
 
-    val usuario: Flow<Usuario> = repository.getUsuarioLocal()
-    val usuarioConMoneda: Flow<UsuarioConMoneda> = repository.getUsuarioConMonedaLocal()
+    val usuario: Flow<Usuario?> = repository.getUsuarioLocal()
+    val usuarioConMoneda: Flow<UsuarioConMoneda?> = repository.getUsuarioConMonedaLocal()
     private val _usuarioState = MutableStateFlow<UiState<UsuarioMonedaDTO>>(UiState.Idle)
     val usuarioState: StateFlow<UiState<UsuarioMonedaDTO>> = _usuarioState
 
@@ -37,7 +37,7 @@ class UserViewModel @Inject constructor(
 
     suspend fun actualizarBalance(balance: String) {
         repository.getUsuarioLocal().collect { usuario ->
-            usuario.let { repository.updateBalance(balance, it.email) }
+            usuario.let { it?.let { it1 -> repository.updateBalance(balance, it1.email) } }
         }
 
     }
