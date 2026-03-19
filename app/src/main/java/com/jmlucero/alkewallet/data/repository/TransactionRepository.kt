@@ -14,40 +14,24 @@ import javax.inject.Inject
 
 
 class TransactionRepository @Inject constructor(
-    private val apiService: ApiService) {
+    private val apiService: ApiService,
+    private val apiHandler: ApiHandler){
 
 
-    suspend fun getTransaccionPorId(id: Long): Flow<UiState<Transaccion>> =
-        safeApiCall {
+     fun getTransaccionPorId(id: Long): Flow<UiState<Transaccion>> =
+        apiHandler.safeApiCall  {
             apiService.getTransaccionPorId(id)
         }
 
-    suspend fun getTransacciones(): Flow<UiState<List<Transaccion>>> =
-        safeApiCall {
+     fun getTransacciones(): Flow<UiState<List<Transaccion>>> =
+        apiHandler.safeApiCall  {
             apiService.getTransacciones()
         }
 
-    suspend fun getTransaccionesSimple():  Flow<UiState<List<TransaccionSimple>>> =
-        safeApiCall {
+     fun getTransaccionesSimple():  Flow<UiState<List<TransaccionSimple>>> =
+        apiHandler.safeApiCall  {
             apiService.getTransaccionesSimple()
         }
 
-    private fun <T> safeApiCall(
-        apiCall: suspend () -> Response<T>
-    ): Flow<UiState<T>> = flow {
-        emit(UiState.Loading)
 
-        val response = apiCall()
-
-        if (response.isSuccessful) {
-            response.body()?.let {
-                emit(UiState.Success(it))
-            } ?: emit(UiState.Error("Respuesta vacía"))
-        } else {
-            val error = response.errorBody()?.string() ?: "Error desconocido"
-            emit(UiState.Error("Error ${response.code()}: $error"))
-        }
-    }.catch {
-        emit(UiState.Error(it.message ?: "Error inesperado"))
-    }
 }

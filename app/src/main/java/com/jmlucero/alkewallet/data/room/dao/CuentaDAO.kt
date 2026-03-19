@@ -17,7 +17,7 @@ interface CuentaDAO {
 
 
     @Query("SELECT * FROM cuentas WHERE usuarioEmail= :usuario_email")
-    fun getCuenta(usuario_email:String): Flow<Cuenta?>
+    fun getCuenta(usuario_email:String): Flow<Cuenta>
 }
 
 

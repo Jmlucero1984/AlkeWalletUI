@@ -14,31 +14,15 @@ import javax.inject.Inject
 
 class MonedaRepository @Inject constructor(
     private val apiService: ApiService,
-    private val monedaDAO: MonedaDAO
-) {
+    private val monedaDAO: MonedaDAO,
+    private val apiHandler: ApiHandler){
 
 
 
-    suspend fun getCurrencies():  Flow<UiState<List<Moneda>>> =
-        safeApiCall {
+
+     fun getCurrencies():  Flow<UiState<List<Moneda>>> =
+        apiHandler.safeApiCall  {
             apiService.getCurrencies()
         }
-    private fun <T> safeApiCall(
-        apiCall: suspend () -> Response<T>
-    ): Flow<UiState<T>> = flow {
-        emit(UiState.Loading)
 
-        val response = apiCall()
-
-        if (response.isSuccessful) {
-            response.body()?.let {
-                emit(UiState.Success(it))
-            } ?: emit(UiState.Error("Respuesta vacía"))
-        } else {
-            val error = response.errorBody()?.string() ?: "Error desconocido"
-            emit(UiState.Error("Error ${response.code()}: $error"))
-        }
-    }.catch {
-        emit(UiState.Error(it.message ?: "Error inesperado"))
-    }
 }

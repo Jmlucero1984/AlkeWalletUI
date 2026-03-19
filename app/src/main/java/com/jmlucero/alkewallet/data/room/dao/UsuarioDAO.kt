@@ -23,7 +23,7 @@ interface UsuarioDAO {
 
     @Query("UPDATE usuarios SET avatar_url = :avatarUrl WHERE isLoggedUser = 1")
     suspend fun updateAvatar(avatarUrl: String)
-
+    @Transaction
     @Query("SELECT * FROM usuarios WHERE isLoggedUser = true")
     fun getUsuarioConMoneda(): Flow<UsuarioConMoneda?>
     @Transaction

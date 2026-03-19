@@ -26,12 +26,13 @@ class AuthRepository @Inject constructor(
     private val apiService: ApiService,
     private val usuarioDao: UsuarioDAO,
     private val cuentaDAO: CuentaDAO,
-    private val monedaDAO: MonedaDAO){
+    private val monedaDAO: MonedaDAO,
+    private val apiHandler: ApiHandler){
 
 
-    suspend fun getCurrentUser(
+     fun getCurrentUser(
     ): Flow<UiState<UsuarioMonedaDTO>> =
-        safeApiCall {
+        apiHandler.safeApiCall  {
             apiService.get_profile()
         }.onEach { state ->
             if (state is UiState.Success) {
@@ -47,11 +48,11 @@ class AuthRepository @Inject constructor(
         }
 
 
-    suspend fun login(
+     fun login(
         email: String,
         password: String
     ): Flow<UiState<LoginResponse>> =
-        safeApiCall {
+        apiHandler.safeApiCall  {
             apiService.login(LoginRequest(email, password))
         }.onEach { state ->
             if (state is UiState.Success) {
@@ -61,22 +62,5 @@ class AuthRepository @Inject constructor(
             }
         }
 
-    private fun <T> safeApiCall(
-        apiCall: suspend () -> Response<T>
-    ): Flow<UiState<T>> = flow {
-        emit(UiState.Loading)
 
-        val response = apiCall()
-
-        if (response.isSuccessful) {
-            response.body()?.let {
-                emit(UiState.Success(it))
-            } ?: emit(UiState.Error("Respuesta vacía"))
-        } else {
-            val error = response.errorBody()?.string() ?: "Error desconocido"
-            emit(UiState.Error("Error ${response.code()}: $error"))
-        }
-    }.catch {
-        emit(UiState.Error(it.message ?: "Error inesperado"))
-    }
 }

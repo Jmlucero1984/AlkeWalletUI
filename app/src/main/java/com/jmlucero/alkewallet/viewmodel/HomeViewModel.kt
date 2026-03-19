@@ -3,6 +3,7 @@ package com.jmlucero.alkewallet.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.Balance
+import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
@@ -10,8 +11,10 @@ import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,9 +31,13 @@ class HomeViewModel @Inject constructor(
     val usuario: Flow<Usuario?> = repository.getUsuarioLocal()
     val usuarioConMoneda: Flow<UsuarioConMoneda?> = repository.getUsuarioConMonedaLocal()
     val balance: Flow<UiState<Balance>> = repository.getBalance()
-    val cuenta = repository.getUsuarioLocal().flatMapLatest { usuario ->
-                usuario?.let { repository.getCuenta(it.email) } ?: emptyFlow()
+   // val cuenta: Flow<Cuenta?> =  repository.getCuentaUsuarioLogueado()
+    val cuenta = usuarioConMoneda.flatMapLatest { user ->
+        if (user == null) flowOf(null)
+        else  repository.getCuentaUsuarioLogueado()
     }
 
-}
+    }
+
+
 

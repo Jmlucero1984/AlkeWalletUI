@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.data.repository
 
+import android.util.Log
 import androidx.room.Query
 import com.google.gson.Gson
 import com.jmlucero.alkewallet.data.api.ApiError
@@ -45,7 +46,8 @@ class UserRepository @Inject constructor(
     private val usuarioDAO: UsuarioDAO,
     private val cuentaDAO: CuentaDAO,
     private val monedaDAO: MonedaDAO,
-    private val sugerenciasDAO: SugerenciasDAO
+    private val sugerenciasDAO: SugerenciasDAO,
+    private val apiHandler: ApiHandler
 ) {
 
 
@@ -87,7 +89,7 @@ class UserRepository @Inject constructor(
 
 
     suspend fun getUsuarioPorEmail(email: String): Flow<UiState<UsuarioMonedaDTO>> =
-        safeApiCall {
+        apiHandler.safeApiCall  {
             apiService.getUsuarioPorEmail(email)
         }.onEach { state ->
             if (state is UiState.Success) {
@@ -106,59 +108,40 @@ class UserRepository @Inject constructor(
         }
 
 
-    fun getBalance(): Flow<UiState<Balance>> =
-        safeApiCall {
+     fun getBalance(): Flow<UiState<Balance>> =
+        apiHandler.safeApiCall  {
             apiService.getBalance()
         }
 
-    fun doRetiro(retiro: Retiro): Flow<UiState<RetiroResponse>> =
-        safeApiCall {
+     fun doRetiro(retiro: Retiro): Flow<UiState<RetiroResponse>> =
+        apiHandler.safeApiCall  {
             apiService.retiro(retiro)
         }
-    fun doDeposito(deposito: Deposito): Flow<UiState<DepositoResponse>> =
-        safeApiCall {
+     fun doDeposito(deposito: Deposito): Flow<UiState<DepositoResponse>> =
+        apiHandler.safeApiCall  {
             apiService.deposito(deposito)
         }
 
-    suspend fun uploadAvatar(avatar: MultipartBody.Part):Flow<UiState<AvatarResponse>> =
-        safeApiCall {
+     fun uploadAvatar(avatar: MultipartBody.Part):Flow<UiState<AvatarResponse>> =
+        apiHandler.safeApiCall  {
             apiService.uploadAvatar(avatar)
         }
 
-    fun doTransferencia(transferencia: Transferencia): Flow<UiState<TransferenciaResponse>> =
-        safeApiCall {
+     fun doTransferencia(transferencia: Transferencia): Flow<UiState<TransferenciaResponse>> =
+        apiHandler.safeApiCall  {
             apiService.transferencia(transferencia)
         }
-    suspend fun getUsuarios(): Flow<UiState<List<Usuario>>> =
-        safeApiCall {
+     fun getUsuarios(): Flow<UiState<List<Usuario>>> =
+        apiHandler.safeApiCall  {
             apiService.getUsuarios()
         }
-    suspend fun signUpUsuario(signUpNuevoUsuario: SignUpNuevoUsuario): Flow<UiState<SignUpResponse>> =
-        safeApiCall {
+     fun signUpUsuario(signUpNuevoUsuario: SignUpNuevoUsuario): Flow<UiState<SignUpResponse>> =
+        apiHandler.safeApiCall  {
             apiService.signUpUsuario(signUpNuevoUsuario)
         }
 
 
-    private fun <T> safeApiCall(
-        apiCall: suspend () -> Response<T>
-    ): Flow<UiState<T>> = flow {
-        emit(UiState.Loading)
 
-        val response = apiCall()
-
-        if (response.isSuccessful) {
-            response.body()?.let {
-                emit(UiState.Success(it))
-            } ?: emit(UiState.Error("Respuesta vacía"))
-        } else {
-            val error = response.errorBody()?.string() ?: "Error desconocido"
-            //emit(UiState.Error("Error ${response.code()}: $error"))
-            val apiError = Gson().fromJson(error, ApiError::class.java)
-            emit(UiState.Error(apiError.mensaje))
-        }
-    }.catch {
-        emit(UiState.Error(it.message ?: "Error inesperado"))
-    }
 
     suspend fun logout() {
         // 1. Limpiar usuario logueado
@@ -171,4 +154,26 @@ class UserRepository @Inject constructor(
         //transactionDao.clearAll()
         //contactsDao.clearAll()
     }
-}
+
+     fun getCuentaUsuarioLogueado(): Flow<Cuenta?> {
+         val email = sessionManager.getEmail()
+         Log.i("USER REPOSITORY", "EMAIL LOGUEADO $email")
+         val let = email?.let {
+             val _cuenta: Flow<Cuenta> = cuentaDAO.getCuenta(it)
+             _cuenta.let { flow ->
+                 Log.i("USER REPOSITORY", "EMAIL LOGUEADO $_cuenta")
+                 return _cuenta
+             }
+
+         }
+         return flowOf(null)
+
+     }
+
+    }
+
+
+
+        //return sessionManager.getEmail()?.let { cuentaDAO.getCuenta(it) }!!
+
+
