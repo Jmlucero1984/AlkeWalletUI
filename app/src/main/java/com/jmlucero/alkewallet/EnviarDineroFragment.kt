@@ -107,6 +107,7 @@ class EnviarDineroFragment : Fragment() {
         adapter = SugerenciaAdapter { usuario ->
             binding.ingreseEmail.setText(usuario.email)
             binding.recyclerSugerencias.visibility = View.GONE
+
         }
         binding.recyclerSugerencias.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerSugerencias.adapter = adapter
@@ -238,7 +239,10 @@ class EnviarDineroFragment : Fragment() {
                             if (query.isBlank()) {
                                 flowOf(emptyList())
                             } else {
+                                resetFields()
+                                hideAllElements()
                                 userViewModel.buscarSugerencias(query)
+
                             }
                         }
                         .collect { usuarios ->
@@ -250,8 +254,12 @@ class EnviarDineroFragment : Fragment() {
 
                             if (usuarios.isEmpty()) {
                                 binding.recyclerSugerencias.visibility = View.GONE
+
                             } else {
-                                binding.recyclerSugerencias.visibility = View.VISIBLE
+                                if(binding.usuarioDestinoContainer.isVisible ==false) {
+                                    binding.recyclerSugerencias.visibility = View.VISIBLE
+
+                                }
                             }
                         }
                 }
@@ -295,6 +303,9 @@ class EnviarDineroFragment : Fragment() {
 
                             is UiState.Success -> {
                                 //  Toast.makeText(context,state.data.mensaje, Toast.LENGTH_LONG).show()
+
+                                binding.ingreseCantidad.requestFocus()
+                                binding.recyclerSugerencias.visibility = View.GONE
 
                                 binding.nombreUsuarioDestino.text =
                                     state.data.nombre + " " + state.data.apellido

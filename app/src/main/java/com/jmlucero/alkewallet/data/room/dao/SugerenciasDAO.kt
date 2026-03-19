@@ -15,6 +15,7 @@ interface  SugerenciasDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSugerencia(sugerenciasTransfers: SugerenciasTransfers)
 
-    @Query("SELECT u.* FROM usuarios u INNER JOIN SugerenciasTransfers s ON u.email = s.usuarioDestinoEmail WHERE s.usuarioPropietarioEmail = :usuarioPropietarioEmail AND u.email LIKE '%' || :query || '%' ORDER BY s.lastUsed DESC LIMIT 5")
+   // @Query("SELECT u.* FROM usuarios u INNER JOIN SugerenciasTransfers s ON u.email = s.usuarioDestinoEmail WHERE s.usuarioPropietarioEmail = :usuarioPropietarioEmail AND u.email LIKE '%' || :query || '%' ORDER BY s.lastUsed DESC LIMIT 5")
+    @Query("SELECT u.* FROM usuarios u INNER JOIN SugerenciasTransfers s ON u.email = s.usuarioDestinoEmail WHERE s.usuarioPropietarioEmail = :usuarioPropietarioEmail AND u.email LIKE  :query || '%' ORDER BY s.lastUsed DESC LIMIT 5")
     fun getSugerencias(usuarioPropietarioEmail: String, query: String): Flow<List<Usuario>>
 }

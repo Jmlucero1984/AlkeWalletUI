@@ -153,6 +153,7 @@
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:layout_weight="12">
 
                 <LinearLayout
@@ -161,11 +162,13 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/txtInpLayoutIngreseEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
                         android:background="@android:color/white"
                         android:gravity="top"
+                        android:paddingTop="2dp"
                         android:textColorHint="@color/orange"
                         app:boxBackgroundMode="outline"
                         app:boxCornerRadiusBottomEnd="12dp"
@@ -446,7 +449,7 @@
                 android:hint="@string/agregar_notas_de_transferencia_opcional"
                 android:inputType="textMultiLine"
                 android:textColorHint="@color/orange"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

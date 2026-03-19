@@ -207,7 +207,7 @@
                 android:gravity="start|top"
                 android:hint="@string/agregar_notas_de_transferencia_opcional"
                 android:inputType="textMultiLine"
-                android:textSize="12sp" />
+                android:textSize="18sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
