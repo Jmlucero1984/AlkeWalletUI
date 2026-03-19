@@ -3,6 +3,7 @@ package com.jmlucero.alkewallet.data.room.db
 import android.content.Context
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.SugerenciasDAO
 import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 
 // 1. Database Manager
@@ -23,4 +24,6 @@ object DatabaseManager {
     fun getUserDao(): UsuarioDAO = getDatabase().usuarioDAO()
     fun getCuentaDao(): CuentaDAO = getDatabase().cuentaDAO()
     fun getMonedaDao(): MonedaDAO = getDatabase().monedaDAO()
+    fun getSugerenciasDao(): SugerenciasDAO = getDatabase().sugerenciasDAO()
+
 }

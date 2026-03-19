@@ -1,5 +1,6 @@
 package com.jmlucero.alkewallet.data.repository
 
+import androidx.room.Query
 import com.google.gson.Gson
 import com.jmlucero.alkewallet.data.api.ApiError
 import com.jmlucero.alkewallet.data.api.ApiService
@@ -15,6 +16,7 @@ import com.jmlucero.alkewallet.data.model.response.DepositoResponse
 import com.jmlucero.alkewallet.data.model.Retiro
 import com.jmlucero.alkewallet.data.model.response.RetiroResponse
 import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
+import com.jmlucero.alkewallet.data.model.SugerenciasTransfers
 import com.jmlucero.alkewallet.data.model.response.SignUpResponse
 import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.response.TransferenciaResponse
@@ -24,22 +26,26 @@ import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.SugerenciasDAO
 import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onEach
 import okhttp3.MultipartBody
 import retrofit2.Response
 import javax.inject.Inject
+import kotlin.String
 
 class UserRepository @Inject constructor(
     private val apiService: ApiService,
     private val sessionManager: SessionManager,
     private val usuarioDAO: UsuarioDAO,
     private val cuentaDAO: CuentaDAO,
-    private val monedaDAO: MonedaDAO
+    private val monedaDAO: MonedaDAO,
+    private val sugerenciasDAO: SugerenciasDAO
 ) {
 
 
@@ -47,7 +53,16 @@ class UserRepository @Inject constructor(
     suspend fun insertLoggedUsuario(usuario: Usuario) {
         usuarioDAO.insertUser(usuario)
     }
-
+    
+    suspend fun getSugerencias(_query: String): Flow<List<Usuario>> {
+        val email = sessionManager.getEmail() ?: return flowOf(emptyList())
+        return sugerenciasDAO.getSugerencias(
+            email,
+            query =_query
+        )
+    }
+    
+    
     suspend fun updateBalance(balance: String, usuarioEmail:String) {
         cuentaDAO.updateBalance(balance,usuarioEmail)
     }
@@ -80,6 +95,13 @@ class UserRepository @Inject constructor(
                 val moneda = state.data.moneda.toMoneda()
                 usuarioDAO.insertUser(usuario)
                 monedaDAO.insertMoneda(moneda)
+                sugerenciasDAO.insertSugerencia(
+                    SugerenciasTransfers(
+                usuarioPropietarioEmail = sessionManager.getEmail()!!,
+                usuarioDestinoEmail = usuario.email,
+                        lastUsed = System.currentTimeMillis()
+                    )
+                )
             }
         }
 

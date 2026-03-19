@@ -2,6 +2,8 @@ package com.jmlucero.alkewallet
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,12 +16,22 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.textfield.TextInputEditText
 import com.jmlucero.alkewallet.data.model.Transferencia
 import com.jmlucero.alkewallet.data.model.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
+import com.jmlucero.alkewallet.ui.home.SugerenciaAdapter
 import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -41,6 +53,7 @@ class EnviarDineroFragment : Fragment() {
     private var balanceActual: BigDecimal? = null
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val userViewModel: UserViewModel by activityViewModels()
+    private lateinit var adapter: SugerenciaAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,6 +66,8 @@ class EnviarDineroFragment : Fragment() {
         _binding = FragmentEnviarDineroBinding.inflate(inflater, container, false)
         return binding.root
     }
+
+
 
     fun hideAllElements() {
         binding.usuarioDestinoContainer.isVisible = false
@@ -89,6 +104,27 @@ class EnviarDineroFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.homePageFragment)
         }
+        adapter = SugerenciaAdapter { usuario ->
+            binding.ingreseEmail.setText(usuario.email)
+            binding.recyclerSugerencias.visibility = View.GONE
+        }
+        binding.recyclerSugerencias.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerSugerencias.adapter = adapter
+
+        fun TextInputEditText.textChanges(): Flow<String> = callbackFlow {
+            val watcher = object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    trySend(s.toString())
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            }
+
+            addTextChangedListener(watcher)
+
+            awaitClose { removeTextChangedListener(watcher) }
+        }
+
         hideAllElements()
 
 
@@ -194,6 +230,31 @@ class EnviarDineroFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 var usuarioLogueadoMoneda: String = ""
+                launch {
+                    binding.ingreseEmail.textChanges()
+                        .debounce(300)
+                        .distinctUntilChanged()
+                        .flatMapLatest { query ->
+                            if (query.isBlank()) {
+                                flowOf(emptyList())
+                            } else {
+                                userViewModel.buscarSugerencias(query)
+                            }
+                        }
+                        .collect { usuarios ->
+
+                            adapter.submitList(usuarios)
+                            usuarios.forEach { usuario ->
+                                Log.d("SUGERENCIAS", usuario.toString())
+                            }
+
+                            if (usuarios.isEmpty()) {
+                                binding.recyclerSugerencias.visibility = View.GONE
+                            } else {
+                                binding.recyclerSugerencias.visibility = View.VISIBLE
+                            }
+                        }
+                }
                 launch {
                     userViewModel.transferenciaEvent.collect { state ->
                         when (state) {

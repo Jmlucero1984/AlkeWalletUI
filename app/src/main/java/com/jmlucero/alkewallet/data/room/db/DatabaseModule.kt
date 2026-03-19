@@ -6,6 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.SugerenciasDAO
 import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 import dagger.Module
 import dagger.Provides
@@ -76,5 +77,9 @@ object DatabaseModule {
     @Provides
     fun provideMonedaDao(db: AppDatabase): MonedaDAO {
         return db.monedaDAO()
+    }
+    @Provides
+    fun provideSugerenciasDao(db: AppDatabase): SugerenciasDAO {
+        return db.sugerenciasDAO()
     }
 }

@@ -146,50 +146,79 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="12"
-                android:background="@android:color/white"
-                android:paddingBottom="4dp"
-                android:textColorHint="@color/orange"
-                app:boxBackgroundMode="outline"
-                app:boxCornerRadiusBottomEnd="12dp"
-                app:boxCornerRadiusBottomStart="12dp"
-                app:boxCornerRadiusTopEnd="12dp"
-                app:boxCornerRadiusTopStart="12dp"
-                app:boxStrokeColor="@color/orange"
-                app:boxStrokeWidth="2dp"
-                app:boxStrokeWidthFocused="3dp"
-                app:hintTextColor="@color/orange">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="12">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingreseEmail"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Ingrese email"
-                    android:inputType="textEmailAddress"
-                    android:textColor="@color/orange"
-                    android:textColorHint="@color/orange" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:background="@android:color/white"
+                        android:gravity="top"
+                        android:textColorHint="@color/orange"
+                        app:boxBackgroundMode="outline"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxStrokeColor="@color/orange"
+                        app:boxStrokeWidth="2dp"
+                        app:boxStrokeWidthFocused="3dp"
+                        app:hintTextColor="@color/orange">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/ingreseEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
+                            android:hint="Ingrese email"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/orange"
+                            android:textColorHint="@color/orange" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageButton
-                android:id="@+id/btnBuscarUsuario"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_icon_button"
-                android:src="@drawable/flyarrowup"
-                android:textColor="@color/black"
-                app:backgroundTint="@color/orange"
-                app:iconTint="@color/black" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSugerencias"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:paddingTop="4dp">
+
+                <ImageButton
+                    android:id="@+id/btnBuscarUsuario"
+                    android:layout_width="60dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="start"
+                    android:layout_margin="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_icon_button"
+                    android:src="@drawable/flyarrowup"
+                    android:textColor="@color/black"
+                    app:backgroundTint="@color/orange"
+                    app:iconTint="@color/black" />
+            </FrameLayout>
 
         </LinearLayout>
 

@@ -56,6 +56,7 @@ class AuthRepository @Inject constructor(
         }.onEach { state ->
             if (state is UiState.Success) {
                 sessionManager.saveToken(state.data.token)
+                sessionManager.saveEmail(email)
             //RetrofitClient.updateToken(state.data.token)
             }
         }

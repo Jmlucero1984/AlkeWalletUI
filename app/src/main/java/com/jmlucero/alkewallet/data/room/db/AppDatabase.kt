@@ -5,13 +5,15 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import com.jmlucero.alkewallet.data.model.Cuenta
 import com.jmlucero.alkewallet.data.model.Moneda
+import com.jmlucero.alkewallet.data.model.SugerenciasTransfers
 import com.jmlucero.alkewallet.data.model.Usuario
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
+import com.jmlucero.alkewallet.data.room.dao.SugerenciasDAO
 import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 
 @Database(
-    entities = [Usuario::class, Cuenta::class, Moneda::class],
+    entities = [Usuario::class, Cuenta::class, Moneda::class, SugerenciasTransfers::class],
     version = 3,
     exportSchema = false
 )
@@ -21,6 +23,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun cuentaDAO(): CuentaDAO
 
     abstract fun monedaDAO(): MonedaDAO
+    abstract fun sugerenciasDAO(): SugerenciasDAO
+
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null

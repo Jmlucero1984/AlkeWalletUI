@@ -41,6 +41,19 @@ class UserViewModel @Inject constructor(
         }
 
     }
+    suspend fun buscarSugerencias(query: String): Flow<List<Usuario>> {
+
+        return repository.getSugerencias(query)
+    }
+
+
+
+    suspend fun insertarSugerencia(balance: String) {
+        repository.getUsuarioLocal().collect { usuario ->
+            usuario.let { it?.let { it1 -> repository.updateBalance(balance, it1.email) } }
+        }
+
+    }
 
     private val _usuariosState = MutableStateFlow<UiState<List<Usuario>>>(UiState.Idle)
     val usuariosState: StateFlow<UiState<List<Usuario>>> = _usuariosState
