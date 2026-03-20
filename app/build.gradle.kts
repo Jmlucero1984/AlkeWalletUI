@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.androidTest
+import org.gradle.kotlin.dsl.androidTestImplementation
 import org.gradle.kotlin.dsl.implementation
 
 plugins {
@@ -13,6 +15,8 @@ android {
         version = release(36)
     }
 
+
+
     defaultConfig {
         applicationId = "com.jmlucero.alkewallet"
         minSdk = 24
@@ -20,7 +24,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.jmlucero.alkewallet.HiltTestRunner"
     }
 
     buildTypes {
@@ -72,6 +76,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.ui.text)
+    implementation(libs.androidx.ui.test.junit4)
+    implementation(libs.androidx.fragment.testing)
     kapt ("androidx.room:room-compiler:2.6.1") // Importante: seguir usando kapt
     implementation("com.google.dagger:hilt-android:2.51")
     kapt("com.google.dagger:hilt-compiler:2.51")
@@ -79,6 +85,29 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("io.mockk:mockk:1.13.10")
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+
+    // AndroidX Test (alineado)
+    androidTestImplementation ("androidx.test:core:1.5.0")
+    androidTestImplementation ("androidx.test:core-ktx:1.5.0")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test:runner:1.5.2")
+    androidTestImplementation ("androidx.test:rules:1.5.0")
+
+// Espresso
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
+
+// Hilt (IMPORTANTE: bajar versión)
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.48")
+    kaptAndroidTest( "com.google.dagger:hilt-android-compiler:2.48")
+    // Fragment testing
+    debugImplementation ("androidx.fragment:fragment-testing:1.6.2")
+
+        configurations.all {
+            resolutionStrategy {
+                force( "androidx.test:runner:1.5.0")
+                force( "androidx.test:rules:1.5.0")
+                force ("androidx.test.espresso:espresso-core:3.5.0")
+            }
+        }
 }
