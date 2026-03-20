@@ -2,10 +2,10 @@ package com.jmlucero.alkewallet.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jmlucero.alkewallet.data.model.Moneda
-import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
+import com.jmlucero.alkewallet.data.model.entity.Moneda
+import com.jmlucero.alkewallet.data.model.entity.SignUpNuevoUsuario
 import com.jmlucero.alkewallet.data.model.response.SignUpResponse
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.data.repository.MonedaRepository
 import com.jmlucero.alkewallet.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

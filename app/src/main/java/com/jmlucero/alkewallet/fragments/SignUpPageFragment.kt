@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.jmlucero.alkewallet.data.model.SignUpNuevoUsuario
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.SignUpNuevoUsuario
+import com.jmlucero.alkewallet.data.model.entity.UiState
 
 import com.jmlucero.alkewallet.databinding.FragmentSignUpPageBinding
 

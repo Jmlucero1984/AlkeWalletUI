@@ -1,11 +1,6 @@
-package com.jmlucero.alkewallet.data.model
+package com.jmlucero.alkewallet.data.model.entity
 
-import retrofit2.http.Url
 import java.math.BigDecimal
-import java.sql.Date
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.OffsetDateTime
 
 data class Transaccion(
     val cuenta_origen_nombre:String,

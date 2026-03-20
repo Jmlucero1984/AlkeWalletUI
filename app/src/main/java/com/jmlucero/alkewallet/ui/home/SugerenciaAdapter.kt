@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jmlucero.alkewallet.R
-import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.entity.Usuario
 import com.jmlucero.alkewallet.databinding.ItemSugerenciaBinding
 import com.squareup.picasso.Picasso
 

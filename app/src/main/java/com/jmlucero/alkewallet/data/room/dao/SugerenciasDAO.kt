@@ -1,12 +1,11 @@
 package com.jmlucero.alkewallet.data.room.dao
 
 import androidx.room.Dao
-import androidx.room.Index
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmlucero.alkewallet.data.model.SugerenciasTransfers
-import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.entity.SugerenciasTransfers
+import com.jmlucero.alkewallet.data.model.entity.Usuario
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.databinding.FragmentAuthSelectionBinding
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentLoginPageBinding
 import com.jmlucero.alkewallet.viewmodel.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.coroutines.launch
-import kotlin.time.Duration
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

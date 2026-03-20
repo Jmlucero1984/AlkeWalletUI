@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet.data.model
+package com.jmlucero.alkewallet.data.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

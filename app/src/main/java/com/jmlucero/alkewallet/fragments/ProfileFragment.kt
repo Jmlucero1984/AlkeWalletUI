@@ -1,6 +1,5 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
-import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,7 +7,6 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import com.yalantis.ucrop.UCrop
 import android.os.Build
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -16,10 +14,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Lifecycle
@@ -27,17 +23,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.data.model.response.AvatarResponse
-import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
 import com.jmlucero.alkewallet.databinding.FragmentProfileBinding
 import com.jmlucero.alkewallet.viewmodel.ProfileViewModel
-import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
 

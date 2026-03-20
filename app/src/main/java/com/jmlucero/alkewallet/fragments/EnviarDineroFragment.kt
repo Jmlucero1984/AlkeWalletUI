@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -18,8 +18,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.textfield.TextInputEditText
-import com.jmlucero.alkewallet.data.model.Transferencia
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.Transferencia
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
 import com.jmlucero.alkewallet.ui.home.SugerenciaAdapter
 import com.jmlucero.alkewallet.viewmodel.SharedViewModel

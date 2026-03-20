@@ -1,24 +1,20 @@
 package com.jmlucero.alkewallet.data.repository
 
 import com.jmlucero.alkewallet.data.api.ApiService
-import com.jmlucero.alkewallet.data.api.RetrofitClient
 import com.jmlucero.alkewallet.data.api.SessionManager
 import com.jmlucero.alkewallet.data.mapper.toMoneda
 import com.jmlucero.alkewallet.data.mapper.toUsuario
-import com.jmlucero.alkewallet.data.model.Cuenta
+import com.jmlucero.alkewallet.data.model.entity.Cuenta
 
-import com.jmlucero.alkewallet.data.model.LoginRequest
+import com.jmlucero.alkewallet.data.model.entity.LoginRequest
 import com.jmlucero.alkewallet.data.model.response.LoginResponse
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
 import com.jmlucero.alkewallet.data.room.dao.UsuarioDAO
 import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
-import retrofit2.Response
 import javax.inject.Inject
 
 class AuthRepository @Inject constructor(

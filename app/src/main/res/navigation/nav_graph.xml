@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/authSelectionFragment"
-        android:name="com.jmlucero.alkewallet.AuthSelectionFragment"
+        android:name="com.jmlucero.alkewallet.fragments.AuthSelectionFragment"
         android:label="AuthSelection">
 
         <action
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.jmlucero.alkewallet.LoginPageFragment"
+        android:name="com.jmlucero.alkewallet.fragments.LoginPageFragment"
         android:label="Login">
 
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.jmlucero.alkewallet.SignUpPageFragment"
+        android:name="com.jmlucero.alkewallet.fragments.SignUpPageFragment"
         android:label="SignIn">
 
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/homePageFragment"
-        android:name="com.jmlucero.alkewallet.HomePageFragment"
+        android:name="com.jmlucero.alkewallet.fragments.HomePageFragment"
         android:label="Home">
 
         <action
@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/enviarDineroFragment"
-        android:name="com.jmlucero.alkewallet.EnviarDineroFragment"
+        android:name="com.jmlucero.alkewallet.fragments.EnviarDineroFragment"
         android:label="EnviarDinero">
         <action
             android:id="@+id/action_back_to_home"
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/ingresarDineroFragment"
-        android:name="com.jmlucero.alkewallet.IngresarDineroFragment"
+        android:name="com.jmlucero.alkewallet.fragments.IngresarDineroFragment"
         android:label="IngresarDinero">
         <action
             android:id="@+id/action_back_to_home"
@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.jmlucero.alkewallet.ProfileFragment"
+        android:name="com.jmlucero.alkewallet.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action

@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.entity.Usuario
 import com.jmlucero.alkewallet.databinding.ListItemBinding
 
 class UsuarioAdapter : RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {

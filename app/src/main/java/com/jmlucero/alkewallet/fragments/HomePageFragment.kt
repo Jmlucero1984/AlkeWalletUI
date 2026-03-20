@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -20,7 +20,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
 import com.jmlucero.alkewallet.ui.home.TransaccionAdapter
 import com.jmlucero.alkewallet.ui.home.UsuarioAdapter

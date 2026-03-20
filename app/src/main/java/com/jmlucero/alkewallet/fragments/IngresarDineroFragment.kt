@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -13,16 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.jmlucero.alkewallet.data.model.Deposito
-import com.jmlucero.alkewallet.data.model.UiState
-import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
-import com.jmlucero.alkewallet.databinding.FragmentHomePageBinding
+import com.jmlucero.alkewallet.R
+import com.jmlucero.alkewallet.data.model.entity.Deposito
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
 import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 

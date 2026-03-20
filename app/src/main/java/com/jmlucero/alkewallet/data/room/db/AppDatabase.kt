@@ -3,10 +3,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
-import com.jmlucero.alkewallet.data.model.Cuenta
-import com.jmlucero.alkewallet.data.model.Moneda
-import com.jmlucero.alkewallet.data.model.SugerenciasTransfers
-import com.jmlucero.alkewallet.data.model.Usuario
+import com.jmlucero.alkewallet.data.model.entity.Cuenta
+import com.jmlucero.alkewallet.data.model.entity.Moneda
+import com.jmlucero.alkewallet.data.model.entity.SugerenciasTransfers
+import com.jmlucero.alkewallet.data.model.entity.Usuario
 import com.jmlucero.alkewallet.data.room.dao.CuentaDAO
 import com.jmlucero.alkewallet.data.room.dao.MonedaDAO
 import com.jmlucero.alkewallet.data.room.dao.SugerenciasDAO

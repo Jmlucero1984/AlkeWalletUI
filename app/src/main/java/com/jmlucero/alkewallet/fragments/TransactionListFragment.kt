@@ -1,12 +1,11 @@
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.jmlucero.alkewallet.databinding.FragmentAuthSelectionBinding
+import com.jmlucero.alkewallet.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -15,15 +14,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AuthSelectionFragment.newInstance] factory method to
+ * Use the [TransactionListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AuthSelectionFragment : Fragment() {
+class TransactionListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var _binding: FragmentAuthSelectionBinding? = null
-    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +28,6 @@ class AuthSelectionFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
     }
 
     override fun onCreateView(
@@ -39,19 +35,7 @@ class AuthSelectionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentAuthSelectionBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_auth_to_login)
-        }
-
-        binding.txtNoTieneCuenta.setOnClickListener {
-            findNavController().navigate(R.id.action_auth_to_signin)
-        }
+        return inflater.inflate(R.layout.fragment_transaction_list, container, false)
     }
 
     companion object {
@@ -61,12 +45,12 @@ class AuthSelectionFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment AuthSelectionFragment.
+         * @return A new instance of fragment TransactionListFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            AuthSelectionFragment().apply {
+            TransactionListFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

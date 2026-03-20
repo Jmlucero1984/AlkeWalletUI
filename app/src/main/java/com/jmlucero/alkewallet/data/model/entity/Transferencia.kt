@@ -1,4 +1,4 @@
-package com.jmlucero.alkewallet.data.model
+package com.jmlucero.alkewallet.data.model.entity
 
 data class Transferencia(
     val emailUsuarioDestino:String,

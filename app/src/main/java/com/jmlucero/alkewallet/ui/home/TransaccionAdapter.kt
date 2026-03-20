@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.jmlucero.alkewallet.R
-import com.jmlucero.alkewallet.data.model.TransaccionSimple
+import com.jmlucero.alkewallet.data.model.entity.TransaccionSimple
 import com.jmlucero.alkewallet.databinding.ListItemBinding
 import com.squareup.picasso.Picasso
 

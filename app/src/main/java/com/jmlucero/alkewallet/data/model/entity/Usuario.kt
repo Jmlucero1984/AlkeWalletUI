@@ -1,8 +1,7 @@
-package com.jmlucero.alkewallet.data.model
+package com.jmlucero.alkewallet.data.model.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.math.BigDecimal
 
 @Entity(tableName = "usuarios")
 data class Usuario(

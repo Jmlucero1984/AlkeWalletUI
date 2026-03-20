@@ -5,8 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.jmlucero.alkewallet.data.model.Usuario
-import com.jmlucero.alkewallet.data.model.UsuarioConMoneda
+import com.jmlucero.alkewallet.data.model.entity.Usuario
+import com.jmlucero.alkewallet.data.model.entity.UsuarioConMoneda
 import kotlinx.coroutines.flow.Flow
 
 @Dao

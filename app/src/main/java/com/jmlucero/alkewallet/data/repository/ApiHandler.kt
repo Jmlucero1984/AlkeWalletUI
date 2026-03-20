@@ -1,8 +1,7 @@
 package com.jmlucero.alkewallet.data.repository
 
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import java.io.IOException
@@ -35,6 +34,17 @@ class ApiHandler @Inject constructor() {
                     emit(UiState.Error("Tiempo de espera agotado"))
                 is IOException ->
                     emit(UiState.Error("Error de red"))
+                is RuntimeException -> {
+                    if (e.message?.contains("Network error") == true) {
+                        emit(UiState.Error("Error de red"))
+                    }
+                    if (e.message?.contains("Timeout") == true) {
+                        emit(UiState.Error("Tiempo de espera agotado"))
+                    }
+                    if(e.message?.contains("Unable to resolve host") == true) {
+                        emit(UiState.Error("Sin conexión a internet"))
+                    }
+                }
                 else -> emit(UiState.Error(e.message.toString()))
             }
         }

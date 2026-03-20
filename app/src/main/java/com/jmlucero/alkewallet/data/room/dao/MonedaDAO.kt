@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmlucero.alkewallet.data.model.Moneda
+import com.jmlucero.alkewallet.data.model.entity.Moneda
 import kotlinx.coroutines.flow.Flow
 @Dao
 interface MonedaDAO{

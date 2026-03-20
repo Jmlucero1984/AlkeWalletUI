@@ -3,7 +3,7 @@ package com.jmlucero.alkewallet.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jmlucero.alkewallet.data.model.response.LoginResponse
-import com.jmlucero.alkewallet.data.model.UiState
+import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.data.repository.AuthRepository
 import com.jmlucero.alkewallet.data.room.dto.UsuarioMonedaDTO
 import dagger.hilt.android.lifecycle.HiltViewModel
