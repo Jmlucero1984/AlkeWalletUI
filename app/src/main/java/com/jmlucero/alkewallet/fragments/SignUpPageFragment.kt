@@ -87,6 +87,10 @@ class SignUpPageFragment : Fragment() {
                 Toast.makeText(context, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.txtInputEmail.text.toString()).matches()) {
+                binding.txtInputEmail.error = "Email inválido"
+                return@setOnClickListener
+            }
             if(binding.txtInputContrasenia.text.toString() != binding.txtInputConfirmaContrasenia.text.toString()){
                 Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

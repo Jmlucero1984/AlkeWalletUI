@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +16,7 @@ import com.jmlucero.alkewallet.R
 import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentLoginPageBinding
 import com.jmlucero.alkewallet.viewmodel.AuthViewModel
+import com.jmlucero.alkewallet.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.coroutines.launch
@@ -29,6 +31,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [LoginPageFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+/* ESTO ES EXTREMANDAMENTE NECESARIO PARA LOS TEST INSTRUMENTALES CON HILT QUE LANZAN UNA ACTIVIDAD Y NO LOS FRAGMENTS POR SEPARADO
+
+Tambien sugerian usar:
+private val viewModel: AuthViewModel by viewModels()
+
+En lugar de:
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+Pero los test instrumentales funcionan igual, gracias a dios!!
+ */
+
 @AndroidEntryPoint
 class LoginPageFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -37,6 +51,7 @@ class LoginPageFragment : Fragment() {
     private var _binding: FragmentLoginPageBinding? = null
     private val binding get() = _binding!!
 
+    //private val viewModel: AuthViewModel by viewModels()
     private lateinit var viewModel: AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +71,7 @@ class LoginPageFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
         binding.textoCrearCuenta.setOnClickListener {
             findNavController().navigate(R.id.action_login_to_signin)
         }
@@ -72,6 +87,7 @@ class LoginPageFragment : Fragment() {
                 binding.passwordInput.text.toString()
             )
         }
+
         // Observar estado
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -95,6 +111,7 @@ class LoginPageFragment : Fragment() {
 
                                 //findNavController().navigate(R.id.action_login_to_home)
                                 viewModel.saveCurrentLoggedUser()
+                                viewModel.resetLoginState()
                             }
 
                             is UiState.Error -> {
@@ -132,7 +149,7 @@ class LoginPageFragment : Fragment() {
 
 
                                 findNavController().navigate(R.id.action_login_to_home)
-
+                                viewModel.resetLoggedUserState()
                             }
 
                             is UiState.Error -> {

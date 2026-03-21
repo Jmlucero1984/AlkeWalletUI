@@ -62,7 +62,13 @@ class AuthViewModel @Inject constructor(
     }
 
 
+    fun resetLoginState() {
+        _loginState.value = UiState.Idle
+    }
 
+    fun resetLoggedUserState() {
+        _loggedUser.value = UiState.Idle
+    }
     fun login(email: String, password: String) {
 
         viewModelScope.launch {

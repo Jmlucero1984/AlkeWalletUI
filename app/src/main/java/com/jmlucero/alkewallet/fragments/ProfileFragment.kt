@@ -29,10 +29,11 @@ import com.jmlucero.alkewallet.data.model.response.AvatarResponse
 import com.jmlucero.alkewallet.databinding.FragmentProfileBinding
 import com.jmlucero.alkewallet.viewmodel.ProfileViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
-
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!

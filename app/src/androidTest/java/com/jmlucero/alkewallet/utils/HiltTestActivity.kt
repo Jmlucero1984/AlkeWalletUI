@@ -1,6 +1,4 @@
-
-
-package com.jmlucero.alkewallet
+package com.jmlucero.alkewallet.utils
 
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint

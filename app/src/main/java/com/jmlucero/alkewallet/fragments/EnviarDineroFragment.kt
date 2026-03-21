@@ -23,9 +23,11 @@ import com.jmlucero.alkewallet.data.model.entity.Transferencia
 import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentEnviarDineroBinding
 import com.jmlucero.alkewallet.ui.home.SugerenciaAdapter
+import com.jmlucero.alkewallet.utils.DecimalDigitsInputFilter
 import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -37,7 +39,7 @@ import kotlinx.coroutines.launch
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-
+@AndroidEntryPoint
 class EnviarDineroFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -105,6 +107,12 @@ class EnviarDineroFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.homePageFragment)
         }
+
+
+        binding.ingreseCantidad.filters=arrayOf(
+            DecimalDigitsInputFilter(10, 2)
+        )
+
         adapter = SugerenciaAdapter { usuario ->
             binding.ingreseEmail.setText(usuario.email)
             binding.recyclerSugerencias.visibility = View.GONE

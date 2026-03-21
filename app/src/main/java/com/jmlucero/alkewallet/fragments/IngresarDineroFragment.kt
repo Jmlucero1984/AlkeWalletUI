@@ -17,13 +17,15 @@ import com.jmlucero.alkewallet.R
 import com.jmlucero.alkewallet.data.model.entity.Deposito
 import com.jmlucero.alkewallet.data.model.entity.UiState
 import com.jmlucero.alkewallet.databinding.FragmentIngresarDineroBinding
+import com.jmlucero.alkewallet.utils.DecimalDigitsInputFilter
 import com.jmlucero.alkewallet.viewmodel.SharedViewModel
 import com.jmlucero.alkewallet.viewmodel.UserViewModel
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-
+@AndroidEntryPoint
 class IngresarDineroFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private var _binding: FragmentIngresarDineroBinding? = null
@@ -49,13 +51,14 @@ class IngresarDineroFragment : Fragment() {
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.homePageFragment)
         }
+        binding.ingreseCantidad.filters = arrayOf(
+            DecimalDigitsInputFilter(10,2)
+        )
         binding.ingresarDineroButton.setOnClickListener {
             val monto = BigDecimal(binding.ingreseCantidad.getText().toString())
-
-
             userViewModel.depositar(Deposito(monto,binding.notaDepositoInput.text.toString()))
-
         }
+
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {

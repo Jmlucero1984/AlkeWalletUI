@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.jmlucero.alkewallet.R
 import com.jmlucero.alkewallet.databinding.FragmentAuthSelectionBinding
+import dagger.hilt.EntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
