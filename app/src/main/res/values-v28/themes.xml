@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomAlertDialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="colorSurface">@color/orange</item>
+        <item name="colorOnSurface">@color/green</item>
+        <item name="android:dialogCornerRadius">16dp</item>
+
+        <item name="android:backgroundTint">@color/lightblue</item>
+        <item name="android:textColor">#FF5722</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/CustomNegativeButton</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/CustomPositiveButton</item>
+
+    </style>
+</resources>

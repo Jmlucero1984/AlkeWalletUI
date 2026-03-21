@@ -59,14 +59,16 @@ class HomePageFragment : Fragment() {
     }
 
     private fun mostrarDialogoSalir() {
-        AlertDialog.Builder(requireContext())
+        AlertDialog.Builder(requireContext(),R.style.CustomAlertDialog)
             .setTitle("Salir")
             .setMessage("¿Quieres cerrar sesión?")
             .setPositiveButton("Sí") { _, _ ->
                 logout()
             }
             .setNegativeButton("Cancelar", null)
+            .setIcon(R.drawable.aw_icon_alert)
             .show()
+
     }
     private fun logout() {
         // 1. Limpiar datos (Room / token)
@@ -77,7 +79,7 @@ class HomePageFragment : Fragment() {
             R.id.loginFragment,
             null,
             NavOptions.Builder()
-                .setPopUpTo(R.id.nav_graph, true) // limpia TODO
+                .setPopUpTo(R.id.nav_graph, true)
                 .build()
         )
     }
