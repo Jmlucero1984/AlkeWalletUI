@@ -356,14 +356,15 @@ class EnviarDineroFragment : Fragment() {
                     }
                 }
 
-
                 launch {
                     userViewModel.usuarioConMoneda.collect { usuarioConMoneda ->
                         if (usuarioConMoneda != null) {
                             usuarioLogueadoMoneda = usuarioConMoneda.moneda.codigo
                             ratio_a_dolar_usuario_emisor = usuarioConMoneda.moneda.ratio_a_usd
                             codigo_moneda_emisor = usuarioConMoneda.moneda.codigo
+
                             balanceActual = BigDecimal(usuarioConMoneda.usuario.balance)
+                            Log.i("BALANCEE ACTUAL!!!", balanceActual.toString())
                             binding.nombreUsuario.text =
                                 "${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}"
                             binding.emailUsuario.text =

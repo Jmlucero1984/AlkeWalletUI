@@ -60,7 +60,10 @@ class UserRepository @Inject constructor(
     
     suspend fun updateBalance(balance: String, usuarioEmail:String) {
         cuentaDAO.updateBalance(balance,usuarioEmail)
+        usuarioDAO.updateBalance(balance,usuarioEmail)
+
     }
+
 
     suspend fun updateUsuarioLocalAvatar(url:String) {
         usuarioDAO.updateAvatar(url)
@@ -75,9 +78,6 @@ class UserRepository @Inject constructor(
         return cuentaDAO.getCuenta(usuario_email)
     }
 
-    fun getCuenta(usuario_email:String): Flow<Cuenta?> {
-        return  cuentaDAO.getCuenta(usuario_email)
-    }
 
 
 

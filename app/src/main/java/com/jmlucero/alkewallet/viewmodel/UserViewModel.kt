@@ -37,10 +37,28 @@ class UserViewModel @Inject constructor(
 
     suspend fun actualizarBalance(balance: String) {
         repository.getUsuarioLocal().collect { usuario ->
-            usuario.let { it?.let { it1 -> repository.updateBalance(balance, it1.email) } }
+            usuario.let { it?.let { it1 ->
+
+                    repository.updateBalance(balance, it1.email)
+
+
+            }
+
+
+            }
+
         }
 
     }
+
+    suspend fun getBalance() {
+        repository.getUsuarioLocal().collect { usuario ->
+            usuario.let { it?.let { it1 -> repository.getBalance() } }
+        }
+
+    }
+
+
     suspend fun buscarSugerencias(query: String): Flow<List<Usuario>> {
 
         return repository.getSugerencias(query)

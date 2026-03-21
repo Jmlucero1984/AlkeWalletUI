@@ -171,6 +171,8 @@ class HomePageFragment : Fragment() {
                                 Log.i("INFORMACION CUENTA", cuenta.balance.toString())
                                 val bf = BigDecimal(cuenta.balance).setScale(2, BigDecimal.ROUND_HALF_UP)
                                 binding.actualBalanceText.text = "$${bf} $codigo"
+
+
                                }
 
                         } ?: run{
