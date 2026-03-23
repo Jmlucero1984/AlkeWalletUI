@@ -12,7 +12,7 @@ interface CuentaDAO {
     suspend fun insertCuenta(cuenta: Cuenta)
 
     @Query("UPDATE cuentas SET balance = :balance WHERE usuarioEmail = :usuario_email")
-    suspend fun updateBalance(balance: String, usuario_email: String)
+    suspend fun updateBalance(balance: String, usuario_email: String?)
 
 
 

@@ -22,7 +22,7 @@ interface UsuarioDAO {
     suspend fun logoutAllUsers()
 
     @Query("UPDATE usuarios SET balance = :balance WHERE email = :email")
-    suspend fun updateBalance(balance: String, email: String)
+    suspend fun updateBalance(balance: String, email: String?)
 
 
     @Query("UPDATE usuarios SET avatar_url = :avatarUrl WHERE isLoggedUser = 1")

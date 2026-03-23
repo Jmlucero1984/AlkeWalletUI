@@ -58,9 +58,10 @@ class UserRepository @Inject constructor(
     }
     
     
-    suspend fun updateBalance(balance: String, usuarioEmail:String) {
-        cuentaDAO.updateBalance(balance,usuarioEmail)
-        usuarioDAO.updateBalance(balance,usuarioEmail)
+    suspend fun updateBalance(balance: String) {
+        val email = sessionManager.getEmail()
+        cuentaDAO.updateBalance(balance,email)
+        usuarioDAO.updateBalance(balance,email)
 
     }
 

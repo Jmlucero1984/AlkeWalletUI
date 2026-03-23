@@ -36,20 +36,9 @@ class UserViewModel @Inject constructor(
     val usuarioDestinoEvent = _usuarioDestinoEvent.asSharedFlow()
 
     suspend fun actualizarBalance(balance: String) {
-        repository.getUsuarioLocal().collect { usuario ->
-            usuario.let { it?.let { it1 ->
-
-                    repository.updateBalance(balance, it1.email)
-
-
-            }
-
-
-            }
-
+                    repository.updateBalance(balance)
         }
 
-    }
 
     suspend fun getBalance() {
         repository.getUsuarioLocal().collect { usuario ->
@@ -65,13 +54,15 @@ class UserViewModel @Inject constructor(
     }
 
 
-
+/*
     suspend fun insertarSugerencia(balance: String) {
         repository.getUsuarioLocal().collect { usuario ->
             usuario.let { it?.let { it1 -> repository.updateBalance(balance, it1.email) } }
         }
 
     }
+    */
+
 
     private val _usuariosState = MutableStateFlow<UiState<List<Usuario>>>(UiState.Idle)
     val usuariosState: StateFlow<UiState<List<Usuario>>> = _usuariosState

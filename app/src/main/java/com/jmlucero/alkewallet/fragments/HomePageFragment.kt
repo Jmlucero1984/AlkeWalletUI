@@ -171,8 +171,25 @@ class HomePageFragment : Fragment() {
                                 Log.i("INFORMACION CUENTA", cuenta.balance.toString())
                                 val bf = BigDecimal(cuenta.balance).setScale(2, BigDecimal.ROUND_HALF_UP)
                                 binding.actualBalanceText.text = "$${bf} $codigo"
+                                binding.perfilNombreUsuario.text =
+                                    "Hola ${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}!"
+                                var url = usuarioConMoneda.usuario.avatar_url
+                                Picasso.get()
+                                    .load(url)
+                                    .placeholder(R.drawable.profile_svgrepo_com)
+                                    .error(R.drawable.profile_svgrepo_com)
+                                    .fit()
+                                    .centerCrop()
+                                    .into(binding.usuarioProfileImg, object : Callback {
+                                        override fun onSuccess() {
+                                            Log.d("Picasso", "Imagen cargada exitosamente")
+                                        }
 
-
+                                        override fun onError(e: Exception) {
+                                            Log.e("Picasso", "Error cargando imagen: ${e.message}")
+                                            e.printStackTrace()
+                                        }
+                                    })
                                }
 
                         } ?: run{
@@ -189,42 +206,6 @@ class HomePageFragment : Fragment() {
                 }
 
 
-                launch {
-                    homeViewModel.usuarioConMoneda.collect { _usuarioConMoneda ->
-                        _usuarioConMoneda?.let { usuarioConMoneda ->
-
-                            binding.perfilNombreUsuario.text =
-                                "Hola ${usuarioConMoneda.usuario.nombre} ${usuarioConMoneda.usuario.apellido}!"
-                            var url = usuarioConMoneda.usuario.avatar_url
-                            Picasso.get()
-                                .load(url)
-                                .placeholder(R.drawable.profile_svgrepo_com)
-                                .error(R.drawable.profile_svgrepo_com)
-                                .fit()
-                                .centerCrop()
-                                .into(binding.usuarioProfileImg, object : Callback {
-                                    override fun onSuccess() {
-                                        Log.d("Picasso", "Imagen cargada exitosamente")
-                                    }
-
-                                    override fun onError(e: Exception) {
-                                        Log.e("Picasso", "Error cargando imagen: ${e.message}")
-                                        e.printStackTrace()
-                                    }
-                                })
-                        } ?: run {
-                            // 🔥 Usuario ya no existe → salir del Home
-                            findNavController().navigate(
-                                R.id.loginFragment,
-                                null,
-                                NavOptions.Builder()
-                                    .setPopUpTo(R.id.nav_graph, true)
-                                    .build()
-                            )
-                        }
-                    }
-
-                }
 
 //                launch {
 //                    homeViewModel.usuario.collect { usuario ->

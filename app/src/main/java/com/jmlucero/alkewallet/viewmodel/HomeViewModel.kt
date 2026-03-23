@@ -26,9 +26,12 @@ class HomeViewModel @Inject constructor(
     }
 
     val usuario: Flow<Usuario?> = repository.getUsuarioLocal()
+
     val usuarioConMoneda: Flow<UsuarioConMoneda?> = repository.getUsuarioConMonedaLocal()
+
     val balance: Flow<UiState<Balance>> = repository.getBalance()
    // val cuenta: Flow<Cuenta?> =  repository.getCuentaUsuarioLogueado()
+
     val cuenta = usuarioConMoneda.flatMapLatest { user ->
         if (user == null) flowOf(null)
         else  repository.getCuentaUsuarioLogueado()
