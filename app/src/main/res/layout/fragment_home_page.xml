@@ -62,7 +62,7 @@
                                     android:clipToOutline="true"
                                     android:contentDescription="TODO"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/avatar_6" />
+                                    android:src="@drawable/profile_svgrepo_com" />
                             </com.google.android.material.card.MaterialCardView>
 
                             <TextView
